@@ -1,0 +1,24 @@
+{
+	"name": "say-quality",
+	"version": "1.0.0",
+	"description": "\"# SayQuality\"",
+	"main": "index.js",
+	"workspaces": [
+		"front-end",
+		"back-end"
+	],
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/identikitapp/SayQuality.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/identikitapp/SayQuality/issues"
+	},
+	"homepage": "https://github.com/identikitapp/SayQuality#readme"
+}
