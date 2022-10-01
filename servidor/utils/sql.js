@@ -12,7 +12,20 @@ const connection = mysql.createConnection({
 
 connection.connect();
 
+function DeleteStandbyUsers() {
+    return new Promise((resolve, reject) => {
+        connection.query("UPDATE Users SET emailCode = null, email = null, userStatus = 3 WHERE userStatus < 3 && deleteAccount = 1 && deleteTimestamp > "+Date.now(), (error, results, fields) => {
+            if (error) {
+                reject(new Error("Error al actualizar a los usuarios"))
+            };
 
+            resolve();
+        });
+    });
+};
+
+DeleteStandbyUsers();
+setInterval(DeleteStandbyUsers, 21600000);
 
 module.exports.CreateUser = (user) => {
     return new Promise((resolve, reject) => {
@@ -23,7 +36,7 @@ module.exports.CreateUser = (user) => {
 
             resolve();
         });
-    })
+    });
 };
 
 module.exports.GetUser = (id) => {
@@ -49,7 +62,7 @@ module.exports.GetUserByName = (name) => {
 
             resolve(results)
         });
-    })
+    });
 };
 
 module.exports.GetUserByEmail = (email) => {
@@ -61,7 +74,7 @@ module.exports.GetUserByEmail = (email) => {
 
             resolve(results)
         });
-    })
+    });
 };
 
 module.exports.GetUserByCode = (code) => {
@@ -73,7 +86,7 @@ module.exports.GetUserByCode = (code) => {
 
             resolve(results)
         });
-    })
+    });
 };
 
 module.exports.UpdateUser = (id, user) => {
@@ -85,19 +98,20 @@ module.exports.UpdateUser = (id, user) => {
 
             resolve();
         });
-    })
+    });
 };
 
+//Nunca fue usado
 module.exports.DeleteUser = (id, status = 3) => {
     return new Promise((resolve, reject) => {
-        connection.query("UPDATE Users SET username = null, password = null, email = null, userStatus = ? WHERE ID = ?", [status, id], (error, results, fields) => {
+        connection.query("UPDATE Users SET emailCode = null, email = null, userStatus = ? WHERE ID = ?", [status, id], (error, results, fields) => {
             if (error) {
                 reject(new Error("Error al actualizar el usuario"))
             };
 
             resolve();
         });
-    })
+    });
 };
 
 module.exports.GetCourses = () => {
@@ -110,7 +124,7 @@ module.exports.GetCourses = () => {
 
             resolve(results)
         });
-    })
+    });
 };
 
 module.exports.GetCourseByName = (name) => {
@@ -123,7 +137,7 @@ module.exports.GetCourseByName = (name) => {
 
             resolve(results)
         });
-    })
+    });
 };
 
 module.exports.CreatePayment = (payment) => {
@@ -135,7 +149,31 @@ module.exports.CreatePayment = (payment) => {
 
             resolve();
         });
-    })
+    });
+};
+
+module.exports.UpdatePayment = (id, payment) => {
+    return new Promise((resolve, reject) => {
+        connection.query("UPDATE Payments SET userID = ?, courseID = ?, mpPaymentID = ?, authorized = ? WHERE ID = ?", [payment.userID, payment.courseID, payment.mpPaymentID, payment.authorized, id], (error, results, fields) => {
+            if (error) {
+                reject(new Error("Error al crear el usuario"))
+            };
+
+            resolve();
+        });
+    });
+};
+
+module.exports.UpdatePaymentByMPID = (mpid, payment) => {
+    return new Promise((resolve, reject) => {
+        connection.query("UPDATE Payments SET userID = ?, courseID = ?, authorized = ? WHERE ID = ?", [payment.userID, payment.courseID, payment.authorized, mpid], (error, results, fields) => {
+            if (error) {
+                reject(new Error("Error al crear el usuario"))
+            };
+
+            resolve();
+        });
+    });
 };
 
 module.exports.GetPaymentsByUser = (id) => {
@@ -147,11 +185,37 @@ module.exports.GetPaymentsByUser = (id) => {
 
             resolve(results);
         });
-    })
+    });
 };
 
 
+module.exports.Payment = class {
+    constructor(Payment){
+        if (!Payment.userID) {
+            this.userID = 0;
+        }else{
+            this.userID = Payment.userID;
+        };
 
+        if (!Payment.courseID) {
+            this.courseID = 0;
+        }else{
+            this.courseID = Payment.courseID;
+        };
+
+        if (!Payment.mpPaymentID) {
+            this.mpPaymentID = 0;
+        }else{
+            this.mpPaymentID = Payment.mpPaymentID;
+        };
+
+        if (!Payment.authorized) {
+            this.authorized = false;
+        }else{
+            this.authorized = Payment.authorized;
+        };
+    };
+};
 
 module.exports.User = class {
     constructor(user){

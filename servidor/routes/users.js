@@ -3,7 +3,7 @@ const users = express.Router();
 const sql = require("../utils/sql.js");
 const email = require("../utils/email.js");
 const jwt = require("../utils/jwt.js");
-const avatar = require("../utils/avatar.js");
+const images = require("../utils/images.js");
 const shajs = require('sha.js');
 
 users.param('ID', function (req, res, next, ID) {
@@ -30,8 +30,7 @@ users.param('ID', function (req, res, next, ID) {
                         .json({
                             "error": {
                                 "code": 404,
-                                "message": "El usuario no existe.",
-                                "field": "email"
+                                "message": "El usuario no existe."
                             }
                         });
                     return;
@@ -668,6 +667,17 @@ users.get("/:ID", (req, res) => {
 });
 
 users.delete("/:ID", (req, res) => {
+
+    if (!req.user) {
+        return res
+            .status(401)
+            .json({
+                "error": {
+                    "code": 401,
+                    "message": "Debes iniciar sesion para hacer eso."
+                }
+            });
+    };
 
     if (req.paramUser.id != req.user.id) {
         return res
