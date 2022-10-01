@@ -1,3 +1,4 @@
+import SayQuality from '../assets/SayQuality.jpg'
 export function Home() {
 	return (
 		<div>
@@ -7,6 +8,7 @@ export function Home() {
 				debitis quaerat, obcaecati ipsum ullam ex et animi soluta illo delectus. Alias
 				blanditiis, labore tenetur nam praesentium consequatur totam.
 			</p>
+			<img src={SayQuality} alt="imagen say quality" />
 		</div>
 	)
 }

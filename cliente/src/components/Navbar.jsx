@@ -1,24 +1,24 @@
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import logo from '../assets/logo.png'
 
 export function Navbar() {
 	return (
-		<nav>
-			<Link to='/'>
-				<img src={logo}></img>
-			</Link>
+		<nav className='navbar'>
+			<Link to='/' className='logo'> <img src={logo}></img> </Link>
 			<ul>
 				<li>
-					<Link to='/cursos'>Cursos</Link>
+					<NavLink to="/cursos" className={({isActive}) => isActive ? "active" : ""}>Cursos</NavLink>
 				</li>
 				<li>
-					<Link to='/equipo'>Equipo</Link>
+					<NavLink to="/equipo" className={({isActive}) => isActive ? "active" : ""}>Equipo</NavLink>
 				</li>
 				<li>
-					<Link to='/contacto'>Contacto</Link>
+					<NavLink to="/contacto" className={({isActive}) => isActive ? "active" : ""}>Contacto</NavLink>
 				</li>
 			</ul>
-			<Link to='/acceder'>Acceder</Link>
+			
+			<NavLink to="/acceder" className={({isActive}) => isActive ? "active" : ""}>Acceder</NavLink>
 		</nav>
 	)
 }
+

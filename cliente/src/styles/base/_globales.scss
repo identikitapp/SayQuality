@@ -1,0 +1,40 @@
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+body {
+    overflow-x: hidden;
+}
+
+
+a {
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+}
+
+p {
+        margin: 0;
+ }
+
+    // Scroll Bar 
+
+//  ::-webkit-scrollbar {
+    
+//  }
+
+//  ::-webkit-scrollbar-track {
+   
+//  }
+
+//  ::-webkit-scrollbar-thumb {
+ 
+//  }

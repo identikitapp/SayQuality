@@ -10,7 +10,7 @@ import { Footer } from './Footer'
 export function App() {
 	return (
 		<BrowserRouter>
-			<header>
+			<header className='header'>
 				<Navbar />
 			</header>
 			<main>

@@ -1,0 +1,65 @@
+.header {
+    position: fixed;
+    width: 100%;
+    font-size: 2rem;
+    height: 6rem;
+
+   
+    .logo {
+        img {
+            width: 6rem;
+            height: 6rem;
+        }
+        &:hover {
+            cursor: pointer;
+        }
+    }
+    .active {
+        color: $naranja;
+    }
+
+    .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        
+        ul {
+            display: flex;
+            li {
+                padding: 2rem;
+                padding-bottom: .3rem; 
+                list-style: none;
+                a {
+                    text-decoration: none;
+                    padding: 1rem;
+                    
+                    &:hover {
+                        border-bottom: solid .3rem $naranja;
+
+                    }
+                }
+              
+            }
+        }      
+    }
+
+    .login {
+        
+        ul {
+            display: flex;
+            li {
+                padding: 2rem;
+                padding-bottom: .3rem; 
+                list-style: none;
+                a {
+                    padding: 1rem;
+                    text-decoration: none;
+                    &:hover {
+                        border-bottom: solid .3rem $naranja;       
+                    }
+                }
+              
+            }
+        }    
+    }
+}
