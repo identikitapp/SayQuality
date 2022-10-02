@@ -14,8 +14,9 @@ connection.connect();
 
 function DeleteStandbyUsers() {
     return new Promise((resolve, reject) => {
-        connection.query("UPDATE Users SET emailCode = null, email = null, userStatus = 3 WHERE userStatus < 3 && deleteAccount = 1 && deleteTimestamp > "+Date.now(), (error, results, fields) => {
+        connection.query("UPDATE Users SET emailCode = null, email = null, status = 3 WHERE status < 3 && deleteAccount = 1 && deleteTimestamp < ?", Date.now(), (error, results, fields) => {
             if (error) {
+                
                 reject(new Error("Error al actualizar a los usuarios"))
             };
 
@@ -24,12 +25,12 @@ function DeleteStandbyUsers() {
     });
 };
 
-DeleteStandbyUsers();
+setTimeout(DeleteStandbyUsers, 5000);
 setInterval(DeleteStandbyUsers, 21600000);
 
 module.exports.CreateUser = (user) => {
     return new Promise((resolve, reject) => {
-        connection.query("INSERT INTO Users SET username = ?, password = ?, email = ?, emailCode = ?, userStatus = ?, avatar = ?, deleteTimestamp = ?, deleteAccount = ?, biography = ?, linkedin = ?, facebook = ?, twitter = ?, youtube = ?", [user.username, user.password, user.email, user.emailCode, user.status, user.avatar, user.deleteTimestamp, user.deleteAccount, user.biography, user.linkedin, user.facebook, user.twitter, user.youtube], (error, results, fields) => {
+        connection.query("INSERT INTO Users SET username = ?, password = ?, email = ?, emailCode = ?, status = ?, avatar = ?, deleteTimestamp = ?, deleteAccount = ?, biography = ?, linkedin = ?, facebook = ?, twitter = ?, youtube = ?", [user.username, user.password, user.email, user.emailCode, user.status, user.avatar, user.deleteTimestamp, user.deleteAccount, user.biography, user.linkedin, user.facebook, user.twitter, user.youtube], (error, results, fields) => {
             if (error) {
                 reject(new Error("Error al crear el usuario"))
             };
@@ -43,7 +44,6 @@ module.exports.GetUser = (id) => {
     return new Promise((resolve, reject) => {
         connection.query("SELECT * FROM Users WHERE ID = ?", [id], (error, results, fields) => {
             if (error) {
-                console.log(error)
                 reject(new Error("Error al obtener el usuario"))
             };
 
@@ -55,8 +55,7 @@ module.exports.GetUser = (id) => {
 module.exports.GetUserByName = (name) => {
     return new Promise((resolve, reject) => {
         connection.query("SELECT * FROM Users WHERE username = ?", [name], (error, results, fields) => {
-            if (error) {
-                console.log(error)
+            if (error) {  
                 reject(new Error("Error al obtener el usuario"))
             };
 
@@ -91,7 +90,7 @@ module.exports.GetUserByCode = (code) => {
 
 module.exports.UpdateUser = (id, user) => {
     return new Promise((resolve, reject) => {
-        connection.query("UPDATE Users SET username = ?, password = ?, email = ?, emailCode = ?, userStatus = ?, avatar = ?, deleteTimestamp = ?, deleteAccount = ?, biography = ?, linkedin = ?, facebook = ?, twitter = ?, youtube = ? WHERE ID = ?", [user.username, user.password, user.email, user.emailCode, user.status, user.avatar, user.deleteTimestamp, user.deleteAccount, user.biography, user.linkedin, user.facebook, user.twitter, user.youtube, id], (error, results, fields) => {
+        connection.query("UPDATE Users SET username = ?, password = ?, email = ?, emailCode = ?, status = ?, avatar = ?, deleteTimestamp = ?, deleteAccount = ?, biography = ?, linkedin = ?, facebook = ?, twitter = ?, youtube = ? WHERE ID = ?", [user.username, user.password, user.email, user.emailCode, user.status, user.avatar, user.deleteTimestamp, user.deleteAccount, user.biography, user.linkedin, user.facebook, user.twitter, user.youtube, id], (error, results, fields) => {
             if (error) {
                 reject(new Error("Error al actualizar el usuario"))
             };
@@ -104,7 +103,7 @@ module.exports.UpdateUser = (id, user) => {
 //Nunca fue usado
 module.exports.DeleteUser = (id, status = 3) => {
     return new Promise((resolve, reject) => {
-        connection.query("UPDATE Users SET emailCode = null, email = null, userStatus = ? WHERE ID = ?", [status, id], (error, results, fields) => {
+        connection.query("UPDATE Users SET emailCode = null, email = null, status = ? WHERE ID = ?", [status, id], (error, results, fields) => {
             if (error) {
                 reject(new Error("Error al actualizar el usuario"))
             };
@@ -118,7 +117,7 @@ module.exports.GetCourses = () => {
     return new Promise((resolve, reject) => {
         connection.query("SELECT * FROM Courses", (error, results, fields) => {
             if (error) {
-                console.log(error)
+                
                 reject(new Error("Error al obtener el usuario"))
             };
 
@@ -131,7 +130,7 @@ module.exports.GetCourseByName = (name) => {
     return new Promise((resolve, reject) => {
         connection.query("SELECT * FROM Courses WHERE name = ?", [name], (error, results, fields) => {
             if (error) {
-                console.log(error)
+                
                 reject(new Error("Error al obtener el usuario"))
             };
 

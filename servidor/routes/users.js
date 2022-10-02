@@ -61,7 +61,7 @@ users.param('ID', function (req, res, next, ID) {
                     });
             });
     };
-})
+});
 
 users.post("/", (req, res) => {
     let body = req.body;
@@ -135,7 +135,7 @@ users.post("/", (req, res) => {
     sql.GetUserByEmail(body.email)
         .then((users) => {
             if (users.length != 0) {
-                res
+                return res
                     .status(409)
                     .json({
                         "error": {
@@ -244,7 +244,7 @@ users.patch("/auth/verify", (req, res) => {
             user.emailCode = null;
             user.status = 2;
 
-            sql.UpdateUser(user.id, user)
+            sql.UpdateUser(user.ID, user)
                 .then(() => {
                     res
                         .status(200)
@@ -337,7 +337,7 @@ users.post("/auth/recovery", (req, res) => {
 
                 user.emailCode = emailCode;
 
-                sql.UpdateUser(user, user.ID)
+                sql.UpdateUser(user.ID, user)
                     .then(() => {
                         email.NoReply([user.email], "Restablece tu contraseña!", process.env.WEB + "/recovery?code=" + user.emailCode)
                         res
@@ -357,6 +357,24 @@ users.post("/auth/recovery", (req, res) => {
                                     "message": "Error interno.",
                                 }
                             });
+                    });
+            } else if (user.status == 3) {
+                return response
+                    .status(410)
+                    .json({
+                        "error": {
+                            "code": 410,
+                            "message": "Tu cuenta fue eliminada."
+                        }
+                    });
+            } else if (user.status == 4) {
+                return response
+                    .status(403)
+                    .json({
+                        "error": {
+                            "code": 403,
+                            "message": "Tu cuenta fue suspendida."
+                        }
                     });
             };
         })
@@ -452,7 +470,7 @@ users.patch("/auth/reset", (req, res) => {
             user.emailCode = null;
             user.password = shajs('sha256').update(process.env.salt + body.password).digest('hex');
 
-            sql.UpdateUser(user.id, user)
+            sql.UpdateUser(user.ID, user)
                 .then(() => {
                     res
                         .status(200)
@@ -591,14 +609,14 @@ users.post("/auth", (req, res) => {
 
             if (user.deleteAccount) {
                 user.deleteAccount = false;
-                return sql.UpdateUser(user, user.id)
+                return sql.UpdateUser(user.ID, user)
                     .then(() => {
                         res
                             .status(200)
                             .json({
                                 data: {
                                     message: "Sesion iniciada y cuenta reactivada con exito.",
-                                    token: jwt.Create(user.id)
+                                    token: jwt.Create(user.ID)
                                 }
                             })
                     })
@@ -619,7 +637,7 @@ users.post("/auth", (req, res) => {
                 .json({
                     data: {
                         message: "Sesion iniciada con exito.",
-                        token: jwt.Create(user.id)
+                        token: jwt.Create(user.ID)
                     }
                 })
 
@@ -642,7 +660,7 @@ users.get("/:ID", (req, res) => {
     //req.paramUser
     let user = {
         username: req.paramUser.username,
-        id: req.paramUser.id,
+        id: req.paramUser.ID,
         biography: req.paramUser.biography,
         avatar: req.paramUser.avatar,
         linkedin: req.paramUser.linkedin,
@@ -651,8 +669,10 @@ users.get("/:ID", (req, res) => {
         youtube: req.paramUser.youtube
     };
 
-    if (req.paramUser.id == req.user.id) {
-        user.email = req.paramUser.email;
+    if (!!req.user) {
+        if (req.paramUser.ID == req.user.ID) {
+            user.email = req.paramUser.email;
+        };
     };
 
     res
@@ -679,7 +699,7 @@ users.delete("/:ID", (req, res) => {
             });
     };
 
-    if (req.paramUser.id != req.user.id) {
+    if (req.paramUser.ID != req.user.ID) {
         return res
             .status(403)
             .json({
@@ -690,7 +710,7 @@ users.delete("/:ID", (req, res) => {
             });
     };
 
-    var date = new Date();
+    let date = new Date();
     date.setMonth(date.getMonth() + 1);
 
     req.user.deleteTimestamp = date.getTime();

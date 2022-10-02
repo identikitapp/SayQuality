@@ -79,6 +79,16 @@ courses.get("/:name", (req, res) => {
 courses.post("/payments", (req, res) => {
     let body = req.body;
 
+    if (body.type == "test") {
+        return res
+            .status(200)
+            .json({
+                data: {
+                    message: "👍."
+                }
+            });
+    };
+
     if (body.type != "payment") {
         return res
             .status(422)

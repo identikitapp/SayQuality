@@ -1,16 +1,18 @@
 require('dotenv').config();
 var fs = require('fs');
-var https = require('http');
+var https = require('https');
 var express = require('express');
 const jwt = require("./utils/jwt.js");
 const sql = require("./utils/sql.js");
 var app = express();
 
+app.use(express.json());
+
 app.use((error, request, response, next) => {
 
     if (error.statusCode == 413) {
 
-        response
+        return response
             .status(413)
             .json({
                 "error": {
@@ -19,28 +21,37 @@ app.use((error, request, response, next) => {
                 }
             });
 
-    } else {
-        response
-            .status(500)
+    };
+
+    if (error.type == 'entity.parse.failed') {
+        return response
+            .status(400)
             .json({
                 "error": {
-                    "code": 500,
-                    "message": "Ocurrio un error, intenta de nuevo mas tarde."
+                    "code": 400,
+                    "message": "El cuerpo de la peticion esta malformado."
                 }
             });
     };
+
+    response
+        .status(500)
+        .json({
+            "error": {
+                "code": 500,
+                "message": "Ocurrio un error, intenta de nuevo mas tarde."
+            }
+        });
+
 
 });
 
 app.use((request, response, next) => {
     if (request.method == "GET" || request.method == "DELETE" || request.method == "HEAD") return next();
-    if (!!request.content) return next();
 
     if (request.path == "/users/pfp") {
-        if (request.headers['content-type'].toLowerCase().startsWith("image/")) {
-            return next()
-        } else {
-            response
+        if (!request.get('Content-Type') || !request.get('Content-Type').toLowerCase().startsWith("image/")) {
+            return response
                 .status(415)
                 .json({
                     "error": {
@@ -48,10 +59,14 @@ app.use((request, response, next) => {
                         "message": "El encabezado Content-Type debe ser una imagen."
                     }
                 });
+        } else {
+            return next()
         };
+    } else if (request.path == "/courses/payments") {
+        return next();
     };
 
-    if (request.headers['content-type'].toLowerCase() != "application/json") {
+    if (!request.get('Content-Type') || request.get('Content-Type').toLowerCase() != "application/json") {
         response
             .status(415)
             .json({
@@ -98,13 +113,10 @@ app.use((request, response, next) => {
             });
 
     } else {
-
-
         jwt.Check(header[1])
             .then((decode) => {
                 sql.GetUser(decode.ID)
                     .then((users) => {
-
                         if (users.length == 0) {
                             return response
                                 .status(500)
@@ -115,6 +127,8 @@ app.use((request, response, next) => {
                                     }
                                 });
                         };
+
+                        let user = users[0];
 
                         if (user.status == 3) {
                             return response
@@ -193,10 +207,10 @@ app.all("*", function (req, res) {
 });
 
 //crear servidor https
-/*var privateKey = fs.readFileSync('sslcert/server.key', 'utf8');
-var certificate = fs.readFileSync('sslcert/server.crt', 'utf8');
-var credentials = { key: privateKey, cert: certificate };*/
-var httpsServer = https.createServer(/*credentials*/ app);
+var privateKey = fs.readFileSync('sslcert/privkey.pem', 'utf8');
+var certificate = fs.readFileSync('sslcert/fullchain.pem', 'utf8');
+var credentials = { key: privateKey, cert: certificate };
+var httpsServer = https.createServer(credentials, app);
 httpsServer.listen(process.env.HTTPPort, process.env.HTTPHost, () => {
     console.log("Servidor en funcionamiento");
 });
