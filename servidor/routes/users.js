@@ -6,62 +6,7 @@ const jwt = require("../utils/jwt.js");
 const images = require("../utils/images.js");
 const shajs = require('sha.js');
 
-users.param('ID', function (req, res, next, ID) {
-    if (ID == "me") {
-        if (!req.user) {
-            return res
-                .status(401)
-                .json({
-                    "error": {
-                        "code": 401,
-                        "message": "Debes iniciar sesion."
-                    }
-                });
-        } else {
-            req.paramUser = req.user;
-            next();
-        }
-    } else {
-        sql.GetUser(ID)
-            .then((users) => {
-                if (users.length == 0) {
-                    res
-                        .status(404)
-                        .json({
-                            "error": {
-                                "code": 404,
-                                "message": "El usuario no existe."
-                            }
-                        });
-                    return;
-                };
-
-                if (users[0].status == 3) {
-                    return res
-                        .status(410)
-                        .json({
-                            "error": {
-                                "code": 410,
-                                "message": "La cuenta fue eliminada."
-                            }
-                        });
-                };
-
-                req.paramUser = users[0];
-                next();
-            })
-            .catch((e) => {
-                return res
-                    .status(500)
-                    .json({
-                        "error": {
-                            "code": 500,
-                            "message": "Error interno.",
-                        }
-                    });
-            });
-    };
-});
+users.param('ID', require("../middlewares/userParam.js"));
 
 users.post("/", (req, res) => {
     let body = req.body;
@@ -145,7 +90,7 @@ users.post("/", (req, res) => {
                     });
             }
 
-            let emailCode = shajs('sha256').update(process.env.salt + body.email).digest('hex')
+            let emailCode = shajs('sha256').update(process.env.salt + Date.now().toString() + body.email).digest('hex')
 
             sql.CreateUser(new sql.User({
                 email: body.email,
