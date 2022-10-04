@@ -487,15 +487,32 @@ template {
   }
 }
 .acceder {
-  padding-top: 7rem;
-  display: grid;
-  grid-template-columns: 1fr 2fr;
+  padding-top: 10rem;
+  display: block;
+  min-height: 100vh;
+  background-color: #202C33;
+}
+.acceder .logo {
+  background-color: #202C33;
+  height: 100%;
+  width: 100%;
+  display: flex;
   align-items: center;
 }
-.acceder .iniciar-sesion {
+.acceder .registrate {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  font-size: 1.5rem;
+}
+.acceder .iniciar-sesion {
+  background-color: #FFF;
+  height: 90vh;
+  padding-top: 10rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-top-left-radius: 5rem;
 }
 .acceder .iniciar-sesion .acceder-google {
   display: flex;
@@ -504,11 +521,66 @@ template {
   font-size: 3rem;
   margin: 1rem;
 }
+.acceder .iniciar-sesion .acceder-google p {
+  padding-bottom: 2rem;
+  color: #000;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 0 auto;
+}
+.acceder .iniciar-sesion .acceder-google button {
+  display: flex;
+  align-items: center;
+  border: 1px solid #000;
+  border-radius: 0.5rem;
+}
+.acceder .iniciar-sesion .acceder-google button:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+.acceder .iniciar-sesion .formulario_recuperar .instrucciones {
+  max-width: 40rem;
+  font-size: 2.5rem;
+  word-break: keep-all;
+}
+.acceder .iniciar-sesion .formulario_recuperar .recuperar {
+  min-width: 30rem;
+}
+.acceder .iniciar-sesion .formulario_recuperar .correo {
+  margin: 2rem 0;
+}
 .acceder .iniciar-sesion form {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 1rem;
+}
+.acceder .iniciar-sesion form button {
+  font-size: 2.5rem;
+  background-color: #0083BB;
+  border: none;
+  outline: none;
+  border-radius: 0.5rem;
+  color: #FFF;
+  width: 60%;
+  height: 4rem;
+  margin: 1rem;
+}
+.acceder .iniciar-sesion form button:hover {
+  border: 2px solid #000;
+  cursor: pointer;
+}
+.acceder .iniciar-sesion form ::-moz-placeholder {
+  padding-left: 0.5rem;
+  font-size: 2rem;
+}
+.acceder .iniciar-sesion form :-ms-input-placeholder {
+  padding-left: 0.5rem;
+  font-size: 2rem;
+}
+.acceder .iniciar-sesion form ::placeholder {
+  padding-left: 0.5rem;
+  font-size: 2rem;
 }
 .acceder .iniciar-sesion form input {
   font-size: 3rem;
@@ -516,8 +588,55 @@ template {
   border: none;
   border-radius: 0.5rem;
   margin: 1rem;
+  background-color: #FFF;
+  border-bottom: 1.5px solid #C8CEBD;
+  color: #FFF;
 }
-.acceder .iniciar-sesion form .checkbox {
+.acceder .iniciar-sesion form input:focus {
+  border: 1px solid #FFF;
+  border-bottom: 2px solid #3B444B;
+}
+.acceder .iniciar-sesion .checkbox {
   display: flex;
-  justify-content: center;
+  align-items: center;
+  justify-content: space-around;
+}
+.acceder .iniciar-sesion .checkbox p {
+  font-size: 1.5rem;
+  padding-left: 0.5rem;
+}
+.acceder .iniciar-sesion .checkbox .recordame {
+  display: flex;
+}
+.acceder .iniciar-sesion .checkbox .recordame p {
+  font-size: 1.5rem;
+  margin: 0 auto;
+}
+.acceder .iniciar-sesion .registrate {
+  color: #000;
+}
+.acceder .iniciar-sesion .registrate .link {
+  font-weight: bold;
+  color: #000;
+}
+
+@media (min-width: 768px) {
+  .acceder {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    align-items: center;
+  }
+  .iniciar-sesion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-top-left-radius: 5rem;
+    border-bottom-left-radius: 5rem;
+    height: 100%;
+  }
+  .checkbox {
+    width: 60%;
+    margin: 0 auto;
+  }
 }/*# sourceMappingURL=app.css.map */

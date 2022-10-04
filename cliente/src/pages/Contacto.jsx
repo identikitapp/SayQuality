@@ -27,7 +27,7 @@ export function Contacto() {
 				...estado_previo,
 				[name]: e.target.value
 			
-		})
+			})
 		);
 	}
 	

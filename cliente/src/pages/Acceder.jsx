@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import logoContacto from '../assets/logoContacto.png'
+import logoContacto from '../assets/logoContacto.png';
+import {FcGoogle} from 'react-icons/fc';
 
 export function Acceder() {
 	return (
@@ -12,17 +13,24 @@ export function Acceder() {
 			<div className='iniciar-sesion'>
 				<div className='acceder-google'>
 					<p>Iniciar Sesión</p>
-					<button>Continuar con Google</button>
+					<button><FcGoogle />Continuar con Google</button>
 				</div>
 				<form action="" method='POST'>
 					<input type="email" name='email' placeholder='Correo Electrónico'/>
 					<input type="password" name='password' placeholder='Contraseña' />
+					<button>Iniciar Sesion</button>
 				</form>
 				<div className='checkbox'>
-					<input type="checkbox" name="checkbox" id="recordarme" />
-					<p><strong>¿Olvidaste tu contraseña?</strong></p>
+					<div className='recordame'>
+						<input type="checkbox" name="checkbox" id="recordarme" />
+						<p>Recordarme</p>
+					</div>
+					<p><strong><Link to='/recuperar-password' className='link'>¿Olvidaste tu contraseña?</Link></strong></p>
 				</div>
-				<p>¿Aún no eres miembro? <strong>Regístrate</strong></p>
+				<div className='registrate'>
+					<p>¿Aún no eres miembro? <Link to='/registrarse' className='link'>Registrarse</Link></p>
+				</div>
+				
 			</div>
 		</section>
 	)
