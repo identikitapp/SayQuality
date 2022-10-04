@@ -1,5 +1,7 @@
 node_modules/
+sslcert/
 .env
 package-lock.json
 ideas.txt
 ideas.sql
+ideas.js

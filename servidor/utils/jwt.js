@@ -1,12 +1,12 @@
 var jwt = require('jsonwebtoken');
 
 
-module.exports.Create = (id) => {
+module.exports.Create = (ID) => {
 
-    let obj = { id };
+    let obj = { ID };
 
-    if (typeof id == "string") {
-        obj.id = parseInt(id);
+    if (typeof ID == "string") {
+        obj.ID = parseInt(ID);
     };
 
     return jwt.sign(obj, process.env.jwtSecret);

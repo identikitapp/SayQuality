@@ -1,4 +1,6 @@
 const mysql = require('mysql');
+const events = require('events');
+const updateEvent = new events.EventEmitter();
 require('dotenv').config();
 
 const connection = mysql.createConnection({
@@ -12,25 +14,38 @@ const connection = mysql.createConnection({
 
 connection.connect();
 
+function DeleteStandbyUsers() {
+    return new Promise((resolve, reject) => {
+        connection.query("UPDATE Users SET emailCode = null, email = null, status = 3 WHERE status < 3 && deleteAccount = 1 && deleteTimestamp < ?", Date.now(), (error, results, fields) => {
+            if (error) {
 
+                reject(new Error("Error al actualizar a los usuarios"))
+            };
+
+            resolve();
+        });
+    });
+};
+
+setTimeout(DeleteStandbyUsers, 5000);
+setInterval(DeleteStandbyUsers, 21600000);
 
 module.exports.CreateUser = (user) => {
     return new Promise((resolve, reject) => {
-        connection.query("INSERT INTO Users SET username = ?, password = ?, email = ?, emailCode = ?, userStatus = ?, avatar = ?, deleteTimestamp = ?, deleteAccount = ?, biography = ?, linkedin = ?, facebook = ?, twitter = ?, youtube = ?", [user.username, user.password, user.email, user.emailCode, user.status, user.avatar, user.deleteTimestamp, user.deleteAccount, user.biography, user.linkedin, user.facebook, user.twitter, user.youtube], (error, results, fields) => {
+        connection.query("INSERT INTO Users SET username = ?, password = ?, email = ?, emailCode = ?, status = ?, avatar = ?, deleteTimestamp = ?, deleteAccount = ?, biography = ?, linkedin = ?, facebook = ?, twitter = ?, youtube = ?", [user.username, user.password, user.email, user.emailCode, user.status, user.avatar, user.deleteTimestamp, user.deleteAccount, user.biography, user.linkedin, user.facebook, user.twitter, user.youtube], (error, results, fields) => {
             if (error) {
                 reject(new Error("Error al crear el usuario"))
             };
 
             resolve();
         });
-    })
+    });
 };
 
 module.exports.GetUser = (id) => {
     return new Promise((resolve, reject) => {
         connection.query("SELECT * FROM Users WHERE ID = ?", [id], (error, results, fields) => {
             if (error) {
-                console.log(error)
                 reject(new Error("Error al obtener el usuario"))
             };
 
@@ -43,13 +58,12 @@ module.exports.GetUserByName = (name) => {
     return new Promise((resolve, reject) => {
         connection.query("SELECT * FROM Users WHERE username = ?", [name], (error, results, fields) => {
             if (error) {
-                console.log(error)
                 reject(new Error("Error al obtener el usuario"))
             };
 
             resolve(results)
         });
-    })
+    });
 };
 
 module.exports.GetUserByEmail = (email) => {
@@ -61,7 +75,7 @@ module.exports.GetUserByEmail = (email) => {
 
             resolve(results)
         });
-    })
+    });
 };
 
 module.exports.GetUserByCode = (code) => {
@@ -73,57 +87,58 @@ module.exports.GetUserByCode = (code) => {
 
             resolve(results)
         });
-    })
+    });
 };
 
 module.exports.UpdateUser = (id, user) => {
     return new Promise((resolve, reject) => {
-        connection.query("UPDATE Users SET username = ?, password = ?, email = ?, emailCode = ?, userStatus = ?, avatar = ?, deleteTimestamp = ?, deleteAccount = ?, biography = ?, linkedin = ?, facebook = ?, twitter = ?, youtube = ? WHERE ID = ?", [user.username, user.password, user.email, user.emailCode, user.status, user.avatar, user.deleteTimestamp, user.deleteAccount, user.biography, user.linkedin, user.facebook, user.twitter, user.youtube, id], (error, results, fields) => {
+        connection.query("UPDATE Users SET username = ?, password = ?, email = ?, emailCode = ?, status = ?, avatar = ?, deleteTimestamp = ?, deleteAccount = ?, biography = ?, linkedin = ?, facebook = ?, twitter = ?, youtube = ? WHERE ID = ?", [user.username, user.password, user.email, user.emailCode, user.status, user.avatar, user.deleteTimestamp, user.deleteAccount, user.biography, user.linkedin, user.facebook, user.twitter, user.youtube, id], (error, results, fields) => {
             if (error) {
                 reject(new Error("Error al actualizar el usuario"))
             };
 
             resolve();
         });
-    })
+    });
 };
 
+//Nunca fue usado
 module.exports.DeleteUser = (id, status = 3) => {
     return new Promise((resolve, reject) => {
-        connection.query("UPDATE Users SET username = null, password = null, email = null, userStatus = ? WHERE ID = ?", [status, id], (error, results, fields) => {
+        connection.query("UPDATE Users SET emailCode = null, email = null, status = ? WHERE ID = ?", [status, id], (error, results, fields) => {
             if (error) {
                 reject(new Error("Error al actualizar el usuario"))
             };
 
             resolve();
         });
-    })
+    });
 };
 
 module.exports.GetCourses = () => {
     return new Promise((resolve, reject) => {
         connection.query("SELECT * FROM Courses", (error, results, fields) => {
             if (error) {
-                console.log(error)
-                reject(new Error("Error al obtener el usuario"))
+
+                reject(new Error("Error al obtener el curso"))
             };
 
             resolve(results)
         });
-    })
+    });
 };
 
 module.exports.GetCourseByName = (name) => {
     return new Promise((resolve, reject) => {
         connection.query("SELECT * FROM Courses WHERE name = ?", [name], (error, results, fields) => {
             if (error) {
-                console.log(error)
-                reject(new Error("Error al obtener el usuario"))
+
+                reject(new Error("Error al obtener el curso"))
             };
 
             resolve(results)
         });
-    })
+    });
 };
 
 module.exports.CreatePayment = (payment) => {
@@ -135,7 +150,31 @@ module.exports.CreatePayment = (payment) => {
 
             resolve();
         });
-    })
+    });
+};
+
+module.exports.UpdatePayment = (id, payment) => {
+    return new Promise((resolve, reject) => {
+        connection.query("UPDATE Payments SET userID = ?, courseID = ?, mpPaymentID = ?, authorized = ? WHERE ID = ?", [payment.userID, payment.courseID, payment.mpPaymentID, payment.authorized, id], (error, results, fields) => {
+            if (error) {
+                reject(new Error("Error al crear el usuario"))
+            };
+
+            resolve();
+        });
+    });
+};
+
+module.exports.UpdatePaymentByMPID = (mpid, payment) => {
+    return new Promise((resolve, reject) => {
+        connection.query("UPDATE Payments SET userID = ?, courseID = ?, authorized = ? WHERE ID = ?", [payment.userID, payment.courseID, payment.authorized, mpid], (error, results, fields) => {
+            if (error) {
+                reject(new Error("Error al crear el usuario"))
+            };
+
+            resolve();
+        });
+    });
 };
 
 module.exports.GetPaymentsByUser = (id) => {
@@ -147,97 +186,360 @@ module.exports.GetPaymentsByUser = (id) => {
 
             resolve(results);
         });
+    });
+};
+
+module.exports.CreateChat = (chat) => {
+    return new Promise((resolve, reject) => {
+        connection.query("INSERT INTO Chats SET userID1 = ?, userID2 = ?, lastMessageID = ?", [chat.userID1, chat.userID2, chat.lastMessageID], (error, results, fields) => {
+            if (error) {
+                reject(new Error("Error al crear el usuario"))
+            };
+
+            resolve();
+        });
+    });
+};
+
+module.exports.GetChat = (id) => {
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM Chats WHERE ID = ?", [id], (error, results, fields) => {
+            if (error) {
+                reject(new Error("Error al obtener el chat"))
+            };
+
+            resolve(results)
+        });
     })
 };
 
+module.exports.GetChatsByUser = (id) => {
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM Chats WHERE userID1 = ? OR userID2 = ?", [id, id], (error, results, fields) => {
+            if (error) {
+                reject(new Error("Error al obtener los chats"))
+            };
 
+            resolve(results)
+        });
+    })
+};
 
+module.exports.GetChatByUsers = (userID1, userID2) => {
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM Chats WHERE (userID1 = ? AND userID2 = ?) OR (userID1 = ? AND userID2 = ?)", [userID1, userID2, userID2, userID1], (error, results, fields) => {
+            if (error) {
+                reject(new Error("Error al obtener el chat"))
+            };
+
+            resolve(results)
+        });
+    })
+};
+
+module.exports.CreateMessage = (message) => {
+    return new Promise((resolve, reject) => {
+        connection.query("INSERT INTO Messages SET chatID = ?, authorID = ?, content = ?, status = ?, Timestamp = ?", [message.chatID, message.authorID, message.content, message.status, message.Timestamp], (error, results, fields) => {
+            if (error) {
+                reject(new Error("Error al crear el mensaje"))
+            };
+
+            getMessageByTimestamp(message, "create", (err) => {
+                if (err) {
+                    return reject(err)
+                };
+
+                resolve();
+            });
+        });
+    });
+};
+
+module.exports.GetMessagesByChat = (id, lastMessageID) => {
+    return new Promise((resolve, reject) => {
+        let query = "SELECT * FROM Messages WHERE status != 3 AND chatID = ? LIMIT 50";
+
+        if (!!lastMessageID) query = "SELECT * FROM Messages WHERE status != 3 AND chatID = ? AND ID < ? LIMIT 50";
+
+        connection.query(query, [id, lastMessageID], (error, results, fields) => {
+            if (error) {
+                reject(new Error("Error al obtener los mensajes"))
+            };
+
+            resolve(results)
+        });
+    })
+};
+
+module.exports.GetMessage = (id, chatID) => {
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM Messages WHERE ID = ? AND chatID = ?", [id, chatID], (error, results, fields) => {
+            if (error) {
+                reject(new Error("Error al obtener el mensaje"))
+            };
+
+            resolve(results)
+        });
+    })
+};
+
+module.exports.UpdateMessage = (id, message) => {
+    return new Promise((resolve, reject) => {
+        connection.query("UPDATE Messages SET chatID = ?, authorID = ?, content = ?, status = ?, Timestamp = ? WHERE ID = ?", [message.chatID, message.authorID, message.content, message.status, message.Timestamp, id], (error, results, fields) => {
+            if (error) {
+                reject(new Error("Error al actualizar mensaje"))
+            };
+
+            resolve();
+        });
+    });
+};
+
+module.exports.DeleteMessage = (id, chatID) => {
+    return new Promise((resolve, reject) => {
+        connection.query("UPDATE Messages SET status = 3 WHERE ID = ? AND chatID = ?", [id, chatID], (error, results, fields) => {
+            if (error) {
+                reject(new Error("Error al actualizar el mensaje"))
+            };
+
+            connection.query("UPDATE Chats SET lastMessageID = (SELECT ID FROM Messages WHERE status != 3 AND chatID = ? ORDER BY ID DESC LIMIT 1) WHERE ID = ?", [chatID, chatID], (error2, results, fields) => {
+                if (error2) {
+                    reject(new Error("Error al actualizar el chat"))
+                };
+
+                getMessageByID(id, "delete", (err) =>{
+                    if (err) {
+                        return reject(err)
+                    };
+    
+                    resolve();
+                });
+            });
+        });
+    });
+};
+
+function getMessageByTimestamp(message, action, cb) {
+    connection.query("SELECT * FROM Messages WHERE chatID = ? AND Timestamp = ? LIMIT 1", [message.chatID, message.Timestamp], (error, results, fields) => {
+        if (error) {
+            cb(new Error("Error al obtener el chat"))
+        };
+
+        updateLastMessage(results[0], action, cb);
+    });
+};
+
+function getMessageByID(ID, action, cb) {
+    connection.query("SELECT * FROM Messages WHERE ID = ? LIMIT 1", [ID], (error, results, fields) => {
+        if (error) {
+            cb(new Error("Error al obtener el chat"))
+        };
+
+        getChat(results[0].chatID, results[0], action, cb);
+    });
+};
+
+function updateLastMessage(message, action, cb) {
+    connection.query("UPDATE Chats SET lastMessageID = ? WHERE ID = ?", [message.ID, message.chatID], (error, results, fields) => {
+        if (error) {
+            cb(new Error("Error al crear el usuario"))
+        };
+
+        getChat(message.chatID, message, action, cb);
+    });
+};
+
+function getChat(id, message, action, cb) {
+    connection.query("SELECT * FROM Chats WHERE ID = ?", [id], (error, results, fields) => {
+        if (error) {
+            cb(new Error("Error al obtener el chat"))
+        };
+
+        notifyMessage(results[0], message, action, cb);
+    });
+};
+
+function notifyMessage(chat, message, action, cb) {
+    updateEvent.emit("update", {
+        action,
+        message,
+        chat
+    });
+
+    cb(null);
+};
+
+module.exports.MessageEvent = updateEvent;
+
+module.exports.Chat = class {
+    constructor(Chat) {
+        if (!Chat.userID1) {
+            this.userID1 = 0;
+        } else {
+            this.userID1 = Chat.userID1;
+        };
+
+        if (!Chat.userID2) {
+            this.userID2 = 0;
+        } else {
+            this.userID2 = Chat.userID2;
+        };
+
+        if (!Chat.lastActivity) {
+            this.lastActivity = Date.now();
+        } else {
+            this.lastActivity = Chat.lastActivity;
+        };
+    };
+};
+
+module.exports.Message = class {
+    constructor(Chat) {
+        if (!Chat.chatID) {
+            this.chatID = 0;
+        } else {
+            this.chatID = Chat.chatID;
+        };
+
+        if (!Chat.authorID) {
+            this.authorID = 0;
+        } else {
+            this.authorID = Chat.authorID;
+        };
+
+        if (!Chat.content) {
+            this.content = "";
+        } else {
+            this.content = Chat.content;
+        };
+
+        if (!Chat.status) {
+            this.status = 0;
+        } else {
+            this.status = Chat.status;
+        };
+
+        if (!Chat.Timestamp) {
+            this.Timestamp = 0;
+        } else {
+            this.Timestamp = Chat.Timestamp;
+        };
+    };
+};
+
+module.exports.Payment = class {
+    constructor(Payment) {
+        if (!Payment.userID) {
+            this.userID = 0;
+        } else {
+            this.userID = Payment.userID;
+        };
+
+        if (!Payment.courseID) {
+            this.courseID = 0;
+        } else {
+            this.courseID = Payment.courseID;
+        };
+
+        if (!Payment.mpPaymentID) {
+            this.mpPaymentID = 0;
+        } else {
+            this.mpPaymentID = Payment.mpPaymentID;
+        };
+
+        if (!Payment.authorized) {
+            this.authorized = false;
+        } else {
+            this.authorized = Payment.authorized;
+        };
+    };
+};
 
 module.exports.User = class {
-    constructor(user){
+    constructor(user) {
         if (!user.username) {
             this.username = "";
-        }else{
+        } else {
             this.username = user.username;
         };
 
         if (!user.ID) {
             this.ID = 0;
-        }else{
+        } else {
             this.ID = user.ID;
         };
 
         if (!user.password) {
             this.password = "";
-        }else{
+        } else {
             this.password = user.password;
         };
 
         if (!user.biography) {
             this.biography = "";
-        }else{
+        } else {
             this.biography = user.biography;
         };
 
         if (!user.email) {
             this.email = "";
-        }else{
+        } else {
             this.email = user.email;
         };
 
         if (!user.emailCode) {
             this.emailCode = "";
-        }else{
+        } else {
             this.emailCode = user.emailCode;
         };
 
         if (!user.status) {
             this.status = 1;
-        }else{
+        } else {
             this.status = user.status;
         };
 
         if (!user.avatar) {
             this.avatar = "";
-        }else{
+        } else {
             this.avatar = user.avatar;
         };
 
         if (!user.linkedin) {
             this.linkedin = "";
-        }else{
+        } else {
             this.linkedin = user.linkedin;
         };
 
         if (!user.facebook) {
             this.facebook = "";
-        }else{
+        } else {
             this.facebook = user.facebook;
         };
 
         if (!user.twitter) {
             this.twitter = "";
-        }else{
+        } else {
             this.twitter = user.twitter;
         };
 
         if (!user.youtube) {
             this.youtube = "";
-        }else{
+        } else {
             this.youtube = user.youtube;
         };
 
         if (!user.deleteTimestamp) {
             this.deleteTimestamp = 0;
-        }else{
+        } else {
             this.deleteTimestamp = user.deleteTimestamp;
         };
 
         if (!user.deleteAccount) {
             this.deleteAccount = false;
-        }else{
+        } else {
             this.deleteAccount = user.deleteAccount;
         };
-        
+
     };
 };
