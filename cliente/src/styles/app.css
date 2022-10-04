@@ -10,7 +10,7 @@ html {
 }
 
 body {
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 a {
@@ -25,7 +25,7 @@ p {
   margin: 0;
 }
 
-/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
+/** Media Queries **/ /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 /* Document
    ========================================================================== */
 /**
@@ -385,4 +385,139 @@ template {
 }
 .header .login ul li a:hover {
   border-bottom: solid 0.3rem #FF7400;
+}
+
+.contacto {
+  padding-top: 10rem;
+  min-height: 100vh;
+  background-color: #202C33;
+  gap: 1rem;
+}
+.contacto img {
+  width: 70rem;
+  min-height: 40rem;
+}
+.contacto .contenido {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.contacto .formulario {
+  margin: 15rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-right: 4rem;
+  padding-left: 4rem;
+}
+.contacto .formulario legend {
+  color: #FFF;
+  font-size: 2rem;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+}
+.contacto .formulario ::-moz-placeholder {
+  font-size: 1.5rem;
+}
+.contacto .formulario :-ms-input-placeholder {
+  font-size: 1.5rem;
+}
+.contacto .formulario ::placeholder {
+  font-size: 1.5rem;
+}
+.contacto .formulario input {
+  height: 3rem;
+  outline: none;
+  border: none;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  padding: 0.5rem;
+  background-color: #3B444B;
+  color: #FFF;
+  font-size: 1.5rem;
+}
+.contacto .formulario input:focus {
+  border: 1px solid #FFF;
+  background-color: #3B444B;
+}
+.contacto .formulario textarea {
+  color: #FFF;
+  font-size: 1.5rem;
+  height: 10rem;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  padding: 0.5rem;
+  outline: none;
+  border: none;
+  resize: none;
+  background-color: #3B444B;
+}
+.contacto .formulario textarea:focus {
+  border: 1px solid #FFF;
+  background-color: #3B444B;
+}
+.contacto .formulario label {
+  font-size: 2rem;
+  color: #FFF;
+}
+.contacto .btn {
+  width: 30%;
+  margin: 1rem auto;
+  height: 3.5rem;
+  background-color: #0083BB;
+  color: #FFF;
+  border: none;
+  border-radius: 1rem;
+  outline: none;
+  font-size: 2rem;
+}
+.contacto .btn:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .contacto {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .formulario {
+    min-width: 60rem;
+  }
+}
+.acceder {
+  padding-top: 7rem;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: center;
+}
+.acceder .iniciar-sesion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.acceder .iniciar-sesion .acceder-google {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 3rem;
+  margin: 1rem;
+}
+.acceder .iniciar-sesion form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem;
+}
+.acceder .iniciar-sesion form input {
+  font-size: 3rem;
+  outline: none;
+  border: none;
+  border-radius: 0.5rem;
+  margin: 1rem;
+}
+.acceder .iniciar-sesion form .checkbox {
+  display: flex;
+  justify-content: center;
 }/*# sourceMappingURL=app.css.map */
