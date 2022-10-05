@@ -1,0 +1,101 @@
+.contacto {
+    padding-top: 10rem;
+    min-height: 100vh;
+    background-color: $azulOscuro;
+    gap: 1rem;
+
+ 
+    img {
+        width: 70rem;
+        min-height: 40rem;
+    }
+
+    .contenido {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+    }
+    .formulario {
+        margin: 15rem auto;
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+        padding-right: 4rem;
+        padding-left: 4rem;
+
+        legend {
+            color: $blanco;
+            font-size: 2rem;
+            margin: 0 auto;
+            margin-bottom: 2rem;
+        }
+        ::placeholder {
+            font-size: 1.5rem;
+        }
+        input {
+            height: 3rem;
+            outline: none;
+            border: none;
+            border-radius: .5rem;
+            margin: 1rem 0;
+            padding: .5rem;
+            background-color: $grisOscuro;
+            color: $blanco;
+            font-size: 1.5rem;
+            &:focus {
+                border: 1px solid $blanco;
+                background-color: $grisOscuro;
+
+            }
+        }
+        textarea{
+            color: $blanco;
+            font-size: 1.5rem;
+            height: 10rem;
+            border-radius: .5rem;
+            margin: 1rem 0;
+            padding: .5rem;
+            outline: none;
+            border: none;
+            resize: none;
+            background-color: $grisOscuro;
+            &:focus {
+                border: 1px solid $blanco;
+                background-color: $grisOscuro;
+            }
+        }
+        label {
+            font-size: 2rem;
+            color: $blanco;
+        }
+    }
+    .btn {
+        width: 30%;
+        margin: 1rem auto;
+        height: 3.5rem;
+        background-color: $azul;
+        color: $blanco;
+        border: none;
+        border-radius: 1rem;
+        outline: none;
+        font-size: 2rem;
+            
+        &:hover {
+            opacity: .8;
+            cursor: pointer;
+        }      
+    }
+}
+
+@include tablet {
+    .contacto {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+     }
+     .formulario {
+        min-width: 60rem;
+     }
+     
+} 

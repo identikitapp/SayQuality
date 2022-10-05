@@ -6,6 +6,8 @@ import { Equipo } from '../pages/Equipo'
 import { Contacto } from '../pages/Contacto'
 import { Acceder } from '../pages/Acceder'
 import { Footer } from './Footer'
+import { Registrarse } from '../pages/Registrarse'
+import { RecuperarPassword } from '../pages/RecuperarPassword'
 
 export function App() {
 	return (
@@ -20,6 +22,8 @@ export function App() {
 					<Route path='/equipo' element={<Equipo />} />
 					<Route path='/contacto' element={<Contacto />} />
 					<Route path='/acceder' element={<Acceder />} />
+					<Route path='/registrarse' element={<Registrarse />} />
+					<Route path='/recuperar-password' element={<RecuperarPassword />} />
 					<Route path='*' element={<Navigate replace to='/' />} />
 				</Routes>
 			</main>

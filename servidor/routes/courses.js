@@ -11,35 +11,7 @@ mercadopago.configure({
     access_token: process.env.mpToken,
 });
 
-
-courses.param('name', function (req, res, next, name) {
-    sql.GetCourseByName(name)
-        .then((courses) => {
-            if (courses.length == 0) {
-                return res
-                    .status(404)
-                    .json({
-                        "error": {
-                            "code": 404,
-                            "message": "El curso no existe."
-                        }
-                    });
-            };
-
-            req.paramCourse = courses[0];
-            next();
-        })
-        .catch((e) => {
-            return res
-                .status(500)
-                .json({
-                    "error": {
-                        "code": 500,
-                        "message": "Error interno.",
-                    }
-                });
-        });
-});
+courses.param('name', require("../middlewares/courseParam.js"));
 
 courses.get("/", (req, res) => {
     sql.GetCourses()
@@ -78,6 +50,16 @@ courses.get("/:name", (req, res) => {
 
 courses.post("/payments", (req, res) => {
     let body = req.body;
+
+    if (body.type == "test") {
+        return res
+            .status(200)
+            .json({
+                data: {
+                    message: "👍."
+                }
+            });
+    };
 
     if (body.type != "payment") {
         return res
