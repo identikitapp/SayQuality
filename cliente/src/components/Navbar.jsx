@@ -41,7 +41,7 @@ export function Navbar() {
 					<FaBars size={30} />
 				</button>
 			}
-			<Link to='/acceder' className='acceder'>
+			<Link to='/acceder' className='accederIcon'>
 				<FaUserCircle size={35} />
 			</Link>
 		</nav>
