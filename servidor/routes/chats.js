@@ -87,7 +87,23 @@ chats.post("/", (req, res) => {
 });
 
 chats.get("/:ID", (req, res) => {
-    sql.GetMessagesByChat(req.paramChat.ID)
+
+    if (!!req.query.lastMessageID) {
+        try {
+            parseInt(req.query.lastMessageID)
+        } catch (e) {
+            return res
+                .status(422)
+                .json({
+                    "error": {
+                        "code": 422,
+                        "message": "El parametro lastMessageID no es un numero valido."
+                    }
+                });
+        };
+    };
+
+    sql.GetMessagesByChat(req.paramChat.ID, req.query.lastMessageID)
         .then((messages) => {
             return res
                 .status(200)

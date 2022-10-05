@@ -201,7 +201,7 @@ courses.get("/:name/payment", (req, res) => {
                 "id": req.paramCourse.ID.toString(),
                 "title": req.paramCourse.name,
                 "description": req.paramCourse.description,
-                "picture_url": process.env.HTTPHost + "/images/" + req.paramCourse.picture + ".png",
+                "picture_url": process.env.HTTPHost + "/images/" + req.paramCourse.picture,
                 "category_id": "Online Course",
                 "quantity": 1,
                 "currency_id": req.paramCourse.currency,
