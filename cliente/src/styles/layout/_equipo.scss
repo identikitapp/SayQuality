@@ -1,0 +1,92 @@
+.equipo {
+	margin-top: 60px;
+
+	min-height: 87vh;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	background: $azulOscuro;
+	color: $blanco;
+	font-family: 'Lexend', sans-serif;
+
+	a {
+		color: $naranja;
+
+		&:hover {
+			color: $blanco;
+			transition: 0.5s;
+		}
+	}
+
+	article {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		text-align: center;
+
+		width: 80%;
+
+		margin: 20px 0;
+
+		div {
+			max-width: 300px;
+
+			img {
+				width: 30%;
+
+				border-radius: 50%;
+			}
+
+			h2 {
+				margin: 10px 0;
+
+				font-size: 2rem;
+			}
+
+			span {
+				font-size: 1.5rem;
+			}
+
+			hr {
+				width: 30%;
+
+				margin-top: 10px;
+				margin-bottom: 10px;
+
+				color: $naranja;
+			}
+
+			.redes {
+				margin-top: 10px;
+
+				.linkedin {
+					margin-right: 10px;
+				}
+
+				.github {
+					margin-left: 10px;
+				}
+			}
+		}
+
+		p {
+			font-size: 1.5rem;
+
+			max-width: 400px;
+		}
+	}
+}
+
+@media (max-width: 768px) {
+	article {
+		flex-direction: column;
+
+		p {
+			margin-top: 20px;
+		}
+	}
+}
