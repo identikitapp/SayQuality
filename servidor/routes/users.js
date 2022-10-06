@@ -8,6 +8,103 @@ const shajs = require('sha.js');
 
 users.param('ID', require("../middlewares/userParam.js"));
 
+users.get("/", (req, res) => {
+    let query = req.query;
+
+    if (!query.type || typeof query.type != "string") {
+        return res
+            .status(422)
+            .json({
+                "error": {
+                    "code": 422,
+                    "message": "Por favor ingrese un tipo de usuario."
+                }
+            });
+    };
+
+    let type;
+
+    try {
+        type = parseInt(query.type);
+    } catch (e) {
+        return res
+            .status(422)
+            .json({
+                "error": {
+                    "code": 422,
+                    "message": "El parametro type no es un numero valido."
+                }
+            });
+    };
+
+    if (type <= 0 || type > 3) {
+        return res
+            .status(422)
+            .json({
+                "error": {
+                    "code": 422,
+                    "message": "Ingresa un tipo de usuario valido."
+                }
+            });
+    };
+
+    if (type == 1) {
+        return res
+            .status(423)
+            .json({
+                "error": {
+                    "code": 423,
+                    "message": "No se puede hacer eso."
+                }
+            });
+    };
+
+    sql.GetUsers(type)
+        .then((users) => {
+
+            let validUsers = [];
+
+            for (let index = 0; index < users.length; index++) {
+                const user = users[index];
+
+                if (user.status == 3) continue;
+
+                let validUser = {
+                    username: user.username,
+                    id: user.ID,
+                    biography: user.biography,
+                    avatar: user.avatar,
+                    linkedin: user.linkedin,
+                    facebook: user.facebook,
+                    twitter: user.twitter,
+                    youtube: user.youtube,
+                    type: user.type
+                };
+
+                validUsers.push(validUser);
+            };
+
+            res.json({
+                data: {
+                    message: "Usuarios obtenidos con exito.",
+                    data: validUsers
+                }
+            });
+        })
+        .catch((e) => {
+            return res
+                .status(500)
+                .json({
+                    "error": {
+                        "code": 500,
+                        "message": "Error interno.",
+                    }
+                });
+        });
+
+
+});
+
 users.post("/", (req, res) => {
     let body = req.body;
 
@@ -100,7 +197,7 @@ users.post("/", (req, res) => {
             }))
                 .then(() => {
 
-                    email.NoReply([email], "Su codigo de verificacion!", process.env.WEB + "/verify?code=" + emailCode)
+                    email.NoReply([body.email], "Su codigo de verificacion!", process.env.WEB + "/verify?code=" + emailCode)
 
                     res
                         .status(201)
@@ -602,7 +699,6 @@ users.post("/auth", (req, res) => {
 
 users.get("/:ID", (req, res) => {
 
-    //req.paramUser
     let user = {
         username: req.paramUser.username,
         id: req.paramUser.ID,
@@ -611,7 +707,8 @@ users.get("/:ID", (req, res) => {
         linkedin: req.paramUser.linkedin,
         facebook: req.paramUser.facebook,
         twitter: req.paramUser.twitter,
-        youtube: req.paramUser.youtube
+        youtube: req.paramUser.youtube,
+        type: req.paramUser.type
     };
 
     if (!!req.user) {
