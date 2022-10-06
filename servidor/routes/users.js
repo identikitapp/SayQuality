@@ -68,7 +68,20 @@ users.get("/", (req, res) => {
                 const user = users[index];
 
                 if (user.status == 3) continue;
-                validUsers.push(user);
+
+                let validUser = {
+                    username: user.username,
+                    id: user.ID,
+                    biography: user.biography,
+                    avatar: user.avatar,
+                    linkedin: user.linkedin,
+                    facebook: user.facebook,
+                    twitter: user.twitter,
+                    youtube: user.youtube,
+                    type: user.type
+                };
+
+                validUsers.push(validUser);
             };
 
             res.json({
@@ -184,7 +197,7 @@ users.post("/", (req, res) => {
             }))
                 .then(() => {
 
-                    email.NoReply([email], "Su codigo de verificacion!", process.env.WEB + "/verify?code=" + emailCode)
+                    email.NoReply([body.email], "Su codigo de verificacion!", process.env.WEB + "/verify?code=" + emailCode)
 
                     res
                         .status(201)
@@ -686,7 +699,6 @@ users.post("/auth", (req, res) => {
 
 users.get("/:ID", (req, res) => {
 
-    //req.paramUser
     let user = {
         username: req.paramUser.username,
         id: req.paramUser.ID,
@@ -695,7 +707,8 @@ users.get("/:ID", (req, res) => {
         linkedin: req.paramUser.linkedin,
         facebook: req.paramUser.facebook,
         twitter: req.paramUser.twitter,
-        youtube: req.paramUser.youtube
+        youtube: req.paramUser.youtube,
+        type: req.paramUser.type
     };
 
     if (!!req.user) {
