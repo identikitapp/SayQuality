@@ -1,7 +1,7 @@
 export function Footer() {
 	return (
-		<footer>
-			<p>Este es el footer</p>
+		<footer className='footer'>
+			<span className='copy'>© Say Quality | todos los derechos reservados.</span>
 		</footer>
 	)
 }
