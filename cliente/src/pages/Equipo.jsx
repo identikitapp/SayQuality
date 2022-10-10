@@ -9,7 +9,7 @@ export function Equipo() {
 		<section className='equipo'>
 			<article>
 				<div>
-					<img src={soledad} alt='Soledad Garro' />
+					<img src={soledad} alt='Soledad Garro' loading='lazy' />
 					<h2>Soledad Garro</h2>
 					<span>Profesora</span>
 					<hr />
@@ -35,8 +35,8 @@ export function Equipo() {
 			</article>
 			<article>
 				<div>
-					<img src={matias} alt='Matias Magni' />
-					<h2>Joaquin Alcalde</h2>
+					<img src={matias} alt='Matias Magni' loading='lazy' />
+					<h2>Matias Magni</h2>
 					<span>Profesor</span>
 					<hr />
 					<div className='redes'>
@@ -62,7 +62,7 @@ export function Equipo() {
 			</article>
 			<article>
 				<div>
-					<img src={joaquin} alt='Joaquin Alcalde' />
+					<img src={joaquin} alt='Joaquin Alcalde' loading='lazy' />
 					<h2>Joaquin Alcalde</h2>
 					<span>Profesor</span>
 					<hr />

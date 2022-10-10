@@ -7,7 +7,7 @@ export function Home() {
 			<article>
 				<h1>
 					Convertite en Tester profesional o dale un impulso a tu carrera con nuestros
-					cursos! <IoIosRocket size={40} />
+					cursos! <IoIosRocket size={40} className='rocketIcon' />
 				</h1>
 				<h2>
 					Comenza a invertir en tu educacion con nosotros, cursos desde cero totalmente

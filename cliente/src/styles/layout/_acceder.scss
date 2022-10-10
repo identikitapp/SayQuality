@@ -1,168 +1,178 @@
 .acceder {
-    padding-top: 10rem;
-    display: block;
-    min-height: 100vh;
-    background-color: $azulOscuro;
+	padding-top: 10rem;
+	display: block;
+	min-height: 100vh;
+	background-color: $azulOscuro;
 
-    
-    .logo {
-        background-color: $azulOscuro;
-        height: 100%;
-        width: 100%;
-        display: flex;
-        align-items: center;
-       
-    }
+	.logo {
+		background-color: $azulOscuro;
+		height: 100%;
+		width: 100%;
+		display: flex;
+		align-items: center;
+	}
 
-    .registrate {
-       display: flex;
-       align-items: center;
-       justify-content: center;
-       margin-top: 1rem;
-       font-size: 1.5rem;
-    }
-    .iniciar-sesion {
-        background-color: $blanco;
-        height: 90vh;
-        padding-top: 10rem;
-        padding-left: 1rem;
-        padding-right: 1rem;
-        border-top-left-radius: 5rem;
-       
-        
+	.registrate {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-top: 1rem;
+		font-size: 1.5rem;
+	}
+	.iniciar-sesion {
+		background-color: $blanco;
+		height: 90vh;
+		padding-top: 10rem;
+		padding-left: 1rem;
+		padding-right: 1rem;
+		border-top-left-radius: 5rem;
 
+		.acceder-google {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			font-size: 3rem;
+			margin: 1rem;
+			p {
+				padding-bottom: 2rem;
+				color: $negro;
+				font-size: 2.5rem;
+				font-weight: bold;
+				margin: 0 auto;
+			}
+			button {
+				display: flex;
+				align-items: center;
+				border: 1px solid $negro;
+				border-radius: 0.5rem;
+				&:hover {
+					background-color: rgba(0, 0, 0, 0.3);
+					cursor: pointer;
+				}
+			}
+		}
 
-        .acceder-google {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 3rem;
-            margin: 1rem;
-            p {
-                padding-bottom: 2rem;
-                color: $negro;
-                font-size: 2.5rem;
-                font-weight: bold;
-                margin: 0 auto;
-            }
-            button {
-                display: flex;
-                align-items: center;
-                border: 1px solid $negro;
-                border-radius: .5rem;
-                &:hover {
-                    background-color: rgba(0, 0, 0, .3);
-                    cursor: pointer;
-                }
-            }
-            
-        }
+		// Seccion Recuperar Password
+		.formulario_recuperar {
+			.instrucciones {
+				max-width: 40rem;
+				font-size: 2rem;
+				word-break: keep-all;
+			}
+			.recuperar {
+				min-width: 30rem;
+			}
+			.correo {
+				color: $negro;
+				background-color: $blanco;
 
-        // Seccion Recuperar Password
-        .formulario_recuperar {
-            .instrucciones {
-                max-width: 40rem;
-                font-size: 2.5rem;
-                word-break: keep-all;
-            }
-            .recuperar {
-                min-width: 30rem;
-            }
-            .correo {
-                margin: 2rem 0;
-            }  
-        }
-        // Fin seccion recuperar Password
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 1rem;
-          
-            button {
-                font-size: 2.5rem;
-                background-color: $azul;
-                border: none;
-                outline: none;
-                border-radius: .5rem;
-                color: $blanco;
-                width: 60%;
-                height: 4rem;
-                margin: 1rem;
+				font-size: 1.5rem;
 
-                &:hover {
-                    border: 2px solid $negro;
-                    cursor: pointer;
-                }
-            }
-           ::placeholder{
-            padding-left: .5rem;
-            font-size: 2rem;
-           }
-            input {
-                font-size: 3rem;
-                outline: none;
-                border: none;
-                border-radius: .5rem;
-                margin: 1rem;
-                background-color: $blanco;
-                border-bottom: 1.5px solid $gris;
-                color: $blanco;
-                &:focus {
-                    border: 1px solid $blanco;
-                   border-bottom: 2px solid $grisOscuro;
-    
-                }
-            }
-            
-        }
+				padding: 1rem;
+				width: 100%;
 
-        .checkbox {
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            
-            p {
-                font-size: 1.5rem;
-                padding-left: .5rem;
-            }
+				margin: 2rem 0;
+			}
+			.mensaje {
+				display: none;
 
-            .recordame {
-                display: flex;
-                p {
-                    font-size: 1.5rem;
-                    margin: 0 auto;
-                }
-            }
-        }
-        .registrate {
-            color: $negro;
-            .link {
-                font-weight: bold;
-                color: $negro;
-            }
-        }
-    }
+				color: #ff0000;
+				margin: 3rem 0 1rem;
 
+				font-size: 1.5rem;
+			}
+			.invalid {
+				background-color: #ffdddd;
+			}
+		}
+		// Fin seccion recuperar Password
+		form {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin: 1rem;
+
+			button {
+				font-size: 2.5rem;
+				background-color: $azul;
+				border: none;
+				outline: none;
+				border-radius: 0.5rem;
+				color: $blanco;
+				width: 60%;
+				height: 4rem;
+				margin: 1rem;
+
+				&:hover {
+					border: 2px solid $negro;
+					cursor: pointer;
+				}
+			}
+			::placeholder {
+				padding-left: 0.5rem;
+				font-size: 1.5rem;
+			}
+			input {
+				font-size: 3rem;
+				outline: none;
+				border: none;
+				border-radius: 0.5rem;
+				margin: 1rem;
+				background-color: $blanco;
+				border-bottom: 1.5px solid $gris;
+				color: $blanco;
+				&:focus {
+					border: 1px solid $blanco;
+					border-bottom: 2px solid $grisOscuro;
+				}
+			}
+		}
+
+		.checkbox {
+			display: flex;
+			align-items: center;
+			justify-content: space-around;
+
+			p {
+				font-size: 1.5rem;
+				padding-left: 0.5rem;
+			}
+
+			.recordame {
+				display: flex;
+				p {
+					font-size: 1.5rem;
+					margin: 0 auto;
+				}
+			}
+		}
+		.registrate {
+			color: $negro;
+			.link {
+				font-weight: bold;
+				color: $negro;
+			}
+		}
+	}
 }
 
 @include tablet {
-    .acceder {  
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    align-items: center;
-    }
-    .iniciar-sesion {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        border-top-left-radius: 5rem;
-        border-bottom-left-radius: 5rem;
-        height: 100%;
-    }
-    .checkbox {
-        width: 60%;
-        margin: 0 auto;
-    }
+	.acceder {
+		display: grid;
+		grid-template-columns: 1fr 2fr;
+		align-items: center;
+	}
+	.iniciar-sesion {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		border-top-left-radius: 5rem;
+		border-bottom-left-radius: 5rem;
+		height: 100%;
+	}
+	.checkbox {
+		width: 60%;
+		margin: 0 auto;
+	}
 }
