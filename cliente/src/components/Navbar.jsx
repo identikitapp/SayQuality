@@ -4,13 +4,10 @@ import { FaUserCircle } from 'react-icons/fa'
 import { FaBars } from 'react-icons/fa'
 
 export function Navbar() {
-
 	const toggleMenu = () => {
 		const menu = document.querySelector('.nav-menu')
 		menu.classList.toggle('nav-menu_active')
-		
 	}
-	
 
 	return (
 		<nav className='navbar'>

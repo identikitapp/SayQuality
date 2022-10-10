@@ -9,7 +9,7 @@ export const RecuperarPassword = () => {
 			email: correo.trim(),
 		}
 
-		const url = process.env.REACT_APP_URL_PASSWORD_RECOVERY
+		const url = import.meta.env.VITE_URL_PASSWORD_RECOVERY
 
 		await fetch(url, {
 			method: 'POST',
