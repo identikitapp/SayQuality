@@ -1,3 +1,4 @@
+@charset "UTF-8";
 html {
   font-size: 62.5%;
   box-sizing: border-box;
@@ -428,7 +429,7 @@ template {
   .nav-menu-item {
     text-align: center;
     list-style: none;
-    width: 50%;
+    width: 10rem;
     margin: 3rem 0;
     border-bottom: 2px solid transparent;
   }
@@ -613,6 +614,7 @@ template {
 }
 .equipo {
   margin-top: 60px;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -831,20 +833,52 @@ template {
 }
 .acceder .iniciar-sesion .formulario_recuperar .instrucciones {
   max-width: 40rem;
-  font-size: 2.5rem;
+  font-size: 2rem;
   word-break: keep-all;
 }
 .acceder .iniciar-sesion .formulario_recuperar .recuperar {
   min-width: 30rem;
 }
 .acceder .iniciar-sesion .formulario_recuperar .correo {
+  color: #000;
+  background-color: #fff;
+  font-size: 1.5rem;
+  padding: 1rem;
+  width: 100%;
   margin: 2rem 0;
+}
+.acceder .iniciar-sesion .formulario_recuperar .mensaje {
+  display: none;
+  color: red;
+  margin: 3rem 0 1rem;
+  font-size: 1.5rem;
+}
+.acceder .iniciar-sesion .formulario_recuperar .invalid {
+  background-color: #ffdddd;
 }
 .acceder .iniciar-sesion form {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 1rem;
+}
+.acceder .iniciar-sesion form .mostrarContraseña {
+  font-size: 2rem;
+}
+.acceder .iniciar-sesion form .mostrarContraseña:hover {
+  cursor: pointer;
+}
+.acceder .iniciar-sesion form .formulario_password {
+  display: flex;
+  align-items: center;
+}
+.acceder .iniciar-sesion form label {
+  font-size: 1.5rem;
+  right: 0;
+}
+.acceder .iniciar-sesion form span {
+  font-size: 1.5rem;
+  color: red;
 }
 .acceder .iniciar-sesion form button {
   font-size: 2.5rem;
@@ -863,15 +897,15 @@ template {
 }
 .acceder .iniciar-sesion form ::-moz-placeholder {
   padding-left: 0.5rem;
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 .acceder .iniciar-sesion form :-ms-input-placeholder {
   padding-left: 0.5rem;
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 .acceder .iniciar-sesion form ::placeholder {
   padding-left: 0.5rem;
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 .acceder .iniciar-sesion form input {
   font-size: 3rem;
@@ -881,7 +915,7 @@ template {
   margin: 1rem;
   background-color: #fff;
   border-bottom: 1.5px solid #c8cebd;
-  color: #fff;
+  color: #000;
 }
 .acceder .iniciar-sesion form input:focus {
   border: 1px solid #fff;
