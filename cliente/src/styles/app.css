@@ -780,17 +780,12 @@ template {
   }
 }
 .acceder {
-  padding-top: 10rem;
   display: block;
   min-height: 100vh;
   background-color: #202c33;
 }
-.acceder .logo {
-  background-color: #202c33;
-  height: 100%;
+.acceder img {
   width: 100%;
-  display: flex;
-  align-items: center;
 }
 .acceder .registrate {
   display: flex;
@@ -801,7 +796,7 @@ template {
 }
 .acceder .iniciar-sesion {
   background-color: #fff;
-  height: 90vh;
+  height: 100vh;
   padding-top: 10rem;
   padding-left: 1rem;
   padding-right: 1rem;
@@ -877,8 +872,10 @@ template {
   right: 0;
 }
 .acceder .iniciar-sesion form span {
+  margin: 1rem 0;
   font-size: 1.5rem;
   color: red;
+  width: 30rem;
 }
 .acceder .iniciar-sesion form button {
   font-size: 2.5rem;
@@ -908,7 +905,7 @@ template {
   font-size: 1.5rem;
 }
 .acceder .iniciar-sesion form input {
-  font-size: 3rem;
+  font-size: 2.5rem;
   outline: none;
   border: none;
   border-radius: 0.5rem;
@@ -940,7 +937,7 @@ template {
 .acceder .iniciar-sesion .registrate {
   color: #000;
 }
-.acceder .iniciar-sesion .registrate .link {
+.acceder .iniciar-sesion .link {
   font-weight: bold;
   color: #000;
 }
@@ -948,7 +945,7 @@ template {
 @media (min-width: 768px) {
   .acceder {
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: repeat(2, 1fr);
     align-items: center;
   }
   .iniciar-sesion {

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-// import logoSayQualityContacto from '../assets/logoSayQualityContacto.svg'
+import logoColor from '../assets/logoColor.png'
 
 export function Contacto() {
 	const [usuario, setUsuario] = useState({})
@@ -22,20 +22,23 @@ export function Contacto() {
 		let name = e.target.name
 		let usuarioActualizado = usuario
 
-		setUsuario(estado_previo => ({
-			...estado_previo,
-			[name]: e.target.value,
-		}))
-	}
+		setUsuario(estado_previo => ({ 
+				...estado_previo,
+				[name]: e.target.value
+			
+			})
+			);
+		}
+		
+		return (
+		<section className="contacto">
 
-	return (
-		<section className='contacto'>
-			<div className='contenido'>
-				{/* <img src={logoSayQualityContacto} alt='Logo Say Quality' loading='lazy' /> */}
-				{/* <p>Para inscribirse a un curso en específico, completar el formulario con los datos solicitados y nos pondremos en contacto a la brevedad</p>	 */}
-			</div>
-
-			<form action='' method='POST' className='formulario' onSubmit={conseguirDatos}>
+				<div className='contenido'>
+					<img src={logoColor} alt="Logo Say Quality" loading='lazy' />
+					{/* <p>Para inscribirse a un curso en específico, completar el formulario con los datos solicitados y nos pondremos en contacto a la brevedad</p>	 */}
+				</div>
+			
+			<form action="" method='POST' className='formulario' onSubmit={conseguirDatos}>
 				<legend>Completa el formulario con tus datos</legend>
 				<label htmlFor='nombre'>Nombre</label>
 				<input

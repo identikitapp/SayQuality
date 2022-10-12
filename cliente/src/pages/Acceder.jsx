@@ -1,25 +1,47 @@
 import { Link } from 'react-router-dom'
 import React, { useState, useEffect } from 'react'
-// import logoContacto from '../assets/logoContacto.png';
-import { BsEyeSlash } from 'react-icons/bs'
+import logoColor from '../assets/logoColor.png';
+import { BsEyeSlash, BsEye } from 'react-icons/bs';
 // import {FcGoogle} from 'react-icons/fc';
 
 export function Acceder() {
-	function mostrarContrasena() {
-		let tipo = document.getElementById('password')
-		if (tipo.type == 'password') {
-			tipo.type = 'text'
-		} else {
-			tipo.type = 'password'
+
+	const [correo, setCorreo] = useState('');
+	const [password, setPassword] = useState('');
+	const [passwordType, setPasswordType] = useState(true)
+
+	const enviarFormulario = async () => {
+		const data = {
+			email: correo.trim(),
+			password: password.trim(),
 		}
+
+		const url = import.meta.env.VITE_URL_INICIAR_SESION
+
+		await fetch(url, {
+			method: 'POST',
+			body: JSON.stringify(data),
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		})
+			.then(response => response.json(borrarFormulario))
+			.then(result => console.log(result))
+
+		setCorreo('')
+		setPassword('')
 	}
 
-	const [correo, setCorreo] = useState('')
+	function borrarFormulario() {
+		validarCorreo()
+		validarPassword()
+	}
 
-	function validarFormulario() {
-		const emailRegEx = /^[\w\.\-]+@([\w-]+\.)+[\w-]{2,4}$/
+	function validarCorreo() {
 
-		if (correo.length !== 0) {
+			const emailRegEx = /^[\w\.\-]+@([\w-]+\.)+[\w-]{2,4}$/
+
+		if(correo.length !== 0) {
 			if (emailRegEx.test(correo)) {
 				const input = document.getElementById('correo')
 				input.classList.remove('invalid')
@@ -37,55 +59,124 @@ export function Acceder() {
 	}
 
 	useEffect(() => {
-		validarFormulario()
+		validarCorreo()	
 	}, [correo])
+
+	function validarPassword() {
+
+		const passwordRegEx = /^([a-zA-Z0-9]){7,}([!@#$%^&*]){1,}$/
+
+		if (password.length !== 0) {
+			if (passwordRegEx.test(password)) { 
+				const input = document.getElementById('password')
+				input.classList.remove('invalid')
+				const mensaje = document.getElementById('mensaje')
+				mensaje.style.display = 'none'
+				return true
+			} else {
+				const input = document.getElementById('password')
+				input.classList.add('invalid')
+				const mensaje = document.getElementById('mensaje')
+				mensaje.style.display = 'block'
+				return false
+		}
+	}
+}
+	
+	useEffect( () => {
+		validarPassword()
+	}, [password])
+
+	function validarFormulario() {
+			if(validarCorreo() && validarPassword())
+			return true
+	}
 
 	function handleSubmit(e) {
 		e.preventDefault()
 
-		if (validarFormulario() && correo !== '') {
-			console.log('formulario enviado')
+		if (validarFormulario()) {
+			enviarFormulario()
+			alert("formulario enviado")
 		} else {
-			console.error('No es posible enviar el formulario')
-			// alert('No es posible enviar el formulario')
+			alert('No es posible enviar el formulario')
 		}
 	}
+	
+	function mostrarContrasena() {
+
+        let tipo = document.getElementById('password')
+
+        if (tipo.type === 'password') {
+            tipo.type = 'text'
+            setPasswordType(false)
+        } else {
+            tipo.type = 'password'
+            setPasswordType(true)
+        }
+    }
+	
 	return (
 		<section className='acceder'>
-			<div className='logo'>{/* <img src={logoContacto} alt='logo' /> */}</div>
+
+			
+			<img src={logoColor} alt="logo" />
+			
 
 			<div className='iniciar-sesion'>
+
 				<div className='acceder-google'>
 					<p>Iniciar Sesión</p>
 					{/* <button><FcGoogle />Continuar con Google</button> */}
 				</div>
-				<form method='POST' onSubmit={e => handleSubmit(e)}>
-					<label htmlFor='email'>Ingresar Email</label>
+
+				<form  method='POST' onSubmit={e => handleSubmit(e)}>
+
+					
 					<span id='mensaje' className='mensaje'>
 						El correo ingresado no es valido.
 					</span>
-
-					<input
-						id='correo'
-						type='email'
-						name='email'
-						placeholder='Correo Electrónico'
-						onChange={e => setCorreo(e.target.value)}
-						value={correo}
+					<span id='mensaje-password' className='mensaje'>
+						Password incorrecto, recuerde que debe contener letras mayusculas, numeros y caracteres especiales
+					</span>
+					
+					<input 
+					id='correo'
+					type="email" 
+					name='email' 
+					placeholder='Correo Electrónico'
+					onChange={e => setCorreo(e.target.value)}
+					value={correo}
+					autoComplete="off"
 					/>
-					<label htmlFor='password'>Ingresar Contraseña</label>
+					
 					<div className='formulario_password'>
-						<input
-							id='password'
-							type='password'
-							name='password'
-							placeholder='Contraseña'
-						/>
-						<BsEyeSlash onClick={mostrarContrasena} className='mostrarContraseña' />
+						<input 
+						id='password'
+						type="password" 
+						name='password' 
+						placeholder='Contraseña' 
+						onChange={e => setPassword(e.target.value)}
+						value={password}
+						onPaste={(e)=>{
+							e.preventDefault()
+							return false;
+						  }} onCopy={(e)=>{
+							e.preventDefault()
+							return false;
+						  }}
+					/>
+						{
+						passwordType === true ? 
+						( <BsEyeSlash onClick={mostrarContrasena} className='mostrarContraseña' /> ) 
+						: 
+						( <BsEye onClick={mostrarContrasena} className='mostrarContraseña' /> )
+						}
 					</div>
-
+					
 					<button>Iniciar Sesion</button>
 				</form>
+				
 				<div className='checkbox'>
 					<p>
 						<Link to='/recuperar-password' className='link'>

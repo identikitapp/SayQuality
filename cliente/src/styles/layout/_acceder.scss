@@ -1,15 +1,12 @@
 .acceder {
-	padding-top: 10rem;
+	
 	display: block;
 	min-height: 100vh;
-	background-color: $azulOscuro;
+	background-color: $grisFondo;
 
-	.logo {
-		background-color: $azulOscuro;
-		height: 100%;
+	img {
 		width: 100%;
-		display: flex;
-		align-items: center;
+		
 	}
 
 	.registrate {
@@ -19,9 +16,10 @@
 		margin-top: 1rem;
 		font-size: 1.5rem;
 	}
+
 	.iniciar-sesion {
-		background-color: $blanco;
-		height: 90vh;
+		background-color: $grisFondo;
+		height: 100vh;
 		padding-top: 10rem;
 		padding-left: 1rem;
 		padding-right: 1rem;
@@ -108,10 +106,12 @@
 
 				font-size: 1.5rem;
 			}
+			
 			.invalid {
 				background-color: #ffdddd;
 			}
 		}
+
 		// Fin seccion recuperar Password
 		form {
 			display: flex;
@@ -136,8 +136,10 @@
 				right: 0;
 			}
 			span {
+				margin: 1rem 0;
 				font-size: 1.5rem;
 				color: red;
+				width: 30rem;
 			}
 			button {
 				font-size: 2.5rem;
@@ -196,10 +198,11 @@
 		}
 		.registrate {
 			color: $negro;
-			.link {
-				font-weight: bold;
-				color: $negro;
-			}
+			
+		}
+		.link {
+			font-weight: bold;
+			color: $negro;
 		}
 	}
 }
@@ -207,7 +210,7 @@
 @include tablet {
 	.acceder {
 		display: grid;
-		grid-template-columns: 1fr 2fr;
+		grid-template-columns: repeat(2, 1fr);
 		align-items: center;
 	}
 	.iniciar-sesion {
