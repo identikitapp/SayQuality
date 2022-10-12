@@ -10,9 +10,16 @@ export const Registrarse = () => {
 	const [passwordType, setPasswordType] = useState(true)
 	const [passwordType2, setPasswordType2] = useState(true)
 
+	const borrarFormulario = () => {
+		setUser('')
+		setEmail('')
+		setPassword('')
+		setPassword2('')
+	}
+
 	const enviarFormulario = async () => {
 		const data = {
-			user: user.trim(),
+			username: user.trim(),
 			email: email.trim(),
 			password: password.trim(),
 			password2: password2.trim(),
@@ -29,11 +36,6 @@ export const Registrarse = () => {
 		})
 			.then(response => response.json())
 			.then(result => console.log(result))
-
-		setUser('')
-		setEmail('')
-		setPassword('')
-		setPassword2('')
 	}
 
 	function validarUser() {
@@ -143,6 +145,7 @@ export const Registrarse = () => {
 
 		if (validarFormulario()) {
 			enviarFormulario()
+			borrarFormulario()
 			alert('Formulario enviado')
 			console.log('Formulario enviado')
 		} else {

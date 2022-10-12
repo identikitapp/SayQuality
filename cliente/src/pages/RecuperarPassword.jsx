@@ -4,6 +4,10 @@ import logoColor from '../assets/logoColor.png'
 export const RecuperarPassword = () => {
 	const [correo, setCorreo] = useState('')
 
+	const borrarFormulario = () => {
+		setCorreo('')
+	}
+
 	const enviarFormulario = async () => {
 		const data = {
 			email: correo.trim(),
@@ -20,8 +24,6 @@ export const RecuperarPassword = () => {
 		})
 			.then(response => response.json())
 			.then(result => console.log(result))
-
-		setCorreo('')
 	}
 
 	function validarFormulario() {
@@ -53,6 +55,7 @@ export const RecuperarPassword = () => {
 
 		if (validarFormulario()) {
 			enviarFormulario()
+			borrarFormulario()
 			alert('Formulario enviado')
 			console.log('Formulario enviado')
 		} else {
