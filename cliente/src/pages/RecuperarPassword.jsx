@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import logoContacto from '../assets/logoContacto.png'
+import logoColor from '../assets/logoColor.png'
 
 export const RecuperarPassword = () => {
 	const [correo, setCorreo] = useState('')
@@ -51,18 +51,18 @@ export const RecuperarPassword = () => {
 	function handleSubmit(e) {
 		e.preventDefault()
 
-		if (validarFormulario() && correo !== '') {
+		if (validarFormulario()) {
 			enviarFormulario()
 		} else {
+			alert('No es posible enviar el formulario')
 			console.error('No es posible enviar el formulario')
-			// alert('No es posible enviar el formulario')
 		}
 	}
 
 	return (
 		<section className='acceder'>
 			<div className='logo'>
-				<img src={logoContacto} alt='logo' />
+				<img src={logoColor} alt='logo' />
 			</div>
 			<div className='iniciar-sesion'>
 				<form className='formulario_recuperar' onSubmit={e => handleSubmit(e)}>
