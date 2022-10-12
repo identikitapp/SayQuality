@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react'
-import logoSayQuality from '../assets/logoSayQuality.jpg';
+import logoColor from '../assets/logoColor.png';
 import { BsEyeSlash, BsEye } from 'react-icons/bs';
 // import {FcGoogle} from 'react-icons/fc';
 
@@ -13,7 +13,7 @@ export function Acceder() {
 	const enviarFormulario = async () => {
 		const data = {
 			email: correo.trim(),
-			password: password.trim()
+			password: password.trim(),
 		}
 
 		const url = import.meta.env.VITE_URL_INICIAR_SESION
@@ -25,13 +25,84 @@ export function Acceder() {
 				'Content-Type': 'application/json',
 			},
 		})
-			.then(response => response.JSON())
+			.then(response => response.json(borrarFormulario))
 			.then(result => console.log(result))
 
 		setCorreo('')
 		setPassword('')
 	}
 
+	function borrarFormulario() {
+		validarCorreo()
+		validarPassword()
+	}
+
+	function validarCorreo() {
+
+			const emailRegEx = /^[\w\.\-]+@([\w-]+\.)+[\w-]{2,4}$/
+
+		if(correo.length !== 0) {
+			if (emailRegEx.test(correo)) {
+				const input = document.getElementById('correo')
+				input.classList.remove('invalid')
+				const mensaje = document.getElementById('mensaje')
+				mensaje.style.display = 'none'
+				return true
+			} else {
+				const input = document.getElementById('correo')
+				input.classList.add('invalid')
+				const mensaje = document.getElementById('mensaje')
+				mensaje.style.display = 'block'
+				return false
+			}
+		}
+	}
+
+	useEffect(() => {
+		validarCorreo()	
+	}, [correo])
+
+	function validarPassword() {
+
+		const passwordRegEx = /^([a-zA-Z0-9]){7,}([!@#$%^&*]){1,}$/
+
+		if (password.length !== 0) {
+			if (passwordRegEx.test(password)) { 
+				const input = document.getElementById('password')
+				input.classList.remove('invalid')
+				const mensaje = document.getElementById('mensaje')
+				mensaje.style.display = 'none'
+				return true
+			} else {
+				const input = document.getElementById('password')
+				input.classList.add('invalid')
+				const mensaje = document.getElementById('mensaje')
+				mensaje.style.display = 'block'
+				return false
+		}
+	}
+}
+	
+	useEffect( () => {
+		validarPassword()
+	}, [password])
+
+	function validarFormulario() {
+			if(validarCorreo() && validarPassword())
+			return true
+	}
+
+	function handleSubmit(e) {
+		e.preventDefault()
+
+		if (validarFormulario()) {
+			enviarFormulario()
+			alert("formulario enviado")
+		} else {
+			alert('No es posible enviar el formulario')
+		}
+	}
+	
 	function mostrarContrasena() {
 
         let tipo = document.getElementById('password')
@@ -45,74 +116,11 @@ export function Acceder() {
         }
     }
 	
-
-	function validarCorreo() {
-
-			const emailRegEx = /^[\w\.\-]+@([\w-]+\.)+[\w-]{2,4}$/
-
-			if (emailRegEx.test(correo) && (correo.length !== 0)) {
-				const input = document.getElementById('correo')
-				input.classList.remove('invalid')
-				const mensaje = document.getElementById('mensaje')
-				mensaje.style.display = 'none'
-				return true
-			} else {
-				const input = document.getElementById('correo')
-				input.classList.add('invalid')
-				const mensaje = document.getElementById('mensaje')
-				mensaje.style.display = 'block'
-				return false
-			}
-		}
-	
-
-	function validarPassword() {
-
-		const passwordRegEx = /^([a-zA-Z0-9]){7,}([!@#$%^&*]){1,}$/
-
-			if (passwordRegEx.test(password) && (password.length !== 0)) { 
-				const input = document.getElementById('password')
-				input.classList.remove('invalid')
-				const mensaje = document.getElementById('mensaje')
-				mensaje.style.display = 'none'
-				return true
-			} else {
-				const input = document.getElementById('password')
-				input.classList.add('invalid')
-				const mensaje = document.getElementById('mensaje')
-				mensaje.style.display = 'block'
-				return false
-			}
-	}
-
-	useEffect(() => {
-		validarCorreo()	
-	}, [correo])
-
-	useEffect( () => {
-		validarPassword()
-	}, [password])
-
-	function validarFormulario() {
-			validarPassword()
-			validarCorreo()
-	}
-	function handleSubmit(e) {
-		e.preventDefault()
-
-		if (validarFormulario()) {
-			enviarFormulario()
-			console.log("formulario enviado")
-		} else {
-			alert('No es posible enviar el formulario')
-		}
-	}
-	
 	return (
 		<section className='acceder'>
 
 			
-			<img src={logoSayQuality} alt="logo" />
+			<img src={logoColor} alt="logo" />
 			
 
 			<div className='iniciar-sesion'>
@@ -150,17 +158,19 @@ export function Acceder() {
 						placeholder='Contraseña' 
 						onChange={e => setPassword(e.target.value)}
 						value={password}
-						
+						onPaste={(e)=>{
+							e.preventDefault()
+							return false;
+						  }} onCopy={(e)=>{
+							e.preventDefault()
+							return false;
+						  }}
 					/>
 						{
 						passwordType === true ? 
-						(
-							<BsEyeSlash onClick={mostrarContrasena} className='mostrarContraseña' />                        	
-                        ) 
+						( <BsEyeSlash onClick={mostrarContrasena} className='mostrarContraseña' /> ) 
 						: 
-						(
-							<BsEye onClick={mostrarContrasena} className='mostrarContraseña' />
-                        )
+						( <BsEye onClick={mostrarContrasena} className='mostrarContraseña' /> )
 						}
 					</div>
 					

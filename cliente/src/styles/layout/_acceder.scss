@@ -25,7 +25,31 @@
 		padding-right: 1rem;
 		border-top-left-radius: 5rem;
 
-		
+		#error-user-input,
+		#error-email-input,
+		#error-password-input,
+		#error-password2-input {
+			display: none;
+
+			color: red;
+			margin: 2rem 0 1rem;
+
+			font-size: 1.5rem;
+		}
+		.passwordContainer {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		#password,
+		#password2 {
+			width: 80%;
+		}
+
+		.invalid {
+			background-color: #ffdddd;
+		}
+
 		.acceder-google {
 			display: flex;
 			flex-direction: column;
@@ -91,9 +115,12 @@
 			display: flex;
 			flex-direction: column;
 			align-items: center;
+			justify-content: center;
 			margin: 1rem;
+
 			.mostrarContraseña {
 				font-size: 2rem;
+
 				&:hover {
 					cursor: pointer;
 				}
@@ -133,7 +160,8 @@
 				font-size: 1.5rem;
 			}
 			input {
-				font-size: 2.5rem;
+				font-size: 2rem;
+				padding: 1rem;
 				outline: none;
 				border: none;
 				border-radius: 0.5rem;
@@ -156,7 +184,6 @@
 			p {
 				font-size: 1.5rem;
 				padding-left: 0.5rem;
-
 			}
 
 			.recordame {
@@ -164,7 +191,6 @@
 				p {
 					font-size: 1.5rem;
 					margin: 0 auto;
-					
 				}
 			}
 		}

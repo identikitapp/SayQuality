@@ -1,8 +1,9 @@
 require('dotenv').config();
-var fs = require('fs');
-var https = require('https');
-var express = require('express');
-var app = express();
+const fs = require('fs');
+const https = require('https');
+const express = require('express');
+const cors = require('cors');
+const app = express();
 
 const privateKey = fs.readFileSync('sslcert/privkey.pem', 'utf8');
 const certificate = fs.readFileSync('sslcert/fullchain.pem', 'utf8');
@@ -33,6 +34,7 @@ wss.on("connection", require("./middlewares/websocketChat"));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors());
 
 app.use(require("./middlewares/error.js"));
 
