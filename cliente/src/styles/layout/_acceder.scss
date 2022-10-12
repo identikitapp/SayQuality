@@ -34,9 +34,11 @@
 			display: none;
 
 			color: red;
-			margin: 2rem 0 1rem;
+			margin: 1rem auto;
 
 			font-size: 1.5rem;
+
+			max-width: 42rem;
 		}
 		.passwordContainer {
 			display: flex;

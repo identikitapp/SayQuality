@@ -18,7 +18,7 @@ export const RecuperarPassword = () => {
 				'Content-Type': 'application/json',
 			},
 		})
-			.then(response => response.JSON())
+			.then(response => response.json())
 			.then(result => console.log(result))
 
 		setCorreo('')
@@ -53,6 +53,8 @@ export const RecuperarPassword = () => {
 
 		if (validarFormulario()) {
 			enviarFormulario()
+			alert('Formulario enviado')
+			console.log('Formulario enviado')
 		} else {
 			alert('No es posible enviar el formulario')
 			console.error('No es posible enviar el formulario')
