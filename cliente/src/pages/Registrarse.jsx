@@ -25,7 +25,7 @@ export const Registrarse = () => {
 			password2: password2.trim(),
 		}
 
-		const url = import.meta.env.VITE_URL_REGISTARSE
+		const url = import.meta.env.VITE_URL_REGISTRARSE
 
 		await fetch(url, {
 			method: 'POST',
