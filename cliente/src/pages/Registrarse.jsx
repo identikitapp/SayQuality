@@ -10,11 +10,19 @@ export const Registrarse = () => {
 	const [passwordType, setPasswordType] = useState(true)
 	const [passwordType2, setPasswordType2] = useState(true)
 
+	const borrarFormulario = () => {
+		setUser('')
+		setEmail('')
+		setPassword('')
+		setPassword2('')
+	}
+
 	const enviarFormulario = async () => {
 		const data = {
-			user: user.trim(),
+			username: user.trim(),
 			email: email.trim(),
 			password: password.trim(),
+			password2: password2.trim(),
 		}
 
 		const url = import.meta.env.VITE_URL_REGISTARSE
@@ -28,10 +36,6 @@ export const Registrarse = () => {
 		})
 			.then(response => response.json())
 			.then(result => console.log(result))
-
-		setUser('')
-		setEmail('')
-		setPassword('')
 	}
 
 	function validarUser() {
@@ -129,10 +133,11 @@ export const Registrarse = () => {
 	}, [password2])
 
 	function validarFormulario() {
-		validarUser()
-		validarEmail()
-		validarPassword()
-		validarPassword2()
+		if (validarUser() && validarEmail() && validarPassword() && validarPassword2()) {
+			return true
+		}
+
+		return false
 	}
 
 	function handleSubmit(e) {
@@ -140,6 +145,9 @@ export const Registrarse = () => {
 
 		if (validarFormulario()) {
 			enviarFormulario()
+			borrarFormulario()
+			alert('Formulario enviado')
+			console.log('Formulario enviado')
 		} else {
 			alert('No es posible enviar el formulario')
 			console.error('No es posible enviar el formulario')
@@ -179,9 +187,16 @@ export const Registrarse = () => {
 				<div className='acceder-google'>
 					<p>Crea una cuenta</p>
 				</div>
-				<span id='error-user-input'>El usuario que ingreso es invalido.</span>
+				<span id='error-user-input'>
+					El usuario que ingreso es invalido, recuerde usar las mayusculas corespondientes
+					y un espacio entre su nombre y apellido.
+				</span>
 				<span id='error-email-input'>El email que ingreso es invalido.</span>
-				<span id='error-password-input'>La contraseña que ingreso es invalido.</span>
+				<span id='error-password-input'>
+					La contraseña que ingreso es invalida, la contraseña debe contener 8 caracteres
+					como minimo, utilizar un caracter especial, una mayuscula, una minuscula y un
+					numero.
+				</span>
 				<span id='error-password2-input'>
 					La contraseña que ingreso no coincide con la anterior.
 				</span>
@@ -210,6 +225,14 @@ export const Registrarse = () => {
 							placeholder='Contraseña'
 							onChange={e => setPassword(e.target.value)}
 							value={password}
+							onPaste={e => {
+								e.preventDefault()
+								return false
+							}}
+							onCopy={e => {
+								e.preventDefault()
+								return false
+							}}
 						/>
 						{passwordType === true ? (
 							<BsEyeSlash onClick={mostrarContrasena} className='mostrarContraseña' />
@@ -224,6 +247,14 @@ export const Registrarse = () => {
 							placeholder='Repetir contraseña'
 							onChange={e => setPassword2(e.target.value)}
 							value={password2}
+							onPaste={e => {
+								e.preventDefault()
+								return false
+							}}
+							onCopy={e => {
+								e.preventDefault()
+								return false
+							}}
 						/>
 						{passwordType2 === true ? (
 							<BsEyeSlash onClick={mostrarContrasena2} className='mostrarContraseña' />

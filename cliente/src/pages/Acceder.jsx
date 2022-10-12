@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 import React, { useState, useEffect } from 'react'
 import logoColor from '../assets/logoColor.png';
 import { BsEyeSlash, BsEye } from 'react-icons/bs';
@@ -178,12 +178,20 @@ export function Acceder() {
 				</form>
 				
 				<div className='checkbox'>
-					<p><Link to='/recuperar-password' className='link'>¿Olvidaste tu contraseña?</Link></p>
+					<p>
+						<Link to='/recuperar-password' className='link'>
+							¿Olvidaste tu contraseña?
+						</Link>
+					</p>
 				</div>
 				<div className='registrate'>
-					<p>¿Aún no eres miembro? <Link to='/registrarse' className='link'>Registrarse</Link></p>
+					<p>
+						¿Aún no eres miembro?{' '}
+						<Link to='/registrarse' className='link'>
+							Registrarse
+						</Link>
+					</p>
 				</div>
-				
 			</div>
 		</section>
 	)
