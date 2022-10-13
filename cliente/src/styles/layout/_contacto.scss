@@ -3,8 +3,17 @@
     min-height: 100vh;
     background-color: $azulOscuro;
     gap: 1rem;
-
- 
+        #error-message,
+        #error-user,
+		#error-email,
+		#error-subject {
+			display: none;
+			color: red;
+			margin: 1rem auto;
+			font-size: 1.5rem;
+			max-width: 42rem;
+		}
+        
     img {
         width: 70rem;
         min-height: 40rem;

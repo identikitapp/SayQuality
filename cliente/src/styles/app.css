@@ -668,7 +668,7 @@ template {
   margin-left: 10px;
 }
 .equipo article p {
-  font-size: 2rem;
+  font-size: 1.7rem;
   max-width: 400px;
 }
 
@@ -685,6 +685,15 @@ template {
   min-height: 100vh;
   background-color: #202c33;
   gap: 1rem;
+}
+.contacto #error-user,
+.contacto #error-email,
+.contacto #error-subject {
+  display: none;
+  color: red;
+  margin: 1rem auto;
+  font-size: 1.5rem;
+  max-width: 42rem;
 }
 .contacto img {
   width: 70rem;
@@ -782,7 +791,7 @@ template {
 .acceder {
   display: block;
   min-height: 100vh;
-  background-color: #202c33;
+  background-color: #f5f5f5;
 }
 .acceder img {
   width: 100%;
@@ -795,12 +804,34 @@ template {
   font-size: 1.5rem;
 }
 .acceder .iniciar-sesion {
-  background-color: #fff;
+  background-color: #f5f5f5;
   height: 100vh;
   padding-top: 10rem;
   padding-left: 1rem;
   padding-right: 1rem;
   border-top-left-radius: 5rem;
+}
+.acceder .iniciar-sesion #error-user-input,
+.acceder .iniciar-sesion #error-email-input,
+.acceder .iniciar-sesion #error-password-input,
+.acceder .iniciar-sesion #error-password2-input {
+  display: none;
+  color: red;
+  margin: 1rem auto;
+  font-size: 1.5rem;
+  max-width: 42rem;
+}
+.acceder .iniciar-sesion .passwordContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.acceder .iniciar-sesion #password,
+.acceder .iniciar-sesion #password2 {
+  width: 80%;
+}
+.acceder .iniciar-sesion .invalid {
+  background-color: #ffdddd;
 }
 .acceder .iniciar-sesion .acceder-google {
   display: flex;
@@ -855,6 +886,7 @@ template {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   margin: 1rem;
 }
 .acceder .iniciar-sesion form .mostrarContraseña {
@@ -905,7 +937,8 @@ template {
   font-size: 1.5rem;
 }
 .acceder .iniciar-sesion form input {
-  font-size: 2.5rem;
+  font-size: 2rem;
+  padding: 1rem;
   outline: none;
   border: none;
   border-radius: 0.5rem;
