@@ -22,7 +22,7 @@ export const Registrarse = () => {
 			username: user.trim(),
 			email: email.trim(),
 			password: password.trim(),
-			password2: password2.trim(),
+			// password2: password2.trim(),
 		}
 
 		const url = import.meta.env.VITE_URL_REGISTRARSE
@@ -87,7 +87,8 @@ export const Registrarse = () => {
 	}, [email])
 
 	function validarPassword() {
-		const passwordRegEx = /^([a-zA-Z0-9]){7,}([!@#$%^&*]){1,}$/
+		const passwordRegEx =
+			/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/gm
 
 		if (password.length !== 0) {
 			if (passwordRegEx.test(password)) {
