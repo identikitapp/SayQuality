@@ -81,6 +81,16 @@ users.get("/", (req, res) => {
                     type: user.type
                 };
 
+                if (!!req.user) {
+                    if (user.ID == req.user.ID) {
+                        validUser.email = user.email;
+                    };
+                };
+            
+                if (user.type == 3){
+                    user.email = user.email;
+                };
+
                 validUsers.push(validUser);
             };
 
@@ -115,19 +125,6 @@ users.post("/", (req, res) => {
                 "error": {
                     "code": 422,
                     "message": "El nombre de usuario es demasiado largo o no lo a ingresado.",
-                    "field": "username"
-                }
-            });
-        return;
-    };
-
-    if (!/^(\w|ñ|ç)+$/i.test(body.username)) {
-        res
-            .status(422)
-            .json({
-                "error": {
-                    "code": 422,
-                    "message": "El nombre de usuario solo puede tener letras de la A-Z o numero del 0-9.",
                     "field": "username"
                 }
             });
@@ -708,6 +705,7 @@ users.get("/:ID", (req, res) => {
         facebook: req.paramUser.facebook,
         twitter: req.paramUser.twitter,
         youtube: req.paramUser.youtube,
+        github: req.paramUser.github,
         type: req.paramUser.type
     };
 
@@ -717,6 +715,10 @@ users.get("/:ID", (req, res) => {
         };
     };
 
+    if (req.paramUser.type == 3){
+        user.email = req.paramUser.email;
+    };
+
     res
         .status(200)
         .json({
@@ -724,7 +726,7 @@ users.get("/:ID", (req, res) => {
                 message: "Usuario obtenido con exito.",
                 user
             }
-        })
+        });
 
 });
 

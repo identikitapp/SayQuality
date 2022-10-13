@@ -32,7 +32,7 @@ setInterval(DeleteStandbyUsers, 21600000);
 
 module.exports.CreateUser = (user) => {
     return new Promise((resolve, reject) => {
-        connection.query("INSERT INTO Users SET username = ?, password = ?, email = ?, emailCode = ?, status = ?, avatar = ?, deleteTimestamp = ?, deleteAccount = ?, biography = ?, linkedin = ?, facebook = ?, twitter = ?, youtube = ?, type = ?", [user.username, user.password, user.email, user.emailCode, user.status, user.avatar, user.deleteTimestamp, user.deleteAccount, user.biography, user.linkedin, user.facebook, user.twitter, user.youtube, user.type], (error, results, fields) => {
+        connection.query("INSERT INTO Users SET username = ?, password = ?, email = ?, emailCode = ?, status = ?, avatar = ?, deleteTimestamp = ?, deleteAccount = ?, biography = ?, linkedin = ?, facebook = ?, twitter = ?, youtube = ?, github = ?, type = ?", [user.username, user.password, user.email, user.emailCode, user.status, user.avatar, user.deleteTimestamp, user.deleteAccount, user.biography, user.linkedin, user.facebook, user.twitter, user.youtube, user.github, user.type], (error, results, fields) => {
             if (error) {
                 reject(new Error("Error al crear el usuario"))
             };
@@ -104,7 +104,7 @@ module.exports.GetUserByCode = (code) => {
 
 module.exports.UpdateUser = (id, user) => {
     return new Promise((resolve, reject) => {
-        connection.query("UPDATE Users SET username = ?, password = ?, email = ?, emailCode = ?, status = ?, avatar = ?, deleteTimestamp = ?, deleteAccount = ?, biography = ?, linkedin = ?, facebook = ?, twitter = ?, youtube = ?, type = ? WHERE ID = ?", [user.username, user.password, user.email, user.emailCode, user.status, user.avatar, user.deleteTimestamp, user.deleteAccount, user.biography, user.linkedin, user.facebook, user.twitter, user.youtube, user.type, id], (error, results, fields) => {
+        connection.query("UPDATE Users SET username = ?, password = ?, email = ?, emailCode = ?, status = ?, avatar = ?, deleteTimestamp = ?, deleteAccount = ?, biography = ?, linkedin = ?, facebook = ?, twitter = ?, youtube = ?, github = ?, type = ? WHERE ID = ?", [user.username, user.password, user.email, user.emailCode, user.status, user.avatar, user.deleteTimestamp, user.deleteAccount, user.biography, user.linkedin, user.facebook, user.twitter, user.youtube, user.github, user.type, id], (error, results, fields) => {
             if (error) {
                 reject(new Error("Error al actualizar el usuario"))
             };
@@ -539,6 +539,12 @@ module.exports.User = class {
             this.youtube = "";
         } else {
             this.youtube = user.youtube;
+        };
+
+        if (!user.github) {
+            this.github = "";
+        } else {
+            this.github = user.github;
         };
 
         if (!user.deleteTimestamp) {

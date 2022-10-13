@@ -33,7 +33,8 @@ httpsServer.on('upgrade', function upgrade(request, socket, head) {
 wss.on("connection", require("./middlewares/websocketChat"));
 
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(["/forms", "/chats", "/courses", "/users"], express.json({limit: "1mb"}));
+app.use(["/images"], express.text({type: "image/png", limit: "8mb", defaultCharset: "binary"}));
 app.use(cors());
 
 app.use(require("./middlewares/error.js"));
@@ -45,6 +46,7 @@ app.use(require("./middlewares/authentication.js"));
 app.use("/users", require("./routes/users.js"));
 app.use("/courses", require("./routes/courses.js"));
 app.use("/chats", require("./routes/chats.js"));
+app.use("/images", require("./routes/images.js"));
 app.use("/forms", require("./routes/forms.js"));
 
 /*app.get('/', function (req, res) {

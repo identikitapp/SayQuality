@@ -19,7 +19,7 @@ module.exports = function (req, res, next, ID) {
         sql.GetUser(ID)
             .then((users) => {
                 if (users.length == 0) {
-                    res
+                    return res
                         .status(404)
                         .json({
                             "error": {
@@ -27,7 +27,6 @@ module.exports = function (req, res, next, ID) {
                                 "message": "El usuario no existe."
                             }
                         });
-                    return;
                 };
 
                 if (users[0].status == 3) {

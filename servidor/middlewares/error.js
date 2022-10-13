@@ -9,7 +9,7 @@ module.exports = (error, request, response, next) => {
             .json({
                 "error": {
                     "code": 413,
-                    "message": "El cuerpo de la peticion es muy largo, usa 5MB o menos."
+                    "message": "El cuerpo de la peticion es muy largo."
                 }
             });
 
