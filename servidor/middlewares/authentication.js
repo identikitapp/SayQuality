@@ -50,6 +50,17 @@ module.exports = (request, response, next) => {
 
                         let user = users[0];
 
+                        if (decode.jti != user.password.slice(48)) {
+                            return response
+                                .status(401)
+                                .json({
+                                    "error": {
+                                        "code": 401,
+                                        "message": "El token no es valido."
+                                    }
+                                });
+                        };
+
                         if (user.status == 3) {
                             return response
                                 .status(410)

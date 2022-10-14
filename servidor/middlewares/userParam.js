@@ -12,7 +12,7 @@ module.exports = function (req, res, next, ID) {
                     }
                 });
         } else {
-            req.paramUser = req.user;
+            req.paramUser = { ...req.user };
             next();
         }
     } else {
