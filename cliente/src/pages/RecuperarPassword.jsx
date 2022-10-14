@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import logoColor from '../assets/logoColor.png'
+import Swal from 'sweetalert2';
 
 export const RecuperarPassword = () => {
 	const [correo, setCorreo] = useState('')
@@ -56,11 +57,17 @@ export const RecuperarPassword = () => {
 		if (validarFormulario()) {
 			enviarFormulario()
 			borrarFormulario()
-			alert('Formulario enviado')
-			console.log('Formulario enviado')
+			Swal.fire({
+				icon: 'success', 
+				title: 'Te hemos enviado un mail, por favor verifica tu bandeja de entrada',
+				confirmButtonColor: '#0083bb'
+			})
 		} else {
-			alert('No es posible enviar el formulario')
-			console.error('No es posible enviar el formulario')
+			Swal.fire({
+				icon: 'error', 
+				title: 'Ha ocurrido un error',
+				confirmButtonColor: '#0083bb'
+			})
 		}
 	}
 
@@ -73,10 +80,10 @@ export const RecuperarPassword = () => {
 				<form className='formulario_recuperar' onSubmit={e => handleSubmit(e)}>
 					<p className='instrucciones'>
 						Por favor, introduce tu correo electrónico. Recibiras un mensaje con
-						instrucciones sobre como restablecer tu contraseña.
+						instrucciones sobre como restablecer tu contraseña
 					</p>
 					<span id='mensaje' className='mensaje'>
-						El correo ingresado no es valido.
+						El correo ingresado no es valido
 					</span>
 					<input
 						id='correo'

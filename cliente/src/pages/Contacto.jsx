@@ -1,20 +1,23 @@
 import { useState, useEffect } from 'react'
 import logoWhite from '../assets/logoWhite.png'
+import Swal from 'sweetalert2';
 
 export function Contacto() {
 	
-	const [user, setUser] = useState('')
 	const [email, setEmail] = useState('')
 	const [subject, setSubject] = useState('')
 	const [message, setMessage] = useState('')
+	const [options, setOptions] = useState(0)
+	const [lawyer, setLawyer]  = useState('')
 
 	
 	  
 	const borrarFormulario = () => {
-		setUser('')
 		setEmail('')
 		setSubject('')
 		setMessage('')
+		setOptions(0)
+		setLawyer('')
 	}
 
 	
@@ -22,13 +25,15 @@ export function Contacto() {
 	const enviarFormulario = async () => {
 		
 		const data = {
-			username: user.trim(),
 			email: email.trim(),
 			subject: subject.trim(),
-			message: message.trim()		
+			message: message.trim(),	
+			form: options, 
+			lawyer: lawyer.toString()	
 		}
 
-		const url = import.meta.env.VITE_URL_JWTSECRET
+		
+		const url = import.meta.env.VITE_URL_CONTACT_FORM
 
 		await fetch(url, {
 			method: 'POST',
@@ -41,29 +46,6 @@ export function Contacto() {
 			.then(result => console.log(result))
 	}
 
-	function validarUser() {
-		const userRegEx = /^[A-Z][a-z]{3,10}\ [A-Z][a-z]{3,10}$/
-
-		if (user.length !== 0) {
-			if (userRegEx.test(user)) {
-				const input = document.getElementById('user-contacto')
-				input.classList.remove('invalid')
-				const mensaje = document.getElementById('error-user')
-				mensaje.style.display = 'none'
-				return true
-			} else {
-				const input = document.getElementById('user-contacto')
-				input.classList.add('invalid')
-				const mensaje = document.getElementById('error-user')
-				mensaje.style.display = 'block'
-				return false
-			}
-		}
-	}
-
-	useEffect(() => {
-		validarUser()
-	}, [user])
 
 	function validarEmail() {
 		const emailRegEx = /^[\w\.\-]+@([\w-]+\.)+[\w-]{2,4}$/
@@ -116,7 +98,7 @@ export function Contacto() {
 
 	
 	function validarMessage() {
-		const messageRegEx = /^[a-zA-Z ]*$/
+		const messageRegEx = /^[a-zA-Z0-9]*$/
 
 		if (message.length !== 0) {
 			if (messageRegEx.test(message)) {
@@ -141,7 +123,7 @@ export function Contacto() {
 
 
 	function validarFormulario() {
-		if (validarUser() && validarEmail() && validarSubject() && validarMessage() ) {
+		if (validarEmail() && validarSubject() && validarMessage() ) {
 			return true
 		}
 
@@ -150,15 +132,21 @@ export function Contacto() {
 
 	function handleSubmit(e) {
 		e.preventDefault()
-
+		
 		if (validarFormulario()) {
 			enviarFormulario()
 			borrarFormulario()
-			alert('Formulario enviado')
-			console.log('Formulario enviado')
+			Swal.fire({
+				icon: 'success', 
+				title: 'El formulario se ha enviado con éxito',
+				confirmButtonColor: '#0083bb'
+			})
 		} else {
-			alert('No es posible enviar el formulario')
-			console.error('No es posible enviar el formulario')
+			Swal.fire({
+				icon: 'error', 
+				title: 'El formulario no se ha podido enviar',
+				confirmButtonColor: '#0083bb'
+			})
 		}
 	}
 
@@ -177,21 +165,6 @@ export function Contacto() {
 			<form method='POST' className='formulario' onSubmit={e => handleSubmit(e)} autoComplete="off">
 				<legend>Completa el formulario con tus datos</legend>
 
-				<span id='error-user'>
-					El usuario que ingreso es invalido, recuerde usar las mayusculas corespondientes
-					y un espacio entre su nombre y apellido.
-				</span>
-				<label htmlFor='nombre'>Nombre</label>
-				<input
-					id='user-contacto'
-					type='text'
-					name='name'
-					placeholder=' Ingresa tu nombre'
-					onChange={e => setUser(e.target.value)}
-					value={user}
-					
-				/>
-
 				<span id='error-email'>El email que ingreso es invalido.</span>
 				<label htmlFor='Email'>Email</label>
 				<input
@@ -204,7 +177,7 @@ export function Contacto() {
 					
 				/>
 				<span id='error-subject'>
-					El asunto admite solo letras en minúsculas y mayusculas
+					El asunto admite solo letras en minúsculas y mayusculas.
 				</span>
 				<label htmlFor='Asunto'>Asunto</label>
 				<input
@@ -217,20 +190,41 @@ export function Contacto() {
 					
 				/>
 
-				<span id='error-message'>El mensaje solo debe contener letras en mayúsculas y minúsculas</span>
+				<span id='error-message'>El mensaje solo debe contener letras en mayúsculas, minúsculas y numeros.</span>
 				<label htmlFor='Mensaje'>Mensaje</label>
-				<textarea
-					id='message'
-					name='message'
-					placeholder=' Escribe tu mensaje'
-					onChange={e => setMessage(e.target.value)}
-					value={message}
+					<textarea
+						id='message'
+						name='text'
+						placeholder=' Escribe tu mensaje'
+						onChange={e => setMessage(e.target.value)}
+						value={message}
 					
-				/>
+				/>	
+					<label htmlFor="Motivo" className='motivo'>Motivo</label>
+						<select 
+						className='options' 
+						name="form" 
+						onChange={e => setOptions(e.target.value)} 
+						value={options}>
+							<option value="0"> Problemas o dudas con mi cuenta</option>
+							<option value="1"> Problemas o dudas con mi compra</option>
+							<option value="2"> Problemas o dudas de seguridad</option>
+							<option value="3"> Contacto legal</option>
+							<option value="4"> Contacto empresarial</option>
+							<option value="5"> Otro</option>
+						</select>
 
-				<button className='btn' value='enviar' name='enviar'>
-					Enviar
-				</button>
+					<label className='lawyer'>
+						¿Usted es abogado? 
+						<input 
+						type="checkbox" 
+						name='lawyer' 
+						onChange={e => setLawyer(e.target.checked)} 
+						value={lawyer} 
+						/>	
+					</label>
+
+					<button className='btn' value='enviar' name='enviar'> Enviar </button>
 			</form>
 		</section>
 	)

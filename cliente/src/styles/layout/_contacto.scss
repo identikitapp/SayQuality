@@ -34,6 +34,21 @@
         padding-right: 4rem;
         padding-left: 4rem;
 
+        .lawyer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .options {
+            font-size: 1.6rem;
+            padding: .7rem;
+            border-radius: .5rem;
+            margin-bottom: 1rem;
+            background-color: $grisOscuro;
+            color: $gris;
+            border: none;
+        }
         legend {
             color: $blanco;
             font-size: 2rem;

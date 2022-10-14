@@ -28,9 +28,11 @@
 		padding-left: 1rem;
 		padding-right: 1rem;
 		border-top-left-radius: 5rem;
+
 		#error-password-user,
 		#error-email-user,
-		#error-user-input,
+		#error-name-input,
+		#error-lastName-input,
 		#error-email-input,
 		#error-password-input,
 		#error-password2-input {
@@ -85,7 +87,8 @@
 		// Seccion Recuperar Password
 		.formulario_recuperar {
 			.instrucciones {
-				max-width: 40rem;
+				padding-left: 2rem;
+				max-width: 34rem;
 				font-size: 2rem;
 				word-break: keep-all;
 			}
@@ -95,8 +98,6 @@
 			.correo {
 				color: $negro;
 				background-color: $blanco;
-
-				font-size: 1.5rem;
 
 				padding: 1rem;
 

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import logoColor from '../assets/logoColor.png'
 import { BsEye, BsEyeSlash } from 'react-icons/bs'
+import Swal from 'sweetalert2';
 
 export const Registrarse = () => {
-	const [user, setUser] = useState('')
+	const [name, setName] = useState('')
+	const [lastName, setLastName] = useState('')
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [password2, setPassword2] = useState('')
@@ -11,7 +13,8 @@ export const Registrarse = () => {
 	const [passwordType2, setPasswordType2] = useState(true)
 
 	const borrarFormulario = () => {
-		setUser('')
+		setName('')
+		setLastName('')
 		setEmail('')
 		setPassword('')
 		setPassword2('')
@@ -19,7 +22,8 @@ export const Registrarse = () => {
 
 	const enviarFormulario = async () => {
 		const data = {
-			username: user.trim(),
+			name: name.trim(),
+			lastName: lastName.trim(),
 			email: email.trim(),
 			password: password.trim(),
 			// password2: password2.trim(),
@@ -38,20 +42,20 @@ export const Registrarse = () => {
 			.then(result => console.log(result))
 	}
 
-	function validarUser() {
-		const userRegEx = /^[A-Z][a-z]{3,10}\ [A-Z][a-z]{3,10}$/
+	function validarName() {
+		const nameRegEx = /^[A-Za-z]{3,10}$/
 
-		if (user.length !== 0) {
-			if (userRegEx.test(user)) {
-				const input = document.getElementById('user')
+		if (name.length !== 0) {
+			if (nameRegEx.test(name)) {
+				const input = document.getElementById('name')
 				input.classList.remove('invalid')
-				const mensaje = document.getElementById('error-user-input')
+				const mensaje = document.getElementById('error-name-input')
 				mensaje.style.display = 'none'
 				return true
 			} else {
-				const input = document.getElementById('user')
+				const input = document.getElementById('name')
 				input.classList.add('invalid')
-				const mensaje = document.getElementById('error-user-input')
+				const mensaje = document.getElementById('error-name-input')
 				mensaje.style.display = 'block'
 				return false
 			}
@@ -59,8 +63,32 @@ export const Registrarse = () => {
 	}
 
 	useEffect(() => {
-		validarUser()
-	}, [user])
+		validarName()
+	}, [name])
+
+	function validarLastName() {
+		const lastNameRegEx = /^[A-Za-z]{3,10}$/
+
+		if (lastName.length !== 0) {
+			if (lastNameRegEx.test(lastName)) {
+				const input = document.getElementById('lastName')
+				input.classList.remove('invalid')
+				const mensaje = document.getElementById('error-lastName-input')
+				mensaje.style.display = 'none'
+				return true
+			} else {
+				const input = document.getElementById('lastName')
+				input.classList.add('invalid')
+				const mensaje = document.getElementById('error-lastName-input')
+				mensaje.style.display = 'block'
+				return false
+			}
+		}
+	}
+
+	useEffect(() => {
+		validarLastName()
+	}, [lastName])
 
 	function validarEmail() {
 		const emailRegEx = /^[\w\.\-]+@([\w-]+\.)+[\w-]{2,4}$/
@@ -134,7 +162,7 @@ export const Registrarse = () => {
 	}, [password2])
 
 	function validarFormulario() {
-		if (validarUser() && validarEmail() && validarPassword() && validarPassword2()) {
+		if (validarName() && validarLastName() && validarEmail() && validarPassword() && validarPassword2() ) {
 			return true
 		}
 
@@ -147,11 +175,17 @@ export const Registrarse = () => {
 		if (validarFormulario()) {
 			enviarFormulario()
 			borrarFormulario()
-			alert('Formulario enviado')
-			console.log('Formulario enviado')
+			Swal.fire({
+				icon: 'success', 
+				title: 'Hemos registrado tu cuenta correctamente',
+				confirmButtonColor: '#0083bb'
+			})
 		} else {
-			alert('No es posible enviar el formulario')
-			console.error('No es posible enviar el formulario')
+			Swal.fire({
+				icon: 'error', 
+				title: 'Ocurrio un error al registrar tu cuenta',
+				confirmButtonColor: '#0083bb'
+			})
 		}
 	}
 
@@ -188,27 +222,37 @@ export const Registrarse = () => {
 				<div className='acceder-google'>
 					<p>Crea una cuenta</p>
 				</div>
-				<span id='error-user-input'>
-					El usuario que ingreso es invalido, recuerde usar las mayusculas corespondientes
-					y un espacio entre su nombre y apellido.
+				<span id='error-name-input'>
+					El nombre que ingreso es invalido
 				</span>
-				<span id='error-email-input'>El email que ingreso es invalido.</span>
+				<span id='error-lastName-input'>
+				 	El apellido que ingreso es invalido
+				</span>
+				<span id='error-email-input'>El email que ingreso es invalido</span>
 				<span id='error-password-input'>
 					La contraseña que ingreso es invalida, la contraseña debe contener 8 caracteres
 					como minimo, utilizar un caracter especial, una mayuscula, una minuscula y un
-					numero.
+					numero
 				</span>
 				<span id='error-password2-input'>
-					La contraseña que ingreso no coincide con la anterior.
+					La contraseña que ingreso no coincide con la anterior
 				</span>
 				<form onSubmit={e => handleSubmit(e)}>
 					<input
-						id='user'
+						id='name'
 						type='text'
-						name='username'
-						placeholder='Nombre Completo'
-						onChange={e => setUser(e.target.value)}
-						value={user}
+						name='name'
+						placeholder='Nombre'
+						onChange={e => setName(e.target.value)}
+						value={name}
+					/>
+					<input
+						id='lastName'
+						type='text'
+						name='lastname'
+						placeholder='Apellido'
+						onChange={e => setLastName(e.target.value)}
+						value={lastName}
 					/>
 					<input
 						id='email'

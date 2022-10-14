@@ -714,6 +714,21 @@ template {
   padding-right: 4rem;
   padding-left: 4rem;
 }
+.contacto .formulario .lawyer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.contacto .formulario .options {
+  font-size: 1.6rem;
+  padding: 0.7rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  background-color: #3b444b;
+  color: #c8cebd;
+  border: none;
+}
 .contacto .formulario legend {
   color: #fff;
   font-size: 2rem;
@@ -867,7 +882,8 @@ template {
   cursor: pointer;
 }
 .acceder .iniciar-sesion .formulario_recuperar .instrucciones {
-  max-width: 40rem;
+  padding-left: 2rem;
+  max-width: 34rem;
   font-size: 2rem;
   word-break: keep-all;
 }
@@ -877,7 +893,6 @@ template {
 .acceder .iniciar-sesion .formulario_recuperar .correo {
   color: #000;
   background-color: #fff;
-  font-size: 1.5rem;
   padding: 1rem;
   margin: 2rem 0;
 }

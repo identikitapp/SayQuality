@@ -2,13 +2,15 @@ import { Link } from 'react-router-dom'
 import React, { useState, useEffect } from 'react'
 import logoColor from '../assets/logoColor.png';
 import { BsEyeSlash, BsEye } from 'react-icons/bs';
+import Swal from 'sweetalert2';
+// import createHeader from '../utils/createHeader';
 // import {FcGoogle} from 'react-icons/fc';
 
 export function Acceder() {
 
 	const [correo, setCorreo] = useState('');
 	const [password, setPassword] = useState('');
-	const [passwordType, setPasswordType] = useState(true)
+	const [passwordType, setPasswordType] = useState(false)
 
 	const enviarFormulario = async () => {
 		const data = {
@@ -22,20 +24,19 @@ export function Acceder() {
 			method: 'POST',
 			body: JSON.stringify(data),
 			headers: {
-				'Content-Type': 'application/json',
-			},
+				'Content-type': 'application/json',
+			}
 		})
-			.then(response => response.json(borrarFormulario))
+			.then(response => response.json())
 			.then(result => console.log(result))
-
-		setCorreo('')
-		setPassword('')
+	
 	}
 
 	function borrarFormulario() {
-		validarCorreo()
-		validarPassword()
+		setCorreo('')
+		setPassword('')
 	}
+	
 
 	function validarCorreo() {
 
@@ -64,7 +65,7 @@ export function Acceder() {
 
 	function validarPassword() {
 
-		const passwordRegEx = /^([a-zA-Z0-9]){7,}([!@#$%^&*]){1,}$/
+		const passwordRegEx = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/gm
 
 		if (password.length !== 0) {
 			if (passwordRegEx.test(password)) { 
@@ -97,9 +98,18 @@ export function Acceder() {
 
 		if (validarFormulario()) {
 			enviarFormulario()
-			alert("formulario enviado")
+			borrarFormulario()
+			Swal.fire({
+				icon: 'success', 
+				title: 'Se ha iniciado sesión con éxito',
+				confirmButtonColor: '#0083bb'
+			})
 		} else {
-			alert('No es posible enviar el formulario')
+			Swal.fire({
+				icon: 'error', 
+				title: 'Hubo un error al iniciar sesión',
+				confirmButtonColor: '#0083bb'
+			})
 		}
 	}
 	
@@ -109,10 +119,10 @@ export function Acceder() {
 
         if (tipo.type === 'password') {
             tipo.type = 'text'
-            setPasswordType(false)
+            setPasswordType(true)
         } else {
             tipo.type = 'password'
-            setPasswordType(true)
+            setPasswordType(false)
         }
     }
 	
@@ -136,10 +146,10 @@ export function Acceder() {
 
 					
 					<span id='error-email-user'>
-						El correo ingresado no es valido.
+						El correo ingresado no es valido
 					</span>
 					<span id='error-password-user'>
-						Password incorrecto, recuerde que debe contener letras mayusculas, numeros y caracteres especiales
+						La contraseña ingresada no es valida
 					</span>
 					
 					<input 
@@ -170,9 +180,9 @@ export function Acceder() {
 					/>
 						{
 						passwordType === true ? 
-						( <BsEyeSlash onClick={mostrarContrasena} className='mostrarContraseña' /> ) 
-						: 
 						( <BsEye onClick={mostrarContrasena} className='mostrarContraseña' /> )
+						: 
+						( <BsEyeSlash onClick={mostrarContrasena} className='mostrarContraseña' /> ) 	
 						}
 					</div>
 					
