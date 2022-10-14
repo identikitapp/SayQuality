@@ -45,13 +45,13 @@ export function Acceder() {
 			if (emailRegEx.test(correo)) {
 				const input = document.getElementById('correo')
 				input.classList.remove('invalid')
-				const mensaje = document.getElementById('mensaje')
+				const mensaje = document.getElementById('error-email-user')
 				mensaje.style.display = 'none'
 				return true
 			} else {
 				const input = document.getElementById('correo')
 				input.classList.add('invalid')
-				const mensaje = document.getElementById('mensaje')
+				const mensaje = document.getElementById('error-email-user')
 				mensaje.style.display = 'block'
 				return false
 			}
@@ -70,13 +70,13 @@ export function Acceder() {
 			if (passwordRegEx.test(password)) { 
 				const input = document.getElementById('password')
 				input.classList.remove('invalid')
-				const mensaje = document.getElementById('mensaje')
+				const mensaje = document.getElementById('error-password-user')
 				mensaje.style.display = 'none'
 				return true
 			} else {
 				const input = document.getElementById('password')
 				input.classList.add('invalid')
-				const mensaje = document.getElementById('mensaje')
+				const mensaje = document.getElementById('error-password-user')
 				mensaje.style.display = 'block'
 				return false
 		}
@@ -119,8 +119,10 @@ export function Acceder() {
 	return (
 		<section className='acceder'>
 
+			<div className='logo-acceder'>
+				<img src={logoColor} alt="logo" />
+			</div>
 			
-			<img src={logoColor} alt="logo" />
 			
 
 			<div className='iniciar-sesion'>
@@ -133,10 +135,10 @@ export function Acceder() {
 				<form  method='POST' onSubmit={e => handleSubmit(e)}>
 
 					
-					<span id='mensaje' className='mensaje'>
+					<span id='error-email-user'>
 						El correo ingresado no es valido.
 					</span>
-					<span id='mensaje-password' className='mensaje'>
+					<span id='error-password-user'>
 						Password incorrecto, recuerde que debe contener letras mayusculas, numeros y caracteres especiales
 					</span>
 					

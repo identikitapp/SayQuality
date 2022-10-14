@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import logoColor from '../assets/logoColor.png'
+import logoWhite from '../assets/logoWhite.png'
 
 export function Contacto() {
 	
@@ -28,7 +28,7 @@ export function Contacto() {
 			message: message.trim()		
 		}
 
-		const url = import.meta.env.VITE_URL_REGISTARSE
+		const url = import.meta.env.VITE_URL_JWTSECRET
 
 		await fetch(url, {
 			method: 'POST',
@@ -168,7 +168,7 @@ export function Contacto() {
 		<section className="contacto">
 
 				<div className='contenido'>
-					<img src={logoColor} alt="Logo Say Quality" loading='lazy' />
+					<img src={logoWhite} alt="Logo Say Quality" loading='lazy' />
 					{/* <p>Para inscribirse a un curso en específico, completar el formulario con los datos solicitados y nos pondremos en contacto a la brevedad</p>	 */}
 				</div>
 				

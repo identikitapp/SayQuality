@@ -181,7 +181,7 @@ export const Registrarse = () => {
 
 	return (
 		<section className='acceder'>
-			<div className='logo'>
+			<div className='logo-acceder'>
 				<img src={logoColor} alt='logo' />
 			</div>
 			<div className='iniciar-sesion'>
