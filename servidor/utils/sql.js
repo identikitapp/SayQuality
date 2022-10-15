@@ -132,7 +132,67 @@ module.exports.GetCourses = () => {
         connection.query("SELECT * FROM Courses", (error, results, fields) => {
             if (error) {
 
-                reject(new Error("Error al obtener el curso"))
+                reject(new Error("Error al obtener los cursos"))
+            };
+
+            resolve(results)
+        });
+    });
+};
+
+module.exports.GetStages = (courseID) => {
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM Stages WHERE courseID = ?", [courseID], (error, results, fields) => {
+            if (error) {
+                reject(new Error("Error al obtener la unidad"))
+            };
+
+            resolve(results)
+        });
+    });
+};
+
+module.exports.GetStage = (ID) => {
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM Stages WHERE ID = ?", [ID], (error, results, fields) => {
+            if (error) {
+                reject(new Error("Error al obtener la unidad"))
+            };
+
+            resolve(results)
+        });
+    });
+};
+
+module.exports.GetChapters = (stageID) => {
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM Chapters WHERE stageID = ?", [stageID], (error, results, fields) => {
+            if (error) {
+                reject(new Error("Error al obtener las unidades"))
+            };
+
+            resolve(results)
+        });
+    });
+};
+
+module.exports.GetChapter = (ID) => {
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM Chapters WHERE ID = ?", [ID], (error, results, fields) => {
+            if (error) {
+                reject(new Error("Error al obtener el capitulo"))
+            };
+
+            resolve(results)
+        });
+    });
+};
+
+module.exports.GetHomework = (chapterID, userID) => {
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM Homeworks WHERE chapterID = ? AND userID = ?", [chapterID, userID], (error, results, fields) => {
+            if (error) {
+                reject(new Error("Error al obtener la tarea"))
             };
 
             resolve(results)
@@ -157,7 +217,7 @@ module.exports.CreatePayment = (payment) => {
     return new Promise((resolve, reject) => {
         connection.query("INSERT INTO Payments SET userID = ?, courseID = ?, mpPaymentID = ?, authorized = ?", [payment.userID, payment.courseID, payment.mpPaymentID, payment.authorized], (error, results, fields) => {
             if (error) {
-                reject(new Error("Error al crear el usuario"))
+                reject(new Error("Error al crear el pago"))
             };
 
             resolve();
@@ -169,7 +229,31 @@ module.exports.UpdatePayment = (id, payment) => {
     return new Promise((resolve, reject) => {
         connection.query("UPDATE Payments SET userID = ?, courseID = ?, mpPaymentID = ?, authorized = ? WHERE ID = ?", [payment.userID, payment.courseID, payment.mpPaymentID, payment.authorized, id], (error, results, fields) => {
             if (error) {
-                reject(new Error("Error al crear el usuario"))
+                reject(new Error("Error al actualizar el pago"))
+            };
+
+            resolve();
+        });
+    });
+};
+
+module.exports.GetPayment = (userID, courseID) => {
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM Payments WHERE userID = ? AND courseID = ?", [userID, courseID], (error, results, fields) => {
+            if (error) {console.log(error)
+                reject(new Error("Error al obtener el pago"))
+            };
+
+            resolve(results)
+        });
+    });
+};
+
+module.exports.UpdatePaymentByUserAndCourse = (userID, courseID, payment) => {
+    return new Promise((resolve, reject) => {
+        connection.query("UPDATE Payments SET userID = ?, courseID = ?, authorized = ? WHERE userID = ? AND courseID = ?", [payment.userID, payment.courseID, payment.authorized, userID, courseID], (error, results, fields) => {
+            if (error) {
+                reject(new Error("Error al actualizar el pago"))
             };
 
             resolve();
@@ -179,9 +263,9 @@ module.exports.UpdatePayment = (id, payment) => {
 
 module.exports.UpdatePaymentByMPID = (mpid, payment) => {
     return new Promise((resolve, reject) => {
-        connection.query("UPDATE Payments SET userID = ?, courseID = ?, authorized = ? WHERE ID = ?", [payment.userID, payment.courseID, payment.authorized, mpid], (error, results, fields) => {
+        connection.query("UPDATE Payments SET userID = ?, courseID = ?, authorized = ? WHERE mpPaymentID = ?", [payment.userID, payment.courseID, payment.authorized, mpid], (error, results, fields) => {
             if (error) {
-                reject(new Error("Error al crear el usuario"))
+                reject(new Error("Error al actualizar el pago"))
             };
 
             resolve();
@@ -193,7 +277,7 @@ module.exports.GetPaymentsByUser = (id) => {
     return new Promise((resolve, reject) => {
         connection.query("SELECT * FROM Payments WHERE userID = ?", [id], (error, results, fields) => {
             if (error) {
-                reject(new Error("Error al crear el usuario"))
+                reject(new Error("Error al obtener el pago"))
             };
 
             resolve(results);
@@ -453,7 +537,7 @@ module.exports.Payment = class {
             this.courseID = Payment.courseID;
         };
 
-        if (!Payment.mpPaymentID) {
+        if (!Payment.mpPaymentID && Payment.mpPaymentID != null) {
             this.mpPaymentID = 0;
         } else {
             this.mpPaymentID = Payment.mpPaymentID;
