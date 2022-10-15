@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import logoColor from '../assets/logoColor.png'
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2'
 
 export const RecuperarPassword = () => {
 	const [correo, setCorreo] = useState('')
@@ -58,15 +58,15 @@ export const RecuperarPassword = () => {
 			enviarFormulario()
 			borrarFormulario()
 			Swal.fire({
-				icon: 'success', 
+				icon: 'success',
 				title: 'Te hemos enviado un mail, por favor verifica tu bandeja de entrada',
-				confirmButtonColor: '#0083bb'
+				confirmButtonColor: '#0083bb',
 			})
 		} else {
 			Swal.fire({
-				icon: 'error', 
+				icon: 'error',
 				title: 'Ha ocurrido un error',
-				confirmButtonColor: '#0083bb'
+				confirmButtonColor: '#0083bb',
 			})
 		}
 	}
@@ -83,7 +83,7 @@ export const RecuperarPassword = () => {
 						instrucciones sobre como restablecer tu contraseña
 					</p>
 					<span id='mensaje' className='mensaje'>
-						El correo ingresado no es valido
+						El correo que ingreso es invalido
 					</span>
 					<input
 						id='correo'
