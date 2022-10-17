@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import logoColor from '../assets/logoColor.png'
 import { BsEye, BsEyeSlash } from 'react-icons/bs'
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2'
 
 export const Registrarse = () => {
 	const [name, setName] = useState('')
@@ -22,12 +22,13 @@ export const Registrarse = () => {
 
 	const enviarFormulario = async () => {
 		const data = {
-			name: name.trim(),
-			lastName: lastName.trim(),
+			username: name.trim() + ' ' + lastName.trim(),
 			email: email.trim(),
 			password: password.trim(),
 			// password2: password2.trim(),
 		}
+
+		console.log(data)
 
 		const url = import.meta.env.VITE_URL_REGISTRARSE
 
@@ -43,7 +44,7 @@ export const Registrarse = () => {
 	}
 
 	function validarName() {
-		const nameRegEx = /^[A-Za-z]{3,10}$/
+		const nameRegEx = /^[A-Za-z\ ]{3,20}$/
 
 		if (name.length !== 0) {
 			if (nameRegEx.test(name)) {
@@ -67,7 +68,7 @@ export const Registrarse = () => {
 	}, [name])
 
 	function validarLastName() {
-		const lastNameRegEx = /^[A-Za-z]{3,10}$/
+		const lastNameRegEx = /^[A-Za-z\ ]{3,20}$/
 
 		if (lastName.length !== 0) {
 			if (lastNameRegEx.test(lastName)) {
@@ -162,7 +163,13 @@ export const Registrarse = () => {
 	}, [password2])
 
 	function validarFormulario() {
-		if (validarName() && validarLastName() && validarEmail() && validarPassword() && validarPassword2() ) {
+		if (
+			validarName() &&
+			validarLastName() &&
+			validarEmail() &&
+			validarPassword() &&
+			validarPassword2()
+		) {
 			return true
 		}
 
@@ -176,15 +183,15 @@ export const Registrarse = () => {
 			enviarFormulario()
 			borrarFormulario()
 			Swal.fire({
-				icon: 'success', 
+				icon: 'success',
 				title: 'Hemos registrado tu cuenta correctamente',
-				confirmButtonColor: '#0083bb'
+				confirmButtonColor: '#0083bb',
 			})
 		} else {
 			Swal.fire({
-				icon: 'error', 
+				icon: 'error',
 				title: 'Ocurrio un error al registrar tu cuenta',
-				confirmButtonColor: '#0083bb'
+				confirmButtonColor: '#0083bb',
 			})
 		}
 	}
@@ -222,12 +229,8 @@ export const Registrarse = () => {
 				<div className='acceder-google'>
 					<p>Crea una cuenta</p>
 				</div>
-				<span id='error-name-input'>
-					El nombre que ingreso es invalido
-				</span>
-				<span id='error-lastName-input'>
-				 	El apellido que ingreso es invalido
-				</span>
+				<span id='error-name-input'>El nombre que ingreso es invalido</span>
+				<span id='error-lastName-input'>El apellido que ingreso es invalido</span>
 				<span id='error-email-input'>El email que ingreso es invalido</span>
 				<span id='error-password-input'>
 					La contraseña que ingreso es invalida, la contraseña debe contener 8 caracteres
@@ -242,7 +245,7 @@ export const Registrarse = () => {
 						id='name'
 						type='text'
 						name='name'
-						placeholder='Nombre'
+						placeholder='Nombre/s'
 						onChange={e => setName(e.target.value)}
 						value={name}
 					/>
@@ -250,7 +253,7 @@ export const Registrarse = () => {
 						id='lastName'
 						type='text'
 						name='lastname'
-						placeholder='Apellido'
+						placeholder='Apellido/s'
 						onChange={e => setLastName(e.target.value)}
 						value={lastName}
 					/>
@@ -289,7 +292,7 @@ export const Registrarse = () => {
 						<input
 							id='password2'
 							type='password'
-							placeholder='Repetir contraseña'
+							placeholder='Repetir Contraseña'
 							onChange={e => setPassword2(e.target.value)}
 							value={password2}
 							onPaste={e => {
@@ -307,7 +310,7 @@ export const Registrarse = () => {
 							<BsEye onClick={mostrarContrasena2} className='mostrarContraseña' />
 						)}
 					</div>
-					<button>Iniciar Sesion</button>
+					<button>Registrate</button>
 				</form>
 			</div>
 		</section>

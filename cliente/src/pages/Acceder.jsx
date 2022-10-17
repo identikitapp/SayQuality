@@ -1,10 +1,8 @@
 import { Link } from 'react-router-dom'
 import React, { useState, useEffect } from 'react'
-import logoColor from '../assets/logoColor.png';
-import { BsEyeSlash, BsEye } from 'react-icons/bs';
-import Swal from 'sweetalert2';
-// import createHeader from '../utils/createHeader';
-// import {FcGoogle} from 'react-icons/fc';
+import logoColor from '../assets/logoColor.png'
+import { BsEyeSlash, BsEye } from 'react-icons/bs'
+import Swal from 'sweetalert2'
 
 export function Acceder() {
 
@@ -26,24 +24,26 @@ export function Acceder() {
 			body: JSON.stringify(data),
 			headers: {
 				'Content-type': 'application/json',
-			}
+			},
 		})
 			.then(response => response.json())
-			.then(result => console.log(result))
-	
+			.then(result => {
+				const token = result.data.token
+
+				localStorage.setItem('token', token)
+			})
+			.catch(error => console.error(error))
 	}
 	
 	function borrarFormulario() {
 		setCorreo('')
 		setPassword('')
 	}
-	
 
 	function validarCorreo() {
+		const emailRegEx = /^[\w\.\-]+@([\w-]+\.)+[\w-]{2,4}$/
 
-			const emailRegEx = /^[\w\.\-]+@([\w-]+\.)+[\w-]{2,4}$/
-
-		if(correo.length !== 0) {
+		if (correo.length !== 0) {
 			if (emailRegEx.test(correo)) {
 				const input = document.getElementById('correo')
 				input.classList.remove('invalid')
@@ -61,15 +61,15 @@ export function Acceder() {
 	}
 
 	useEffect(() => {
-		validarCorreo()	
+		validarCorreo()
 	}, [correo])
 
 	function validarPassword() {
-
-		const passwordRegEx = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/gm
+		const passwordRegEx =
+			/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/gm
 
 		if (password.length !== 0) {
-			if (passwordRegEx.test(password)) { 
+			if (passwordRegEx.test(password)) {
 				const input = document.getElementById('password')
 				input.classList.remove('invalid')
 				const mensaje = document.getElementById('error-password-user')
@@ -81,17 +81,16 @@ export function Acceder() {
 				const mensaje = document.getElementById('error-password-user')
 				mensaje.style.display = 'block'
 				return false
+			}
 		}
 	}
-}
-	
-	useEffect( () => {
+
+	useEffect(() => {
 		validarPassword()
 	}, [password])
 
 	function validarFormulario() {
-			if(validarCorreo() && validarPassword())
-			return true
+		if (validarCorreo() && validarPassword()) return true
 	}
 
 	function handleSubmit(e) {
@@ -101,95 +100,83 @@ export function Acceder() {
 			enviarFormulario()
 			borrarFormulario()
 			Swal.fire({
-				icon: 'success', 
+				icon: 'success',
 				title: 'Se ha iniciado sesión con éxito',
-				confirmButtonColor: '#0083bb'
+				confirmButtonColor: '#0083bb',
 			})
 		} else {
 			Swal.fire({
-				icon: 'error', 
+				icon: 'error',
 				title: 'Hubo un error al iniciar sesión',
-				confirmButtonColor: '#0083bb'
+				confirmButtonColor: '#0083bb',
 			})
 		}
 	}
-	
+
 	function mostrarContrasena() {
+		let tipo = document.getElementById('password')
 
-        let tipo = document.getElementById('password')
+		if (tipo.type === 'password') {
+			tipo.type = 'text'
+			setPasswordType(true)
+		} else {
+			tipo.type = 'password'
+			setPasswordType(false)
+		}
+	}
 
-        if (tipo.type === 'password') {
-            tipo.type = 'text'
-            setPasswordType(true)
-        } else {
-            tipo.type = 'password'
-            setPasswordType(false)
-        }
-    }
-	
 	return (
 		<section className='acceder'>
-
 			<div className='logo-acceder'>
-				<img src={logoColor} alt="logo" />
+				<img src={logoColor} alt='logo' />
 			</div>
-			
-			
 
 			<div className='iniciar-sesion'>
-
 				<div className='acceder-google'>
 					<p>Iniciar Sesión</p>
-					{/* <button><FcGoogle />Continuar con Google</button> */}
 				</div>
 
-				<form  method='POST' onSubmit={e => handleSubmit(e)}>
+				<form method='POST' onSubmit={e => handleSubmit(e)}>
+					<span id='error-email-user'>El correo que ingreso es invalido</span>
+					<span id='error-password-user'>La contraseña que ingreso es invalida</span>
 
-					
-					<span id='error-email-user'>
-						El correo ingresado no es valido
-					</span>
-					<span id='error-password-user'>
-						La contraseña ingresada no es valida
-					</span>
-					
-					<input 
-					id='correo'
-					type="email" 
-					name='email' 
-					placeholder='Correo Electrónico'
-					onChange={e => setCorreo(e.target.value)}
-					value={correo}
-					autoComplete="off"
+					<input
+						id='correo'
+						type='email'
+						name='email'
+						placeholder='Correo Electrónico'
+						onChange={e => setCorreo(e.target.value)}
+						value={correo}
+						autoComplete='off'
 					/>
-					
+
 					<div className='formulario_password'>
-						<input 
-						id='password'
-						type="password" 
-						name='password' 
-						placeholder='Contraseña' 
-						onChange={e => setPassword(e.target.value)}
-						value={password}
-						onPaste={(e)=>{
-							e.preventDefault()
-							return false;
-						  }} onCopy={(e)=>{
-							e.preventDefault()
-							return false;
-						  }}
-					/>
-						{
-						passwordType === true ? 
-						( <BsEye onClick={mostrarContrasena} className='mostrarContraseña' /> )
-						: 
-						( <BsEyeSlash onClick={mostrarContrasena} className='mostrarContraseña' /> ) 	
-						}
+						<input
+							id='password'
+							type='password'
+							name='password'
+							placeholder='Contraseña'
+							onChange={e => setPassword(e.target.value)}
+							value={password}
+							onPaste={e => {
+								e.preventDefault()
+								return false
+							}}
+							onCopy={e => {
+								e.preventDefault()
+								return false
+							}}
+						/>
+						{passwordType === true ? (
+							<BsEye onClick={mostrarContrasena} className='mostrarContraseña' />
+						) : (
+							<BsEyeSlash onClick={mostrarContrasena} className='mostrarContraseña' />
+						)}
 					</div>
-					
+
 					<button>Iniciar Sesion</button>
 				</form>
-				
+
 				<div className='checkbox'>
 					<p>
 						<Link to='/recuperar-password' className='link'>
@@ -201,7 +188,7 @@ export function Acceder() {
 					<p>
 						¿Aún no eres miembro?{' '}
 						<Link to='/registrarse' className='link'>
-							Registrarse
+							Registrate
 						</Link>
 					</p>
 				</div>

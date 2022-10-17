@@ -23,14 +23,14 @@ module.exports.Create = (content) => {
     let name = shajs('sha256').update(content).digest('hex');
     let path = process.env.imgPath + "/" + name + ".png";
 
-    if (!fs.existsSync(path)) {
+    if (fs.existsSync(path)) {
         return {
             code: 200,
             name
         };
     };
 
-    fs.appendFileSync(path, Buffer.from(content, "binary"));
+    fs.appendFileSync(path, content, { encoding: "binary" });
 
     if (!isImage(path)) {
         fs.unlinkSync(path);
