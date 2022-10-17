@@ -37,8 +37,6 @@ app.use(["/forms", "/chats", "/courses", "/users"], express.json({limit: "1mb"})
 app.use(["/files"], express.text({type: "image/png", limit: "8mb", defaultCharset: "binary"}));
 app.use(cors());
 
-app.use(require("./middlewares/error.js"));
-
 app.use(require("./middlewares/headerCheck.js"));
 
 app.use(require("./middlewares/authentication.js"));
@@ -49,14 +47,11 @@ app.use("/chats", require("./routes/chats.js"));
 app.use("/files", require("./routes/files.js"));
 app.use("/forms", require("./routes/forms.js"));
 
-/*app.get('/', function (req, res) {
-});*/
-
 app.all("*", function (req, res) {
     res.status(404).json({ "status": "error", "message": "La ruta no existe." });
 });
 
-//crear servidor https
+app.use(require("./middlewares/error.js"));
 
 httpsServer.listen(process.env.HTTPPort, process.env.HTTPHost, () => {
     console.log("Servidor en funcionamiento");

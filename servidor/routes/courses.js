@@ -32,7 +32,7 @@ courses.get("/", (req, res) => {
                 .status(500)
                 .json({
                     "error": {
-                        "code": 500,
+                        
                         "message": "Error interno.",
                     }
                 });
@@ -57,7 +57,7 @@ courses.get("/:name/payment", (req, res) => {
             .status(401)
             .json({
                 "error": {
-                    "code": 401,
+                    
                     "message": "Debes iniciar sesion para hacer eso."
                 }
             });
@@ -83,10 +83,10 @@ courses.get("/:name/payment", (req, res) => {
                 };
 
                 res
-                    .status(201)
+                    .status(202)
                     .json({
                         data: {
-                            message: "Pago realizado con exito."
+                            message: "Pago realizado presuntamente."
                         }
                     });
 
@@ -97,7 +97,7 @@ courses.get("/:name/payment", (req, res) => {
                     .status(500)
                     .json({
                         "error": {
-                            "code": 500,
+                            
                             "message": "Error interno.",
                         }
                     });
@@ -143,7 +143,7 @@ courses.get("/:name/payment", (req, res) => {
                 .status(500)
                 .json({
                     "error": {
-                        "code": 500,
+                        
                         "message": "Error interno.",
                     }
                 });
@@ -169,7 +169,7 @@ courses.get("/chapters/:chapterID/homework", (req, res) => {
             .status(401)
             .json({
                 "error": {
-                    "code": 401,
+                    
                     "message": "Debes iniciar sesion para hacer eso."
                 }
             });
@@ -177,6 +177,17 @@ courses.get("/chapters/:chapterID/homework", (req, res) => {
 
     sql.GetHomework(req.paramChapter.ID, req.user.ID)
         .then((homeworks) => {
+            if (homeworks.length == 0) {
+                return res
+                    .status(404)
+                    .json({
+                        "error": {
+                            
+                            "message": "No hay tarea."
+                        }
+                    });
+            };
+
             let homework = homeworks[0];
 
             homework.approved = new Boolean(homework.approved);
@@ -195,7 +206,7 @@ courses.get("/chapters/:chapterID/homework", (req, res) => {
                 .status(500)
                 .json({
                     "error": {
-                        "code": 500,
+                        
                         "message": "Error interno.",
                     }
                 });
@@ -220,7 +231,7 @@ courses.post("/payments", (req, res) => {
             .status(422)
             .json({
                 "error": {
-                    "code": 422,
+                    
                     "message": "Solo se acepta el tipo de notificación payment."
                 }
             });
@@ -231,7 +242,7 @@ courses.post("/payments", (req, res) => {
             .status(422)
             .json({
                 "error": {
-                    "code": 422,
+                    
                     "message": "No se puede aceptar esa accion."
                 }
             });
@@ -270,7 +281,7 @@ courses.post("/payments", (req, res) => {
                             .status(500)
                             .json({
                                 "error": {
-                                    "code": 500,
+                                    
                                     "message": "Error interno.",
                                 }
                             });
@@ -297,7 +308,7 @@ courses.post("/payments", (req, res) => {
                             .status(500)
                             .json({
                                 "error": {
-                                    "code": 500,
+                                    
                                     "message": "Error interno.",
                                 }
                             });
@@ -311,7 +322,7 @@ courses.post("/payments", (req, res) => {
                     .status(400)
                     .json({
                         "error": {
-                            "code": 400,
+                            
                             "message": "El pago es falso.",
                         }
                     });
@@ -321,7 +332,7 @@ courses.post("/payments", (req, res) => {
                 .status(500)
                 .json({
                     "error": {
-                        "code": 500,
+                        
                         "message": "Error interno.",
                     }
                 });

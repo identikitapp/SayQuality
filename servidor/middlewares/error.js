@@ -8,7 +8,7 @@ module.exports = (error, request, response, next) => {
             .status(413)
             .json({
                 "error": {
-                    "code": 413,
+                    
                     "message": "El cuerpo de la peticion es muy largo."
                 }
             });
@@ -20,7 +20,7 @@ module.exports = (error, request, response, next) => {
             .status(400)
             .json({
                 "error": {
-                    "code": 400,
+                    
                     "message": "El cuerpo de la peticion esta malformado."
                 }
             });
@@ -30,10 +30,8 @@ module.exports = (error, request, response, next) => {
         .status(500)
         .json({
             "error": {
-                "code": 500,
-                "message": "Ocurrio un error, intenta de nuevo mas tarde."
+                
+                "message": "Error interno.",
             }
         });
-
-
-}
+};

@@ -6,21 +6,14 @@ const formsList = {
     2: "Problemas o dudas de seguridad",
     3: "Contacto legal",
     4: "Contacto empresarial",
-    5: "Otro"
+    5: "Entrega de tarea",
+    6: "Otro"
 };
 const sql = require("../utils/sql.js");
 const email = require("../utils/email.js");
 const jwt = require("../utils/jwt.js");
 const images = require("../utils/images.js");
 const shajs = require('sha.js');
-/**
- * 0 = "Problemas o dudas con mi cuenta"
- * 1 = "Problemas o dudas con mi compra"
- * 2 = "Problemas o dudas de seguridad"
- * 3 = "Contacto legal"
- * 4 = "Contacto empresarial"
- * 5 = "Otro"
- */
 
 forms.get("/", (req, res) => {
     res.json({
@@ -31,7 +24,7 @@ forms.get("/", (req, res) => {
     });
 });
 
-forms.post("/", (req, res) => {
+forms.post("/", async (req, res) => {
     let body = req.body;
     let userEmail;
 
@@ -40,7 +33,7 @@ forms.post("/", (req, res) => {
             .status(422)
             .json({
                 "error": {
-                    "code": 422,
+                    
                     "message": "Ingresa un formulario valido.",
                     "field": "form"
                 }
@@ -52,7 +45,7 @@ forms.post("/", (req, res) => {
             .status(409)
             .json({
                 "error": {
-                    "code": 409,
+                    
                     "message": "No puedes colocar un email diferente al de tu usuario.",
                     "field": "email"
                 }
@@ -65,7 +58,7 @@ forms.post("/", (req, res) => {
                 .status(422)
                 .json({
                     "error": {
-                        "code": 422,
+                        
                         "message": "Por favor ingrese un correo electronico.",
                         "field": "email"
                     }
@@ -82,7 +75,7 @@ forms.post("/", (req, res) => {
             .status(422)
             .json({
                 "error": {
-                    "code": 422,
+                    
                     "message": "Por favor ingrese un asunto.",
                     "field": "subject"
                 }
@@ -94,7 +87,7 @@ forms.post("/", (req, res) => {
             .status(422)
             .json({
                 "error": {
-                    "code": 422,
+                    
                     "message": "El asunto es demasiado largo.",
                     "field": "subject"
                 }
@@ -106,7 +99,7 @@ forms.post("/", (req, res) => {
             .status(422)
             .json({
                 "error": {
-                    "code": 422,
+                    
                     "message": "Por favor ingrese un cuerpo.",
                     "field": "body"
                 }
@@ -118,7 +111,7 @@ forms.post("/", (req, res) => {
             .status(422)
             .json({
                 "error": {
-                    "code": 422,
+                    
                     "message": "El cuerpo es demasiado largo, si es necesario coloque enlaces a otros documentos.",
                     "field": "body"
                 }
@@ -135,7 +128,7 @@ forms.post("/", (req, res) => {
                 .status(422)
                 .json({
                     "error": {
-                        "code": 422,
+                        
                         "message": "Verifica si eres un representante.",
                         "field": "lawyer"
                     }
@@ -148,7 +141,7 @@ forms.post("/", (req, res) => {
             .status(422)
             .json({
                 "error": {
-                    "code": 422,
+                    
                     "message": "Esta opcion no requiere un representante.",
                     "field": "lawyer"
                 }

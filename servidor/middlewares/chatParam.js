@@ -6,7 +6,7 @@ module.exports = function (req, res, next, ID) {
             .status(401)
             .json({
                 "error": {
-                    "code": 401,
+                    
                     "message": "Debes iniciar sesion para hacer eso."
                 }
             });
@@ -15,15 +15,14 @@ module.exports = function (req, res, next, ID) {
     sql.GetChat(ID)
         .then((chats) => {
             if (chats.length == 0) {
-                res
+                return res
                     .status(404)
                     .json({
                         "error": {
-                            "code": 404,
+                            
                             "message": "El chat no existe."
                         }
                     });
-                return;
             };
 
             if (req.user.ID != chats[0].userID1 && req.user.ID != chats[0].userID2) {
@@ -32,7 +31,7 @@ module.exports = function (req, res, next, ID) {
                         .status(403)
                         .json({
                             "error": {
-                                "code": 403,
+                                
                                 "message": "No estas autorizado para hacer eso."
                             }
                         });
@@ -47,7 +46,7 @@ module.exports = function (req, res, next, ID) {
                 .status(500)
                 .json({
                     "error": {
-                        "code": 500,
+                        
                         "message": "Error interno.",
                     }
                 });
