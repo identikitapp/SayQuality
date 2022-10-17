@@ -22,12 +22,13 @@ export const Registrarse = () => {
 
 	const enviarFormulario = async () => {
 		const data = {
-			name: name.trim(),
-			lastName: lastName.trim(),
+			username: name.trim() + ' ' + lastName.trim(),
 			email: email.trim(),
 			password: password.trim(),
 			// password2: password2.trim(),
 		}
+
+		console.log(data)
 
 		const url = import.meta.env.VITE_URL_REGISTRARSE
 

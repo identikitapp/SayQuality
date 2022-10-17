@@ -25,7 +25,12 @@ export function Acceder() {
 			},
 		})
 			.then(response => response.json())
-			.then(result => console.log(result))
+			.then(result => {
+				const token = result.data.token
+
+				localStorage.setItem('token', token)
+			})
+			.catch(error => console.error(error))
 	}
 
 	function borrarFormulario() {
