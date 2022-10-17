@@ -1,0 +1,248 @@
+.contenedor_perfil {
+    margin-top: 6rem;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr;
+    background-color: $grisFondo;
+    box-shadow: inset 0px 0px 8px 6px rgba(0,0,0,0.33);
+  
+    aside {
+        background-color: $azulOscuro;
+        height: 100%;
+    
+    
+    // seccion Circulo para agregar imagen de perfil
+    .imagen_perfil { 
+        min-height: 30rem;
+        display: flex;
+        flex-direction: column;
+        padding-top: 2rem;
+        align-items: center;
+        justify-content: center;
+
+        .icon-add {
+            color: $blanco;
+        }
+        p {
+            padding-bottom: 1rem;
+            font-size: 2.5rem;
+            color: $blanco;
+        }
+    }
+    .circulo {
+        width: 15rem;
+        height: 15rem;
+        border-radius: 50%;
+        border: 2px solid $grisOscuro;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+    }
+
+    // Enlaces 
+    .secciones {
+        min-height: 30rem;
+        margin-left: 3rem;
+        margin-bottom: 3rem;
+              
+        
+       .enlaces_secciones {
+        display: flex;
+        align-items: center;
+        list-style: none;
+        font-size: 2rem;
+        font-weight: bold;
+        color: $blanco;
+        margin-top: 5rem;
+        .icon {
+            margin-right: .5rem;
+            color: $naranja;
+        }
+       }
+    }
+} // Fin aside
+    
+// Botones cursos
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 5rem;
+    .buttons_cursos {
+        border: none;
+        font-size: 1.4rem;
+        border-radius: .5rem;
+        padding: .5rem;
+        background-color: $blanco;
+        box-shadow: 0px 1px 10px 4px rgba(0,0,0,0.43);
+    }
+}
+// Fin Botones Cursos
+
+// Boton Inscripto
+.button_inscripto {
+    margin-top: 3rem;
+    padding-left: 1rem;
+    button {
+        border: none;
+        font-size: 1.3rem;
+        border-radius: .5rem;
+        padding: .5rem;
+        color: $naranja;
+        background-color: $blanco;
+        box-shadow: 0px 1px 10px 4px rgba(0,0,0,0.43);
+    }
+}
+
+// Informacion cursos 
+
+.cursos_informacion {
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: space-evenly; 
+    padding-bottom: .5rem;  
+    border-bottom: 1px solid $gris;
+    width: 90%;
+    padding-top: 5rem;
+    margin: 0 auto;
+    }
+}
+
+@include tablet {
+    .contenedor_perfil {
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+
+      .secciones {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      
+      .cursos_informacion {
+        font-size: 2rem;
+        }
+      
+    }
+
+
+}
+
+@include telefono {
+    .contenedor_perfil { 
+        .buttons {
+            .buttons_cursos {
+                font-size: 2rem;
+                padding: 1rem;
+              }
+          }
+
+          .button_inscripto {
+            button {
+                font-size: 2rem;  
+                padding: 1rem; 
+            }
+        }
+    }
+}
+
+
+// ====================================================================== //
+// AJUSTES
+
+
+.formulario_ajustes {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    place-items: center;
+    min-width: 10rem;
+    font-size: 2rem;
+    gap: 3rem;
+
+    .inputs {
+        display: flex;
+        flex-direction: column;
+        max-width: 30rem;
+        
+        input {
+            margin-top: 1rem;
+            height: 5rem;
+            border: none;
+            border-radius: .5rem;
+        
+        }
+    }
+}
+
+
+// Text Area informacion Biografica //
+.informacion_biografica {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 30rem;
+    margin: 0 auto;
+    label {
+        font-size: 2rem;
+        padding-bottom: 1rem;
+    }
+    textarea {
+        min-width: 40rem;
+        height: 30rem;
+        resize: none;
+        border: none;
+        border-radius: .5rem;
+    }
+}
+
+// Seccion Agregar Avatar //
+
+.avatar {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 5rem;
+    font-size: 2rem;
+    .avatar_icon {
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+    }
+    button {
+        border: none;
+        background-color: $naranja;
+        border-radius: .5rem;
+        padding: .3rem;
+    }
+}
+
+// Seccion Cambiar Contraseña
+
+.cambiar_contraseña {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 3rem 0;
+    gap: 2rem;
+    font-size: 2rem;
+    margin-bottom: 5rem;
+
+    input {
+        border: none;
+        height: 3rem;
+        border-radius: .5rem;
+    }
+
+    button {
+        border: none;
+        background-color: $naranja;
+        border-radius: .5rem;
+        padding: .3rem;
+    }
+}
+
+
+
+ 

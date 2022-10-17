@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 
 export function Acceder() {
 
+
 	const [correo, setCorreo] = useState('');
 	const [password, setPassword] = useState('');
 	const [passwordType, setPasswordType] = useState(false)
@@ -31,7 +32,7 @@ export function Acceder() {
 			.then(result => console.log(result))
 	
 	}
-
+	
 	function borrarFormulario() {
 		setCorreo('')
 		setPassword('')
