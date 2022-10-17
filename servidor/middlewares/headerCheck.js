@@ -9,7 +9,7 @@ module.exports = (request, response, next) => {
                 .status(415)
                 .json({
                     "error": {
-                        "code": 415,
+                        
                         "message": "El encabezado Content-Type debe ser una image/png."
                     }
                 });
@@ -25,7 +25,7 @@ module.exports = (request, response, next) => {
             .status(415)
             .json({
                 "error": {
-                    "code": 415,
+                    
                     "message": "El encabezado Content-Type debe ser application/json."
                 }
             });

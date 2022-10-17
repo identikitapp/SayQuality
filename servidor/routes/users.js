@@ -17,7 +17,7 @@ users.get("/", (req, res) => {
             .status(422)
             .json({
                 "error": {
-                    "code": 422,
+                    
                     "message": "Por favor ingrese un tipo de usuario."
                 }
             });
@@ -32,7 +32,7 @@ users.get("/", (req, res) => {
             .status(422)
             .json({
                 "error": {
-                    "code": 422,
+                    
                     "message": "El parametro type no es un numero valido."
                 }
             });
@@ -43,7 +43,7 @@ users.get("/", (req, res) => {
             .status(422)
             .json({
                 "error": {
-                    "code": 422,
+                    
                     "message": "Ingresa un tipo de usuario valido."
                 }
             });
@@ -54,7 +54,7 @@ users.get("/", (req, res) => {
             .status(423)
             .json({
                 "error": {
-                    "code": 423,
+                    
                     "message": "No se puede hacer eso."
                 }
             });
@@ -107,7 +107,7 @@ users.get("/", (req, res) => {
                 .status(500)
                 .json({
                     "error": {
-                        "code": 500,
+                        
                         "message": "Error interno.",
                     }
                 });
@@ -119,17 +119,16 @@ users.get("/", (req, res) => {
 users.post("/", (req, res) => {
     let body = req.body;
 
-    if (!body.username || typeof body.username != "string" || body.username.length > 15) {
-        res
+    if (!body.username || typeof body.username != "string" || body.username.length > 55) {
+        return res
             .status(422)
             .json({
                 "error": {
-                    "code": 422,
+                    
                     "message": "El nombre de usuario es demasiado largo o no lo a ingresado.",
                     "field": "username"
                 }
             });
-        return;
     };
 
     if (!body.email || typeof body.email != "string") {
@@ -138,7 +137,7 @@ users.post("/", (req, res) => {
             .json({
                 "redirect": process.env.WEB + "/register",
                 "error": {
-                    "code": 422,
+                    
                     "message": "Por favor ingrese un correo electronico.",
                     "field": "email"
                 }
@@ -151,7 +150,7 @@ users.post("/", (req, res) => {
             .status(422)
             .json({
                 "error": {
-                    "code": 422,
+                    
                     "message": "Por favor ingrese un correo electronico valido.",
                     "field": "email"
                 }
@@ -160,16 +159,39 @@ users.post("/", (req, res) => {
     };
 
     if (!body.password || typeof body.password != "string") {
-        res
+        return res
             .status(422)
             .json({
                 "error": {
-                    "code": 422,
+                    
                     "message": "Por favor ingrese una contraseña.",
                     "field": "password"
                 }
             });
-        return;
+    };
+
+    if (body.password.length > 50) {
+        return res
+            .status(422)
+            .json({
+                "error": {
+                    
+                    "message": "La contraseña es muy larga.",
+                    "field": "password"
+                }
+            });
+    };
+
+    if (body.password.length < 5) {
+        return res
+            .status(422)
+            .json({
+                "error": {
+                    
+                    "message": "La contraseña es muy corta.",
+                    "field": "password"
+                }
+            });
     };
 
     sql.GetUserByEmail(body.email)
@@ -179,7 +201,7 @@ users.post("/", (req, res) => {
                     .status(409)
                     .json({
                         "error": {
-                            "code": 409,
+                            
                             "message": "El correo electrinico ya esta en uso."
                         }
                     });
@@ -210,7 +232,7 @@ users.post("/", (req, res) => {
                         .status(500)
                         .json({
                             "error": {
-                                "code": 500,
+                                
                                 "message": "Error interno."
                             }
                         });
@@ -221,7 +243,7 @@ users.post("/", (req, res) => {
                 .status(500)
                 .json({
                     "error": {
-                        "code": 500,
+                        
                         "message": "Error interno."
                     }
                 });
@@ -237,7 +259,7 @@ users.patch("/auth/verify", (req, res) => {
             .status(422)
             .json({
                 "error": {
-                    "code": 422,
+                    
                     "message": "No se ingreso el codigo.",
                 }
             });
@@ -248,7 +270,7 @@ users.patch("/auth/verify", (req, res) => {
             .status(422)
             .json({
                 "error": {
-                    "code": 422,
+                    
                     "message": "El codigo debe ser un string.",
                 }
             });
@@ -261,7 +283,7 @@ users.patch("/auth/verify", (req, res) => {
                     .status(422)
                     .json({
                         "error": {
-                            "code": 422,
+                            
                             "message": "El codigo ingresado no es valido.",
                         }
                     });
@@ -274,7 +296,7 @@ users.patch("/auth/verify", (req, res) => {
                     .status(409)
                     .json({
                         "error": {
-                            "code": 409,
+                            
                             "message": "Ya se encuentra verificado.",
                         }
                     });
@@ -298,7 +320,7 @@ users.patch("/auth/verify", (req, res) => {
                         .status(500)
                         .json({
                             "error": {
-                                "code": 500,
+                                
                                 "message": "Error interno.",
                             }
                         });
@@ -309,7 +331,7 @@ users.patch("/auth/verify", (req, res) => {
                 .status(500)
                 .json({
                     "error": {
-                        "code": 500,
+                        
                         "message": "Error interno.",
                     }
                 });
@@ -324,7 +346,7 @@ users.post("/auth/recovery", (req, res) => {
             .status(422)
             .json({
                 "error": {
-                    "code": 422,
+                    
                     "message": "Por favor ingrese un correo electronico.",
                     "field": "email"
                 }
@@ -337,12 +359,23 @@ users.post("/auth/recovery", (req, res) => {
             .status(422)
             .json({
                 "error": {
-                    "code": 422,
+                    
                     "message": "Por favor ingrese un correo electronico valido.",
                     "field": "email"
                 }
             });
         return;
+    };
+
+    if (!!req.user && body.email != req.user.email) {
+        return res
+            .status(401)
+            .json({
+                "error": {
+                    
+                    "message": "No tienes autorizacion para hacer eso."
+                }
+            });
     };
 
     sql.GetUserByEmail(body.email)
@@ -352,7 +385,7 @@ users.post("/auth/recovery", (req, res) => {
                     .status(401)
                     .json({
                         "error": {
-                            "code": 401,
+                            
                             "message": "El correo electronico no esta registrado.",
                             "field": "email"
                         }
@@ -392,7 +425,7 @@ users.post("/auth/recovery", (req, res) => {
                             .status(500)
                             .json({
                                 "error": {
-                                    "code": 500,
+                                    
                                     "message": "Error interno.",
                                 }
                             });
@@ -402,7 +435,7 @@ users.post("/auth/recovery", (req, res) => {
                     .status(410)
                     .json({
                         "error": {
-                            "code": 410,
+                            
                             "message": "Tu cuenta fue eliminada."
                         }
                     });
@@ -411,7 +444,7 @@ users.post("/auth/recovery", (req, res) => {
                     .status(403)
                     .json({
                         "error": {
-                            "code": 403,
+                            
                             "message": "Tu cuenta fue suspendida."
                         }
                     });
@@ -422,7 +455,7 @@ users.post("/auth/recovery", (req, res) => {
                 .status(500)
                 .json({
                     "error": {
-                        "code": 500,
+                        
                         "message": "Error interno.",
                     }
                 });
@@ -441,7 +474,7 @@ users.patch("/auth/reset", (req, res) => {
             .status(422)
             .json({
                 "error": {
-                    "code": 422,
+                    
                     "message": "No se ingreso el codigo.",
                 }
             });
@@ -452,7 +485,7 @@ users.patch("/auth/reset", (req, res) => {
             .status(422)
             .json({
                 "error": {
-                    "code": 422,
+                    
                     "message": "El codigo debe ser un string.",
                 }
             });
@@ -463,7 +496,7 @@ users.patch("/auth/reset", (req, res) => {
             .status(422)
             .json({
                 "error": {
-                    "code": 422,
+                    
                     "message": "No se ingreso la contraseña.",
                 }
             });
@@ -474,7 +507,7 @@ users.patch("/auth/reset", (req, res) => {
             .status(422)
             .json({
                 "error": {
-                    "code": 422,
+                    
                     "message": "La contraseña debe ser un string.",
                 }
             });
@@ -487,7 +520,7 @@ users.patch("/auth/reset", (req, res) => {
                     .status(422)
                     .json({
                         "error": {
-                            "code": 422,
+                            
                             "message": "El codigo ingresado no es valido.",
                         }
                     });
@@ -500,7 +533,7 @@ users.patch("/auth/reset", (req, res) => {
                     .status(409)
                     .json({
                         "error": {
-                            "code": 401,
+                            
                             "message": "Debes verificar tu cuenta.",
                         }
                     });
@@ -524,7 +557,7 @@ users.patch("/auth/reset", (req, res) => {
                         .status(500)
                         .json({
                             "error": {
-                                "code": 500,
+                                
                                 "message": "Error interno.",
                             }
                         });
@@ -535,7 +568,7 @@ users.patch("/auth/reset", (req, res) => {
                 .status(500)
                 .json({
                     "error": {
-                        "code": 500,
+                        
                         "message": "Error interno.",
                     }
                 });
@@ -550,7 +583,7 @@ users.post("/auth", (req, res) => {
             .status(422)
             .json({
                 "error": {
-                    "code": 422,
+                    
                     "message": "Por favor ingrese un correo electronico.",
                     "field": "email"
                 }
@@ -563,7 +596,7 @@ users.post("/auth", (req, res) => {
             .status(422)
             .json({
                 "error": {
-                    "code": 422,
+                    
                     "message": "Por favor ingrese un correo electronico valido.",
                     "field": "email"
                 }
@@ -577,7 +610,7 @@ users.post("/auth", (req, res) => {
             .status(422)
             .json({
                 "error": {
-                    "code": 422,
+                    
                     "message": "No se ingreso la contraseña.",
                 }
             });
@@ -588,7 +621,7 @@ users.post("/auth", (req, res) => {
             .status(422)
             .json({
                 "error": {
-                    "code": 422,
+                    
                     "message": "La contraseña debe ser un string.",
                 }
             });
@@ -601,7 +634,7 @@ users.post("/auth", (req, res) => {
                     .status(401)
                     .json({
                         "error": {
-                            "code": 401,
+                            
                             "message": "El correo electronico no esta registrado.",
                             "field": "email"
                         }
@@ -618,7 +651,7 @@ users.post("/auth", (req, res) => {
                     .status(401)
                     .json({
                         "error": {
-                            "code": 401,
+                            
                             "message": "La contraseña es incorrecta.",
                             "field": "password"
                         }
@@ -631,7 +664,7 @@ users.post("/auth", (req, res) => {
                     .status(410)
                     .json({
                         "error": {
-                            "code": 410,
+                            
                             "message": "Tu cuenta fue eliminada."
                         }
                     });
@@ -640,7 +673,7 @@ users.post("/auth", (req, res) => {
                     .status(403)
                     .json({
                         "error": {
-                            "code": 403,
+                            
                             "message": "Tu cuenta fue suspendida."
                         }
                     });
@@ -664,7 +697,7 @@ users.post("/auth", (req, res) => {
                             .status(500)
                             .json({
                                 "error": {
-                                    "code": 500,
+                                    
                                     "message": "Error interno.",
                                 }
                             });
@@ -687,7 +720,7 @@ users.post("/auth", (req, res) => {
                 .status(500)
                 .json({
                     "error": {
-                        "code": 500,
+                        
                         "message": "Error interno.",
                     }
                 });
@@ -741,7 +774,7 @@ users.patch("/:ID", (req, res) => {
             .status(401)
             .json({
                 "error": {
-                    "code": 401,
+                    
                     "message": "Debes iniciar sesion para hacer eso."
                 }
             });
@@ -752,7 +785,7 @@ users.patch("/:ID", (req, res) => {
             .status(403)
             .json({
                 "error": {
-                    "code": 403,
+                    
                     "message": "No tienes autorizacion para hacer eso."
                 }
             });
@@ -763,7 +796,7 @@ users.patch("/:ID", (req, res) => {
             .status(403)
             .json({
                 "error": {
-                    "code": 403,
+                    
                     "message": "La contraseña es incorrecta."
                 }
             });
@@ -775,7 +808,7 @@ users.patch("/:ID", (req, res) => {
                 .status(422)
                 .json({
                     "error": {
-                        "code": 422,
+                        
                         "message": "El nombre de usuario es demasiado largo o no lo a ingresado.",
                         "field": "username"
                     }
@@ -791,7 +824,7 @@ users.patch("/:ID", (req, res) => {
                 .json({
                     "redirect": process.env.WEB + "/register",
                     "error": {
-                        "code": 422,
+                        
                         "message": "Por favor ingrese un correo electronico.",
                         "field": "email"
                     }
@@ -803,7 +836,7 @@ users.patch("/:ID", (req, res) => {
                 .status(422)
                 .json({
                     "error": {
-                        "code": 422,
+                        
                         "message": "Por favor ingrese un correo electronico valido.",
                         "field": "email"
                     }
@@ -820,8 +853,32 @@ users.patch("/:ID", (req, res) => {
                 .status(422)
                 .json({
                     "error": {
-                        "code": 422,
+                        
                         "message": "Por favor ingrese una contraseña.",
+                        "field": "password"
+                    }
+                });
+        };
+
+        if (body.newPassword.length > 50) {
+            return res
+                .status(422)
+                .json({
+                    "error": {
+                        
+                        "message": "La contraseña es muy larga.",
+                        "field": "password"
+                    }
+                });
+        };
+
+        if (body.newPassword.length < 5) {
+            return res
+                .status(422)
+                .json({
+                    "error": {
+                        
+                        "message": "La contraseña es muy corta.",
                         "field": "password"
                     }
                 });
@@ -838,7 +895,7 @@ users.patch("/:ID", (req, res) => {
                 .status(422)
                 .json({
                     "error": {
-                        "code": 422,
+                        
                         "message": "La biografia es demasiado larga o no lo a ingresado.",
                         "field": "biography"
                     }
@@ -853,7 +910,7 @@ users.patch("/:ID", (req, res) => {
                 .status(422)
                 .json({
                     "error": {
-                        "code": 422,
+                        
                         "message": "El avatar es invalido.",
                         "field": "biography"
                     }
@@ -865,7 +922,7 @@ users.patch("/:ID", (req, res) => {
                 .status(422)
                 .json({
                     "error": {
-                        "code": 422,
+                        
                         "message": "El avatar es invalido.",
                         "field": "avatar"
                     }
@@ -881,7 +938,7 @@ users.patch("/:ID", (req, res) => {
                 .status(422)
                 .json({
                     "error": {
-                        "code": 422,
+                        
                         "message": "El linkedin es invalido o no lo ha ingresado.",
                         "field": "linkedin"
                     }
@@ -896,7 +953,7 @@ users.patch("/:ID", (req, res) => {
                 .status(422)
                 .json({
                     "error": {
-                        "code": 422,
+                        
                         "message": "El facebook es invalido o no lo ha ingresado.",
                         "field": "facebook"
                     }
@@ -911,7 +968,7 @@ users.patch("/:ID", (req, res) => {
                 .status(422)
                 .json({
                     "error": {
-                        "code": 422,
+                        
                         "message": "El twitter es invalido o no lo ha ingresado.",
                         "field": "twitter"
                     }
@@ -926,7 +983,7 @@ users.patch("/:ID", (req, res) => {
                 .status(422)
                 .json({
                     "error": {
-                        "code": 422,
+                        
                         "message": "El canal de youtube es invalido o no lo ha ingresado.",
                         "field": "youtube"
                     }
@@ -941,7 +998,7 @@ users.patch("/:ID", (req, res) => {
                 .status(422)
                 .json({
                     "error": {
-                        "code": 422,
+                        
                         "message": "El github es invalido o no lo ha ingresado.",
                         "field": "github"
                     }
@@ -968,7 +1025,7 @@ users.patch("/:ID", (req, res) => {
                         .status(409)
                         .json({
                             "error": {
-                                "code": 409,
+                                
                                 "message": "El correo electrinico ya esta en uso."
                             }
                         });
@@ -984,7 +1041,7 @@ users.patch("/:ID", (req, res) => {
                     .status(500)
                     .json({
                         "error": {
-                            "code": 500,
+                            
                             "message": "Error interno."
                         }
                     });
@@ -1002,7 +1059,7 @@ users.delete("/:ID", (req, res) => {
             .status(401)
             .json({
                 "error": {
-                    "code": 401,
+                    
                     "message": "Debes iniciar sesion para hacer eso."
                 }
             });
@@ -1013,7 +1070,7 @@ users.delete("/:ID", (req, res) => {
             .status(403)
             .json({
                 "error": {
-                    "code": 403,
+                    
                     "message": "No tienes autorizacion para hacer eso."
                 }
             });
@@ -1041,7 +1098,7 @@ users.delete("/:ID", (req, res) => {
                 .status(500)
                 .json({
                     "error": {
-                        "code": 500,
+                        
                         "message": "Error interno.",
                     }
                 });
@@ -1072,7 +1129,7 @@ function updateUser(req, res, user, token = true) {
                 .status(500)
                 .json({
                     "error": {
-                        "code": 500,
+                        
                         "message": "Error interno."
                     }
                 });

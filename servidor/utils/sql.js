@@ -204,7 +204,6 @@ module.exports.GetCourseByName = (name) => {
     return new Promise((resolve, reject) => {
         connection.query("SELECT * FROM Courses WHERE name = ?", [name], (error, results, fields) => {
             if (error) {
-
                 reject(new Error("Error al obtener el curso"))
             };
 

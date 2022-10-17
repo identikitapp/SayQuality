@@ -7,7 +7,7 @@ module.exports = function (req, res, next, ID) {
                 .status(401)
                 .json({
                     "error": {
-                        "code": 401,
+                        
                         "message": "Debes iniciar sesion."
                     }
                 });
@@ -23,7 +23,7 @@ module.exports = function (req, res, next, ID) {
                         .status(404)
                         .json({
                             "error": {
-                                "code": 404,
+                                
                                 "message": "El usuario no existe."
                             }
                         });
@@ -34,7 +34,7 @@ module.exports = function (req, res, next, ID) {
                         .status(410)
                         .json({
                             "error": {
-                                "code": 410,
+                                
                                 "message": "La cuenta fue eliminada."
                             }
                         });
@@ -48,7 +48,7 @@ module.exports = function (req, res, next, ID) {
                     .status(500)
                     .json({
                         "error": {
-                            "code": 500,
+                            
                             "message": "Error interno.",
                         }
                     });

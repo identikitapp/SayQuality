@@ -17,7 +17,7 @@ chats.get("/", (req, res, next) => {
             .status(401)
             .json({
                 "error": {
-                    "code": 401,
+                    
                     "message": "Debes iniciar sesion para hacer eso."
                 }
             });
@@ -39,7 +39,7 @@ chats.get("/", (req, res, next) => {
                 .status(500)
                 .json({
                     "error": {
-                        "code": 500,
+                        
                         "message": "Error interno.",
                     }
                 });
@@ -53,7 +53,7 @@ chats.post("/", (req, res) => {
             .status(401)
             .json({
                 "error": {
-                    "code": 401,
+                    
                     "message": "Debes iniciar sesion para hacer eso."
                 }
             });
@@ -65,7 +65,7 @@ chats.post("/", (req, res) => {
             .status(422)
             .json({
                 "error": {
-                    "code": 422,
+                    
                     "message": "Por favor ingrese una ID de usuario."
                 }
             });
@@ -76,7 +76,7 @@ chats.post("/", (req, res) => {
             .status(404)
             .json({
                 "error": {
-                    "code": 404,
+                    
                     "message": "El usuario no existe."
                 }
             });
@@ -96,7 +96,7 @@ chats.get("/:ID", (req, res) => {
                 .status(422)
                 .json({
                     "error": {
-                        "code": 422,
+                        
                         "message": "El parametro lastMessageID no es un numero valido."
                     }
                 });
@@ -119,7 +119,7 @@ chats.get("/:ID", (req, res) => {
                 .status(500)
                 .json({
                     "error": {
-                        "code": 500,
+                        
                         "message": "Error interno.",
                     }
                 });
@@ -134,7 +134,7 @@ chats.post("/:ID", (req, res) => {
             .status(422)
             .json({
                 "error": {
-                    "code": 422,
+                    
                     "message": "El nombre de usuario es demasiado largo o no lo a ingresado."
                 }
             });
@@ -161,7 +161,7 @@ chats.post("/:ID", (req, res) => {
                 .status(500)
                 .json({
                     "error": {
-                        "code": 500,
+                        
                         "message": "Error interno.",
                     }
                 });
@@ -197,7 +197,7 @@ chats.delete("/:ID/:MsgID", (req, res) => {
                 .status(500)
                 .json({
                     "error": {
-                        "code": 500,
+                        
                         "message": "Error interno.",
                     }
                 });
@@ -211,7 +211,7 @@ function CheckChat(req, res, c) {
             .status(508)
             .json({
                 "error": {
-                    "code": 508,
+                    
                     "message": "Error al crear chat.",
                 }
             });
@@ -248,7 +248,7 @@ function CheckChat(req, res, c) {
                 .status(500)
                 .json({
                     "error": {
-                        "code": 500,
+                        
                         "message": "Error interno.",
                     }
                 });
@@ -265,7 +265,7 @@ function CheckUser(req, res, c) {
                     .status(404)
                     .json({
                         "error": {
-                            "code": 404,
+                            
                             "message": "El usuario no existe."
                         }
                     });
@@ -279,7 +279,7 @@ function CheckUser(req, res, c) {
                 .status(500)
                 .json({
                     "error": {
-                        "code": 500,
+                        
                         "message": "Error interno.",
                     }
                 });
@@ -302,7 +302,7 @@ function CreateChat(req, res, c) {
                 .status(500)
                 .json({
                     "error": {
-                        "code": 500,
+                        
                         "message": "Error interno.",
                     }
                 });

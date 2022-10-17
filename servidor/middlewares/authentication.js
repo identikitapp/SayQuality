@@ -14,7 +14,7 @@ module.exports = (request, response, next) => {
             .status(400)
             .json({
                 "error": {
-                    "code": 400,
+                    
                     "message": "El contenido de la cabezera \"authorization\" no es valido."
                 }
             });
@@ -27,7 +27,7 @@ module.exports = (request, response, next) => {
             .status(401)
             .json({
                 "error": {
-                    "code": 401,
+                    
                     "message": "No se admite ese tipo de tokens"
                 }
             });
@@ -42,7 +42,7 @@ module.exports = (request, response, next) => {
                                 .status(500)
                                 .json({
                                     "error": {
-                                        "code": 500,
+                                        
                                         "message": "Error interno."
                                     }
                                 });
@@ -55,7 +55,7 @@ module.exports = (request, response, next) => {
                                 .status(401)
                                 .json({
                                     "error": {
-                                        "code": 401,
+                                        
                                         "message": "El token no es valido."
                                     }
                                 });
@@ -66,7 +66,7 @@ module.exports = (request, response, next) => {
                                 .status(410)
                                 .json({
                                     "error": {
-                                        "code": 410,
+                                        
                                         "message": "Tu cuenta fue eliminada."
                                     }
                                 });
@@ -75,7 +75,7 @@ module.exports = (request, response, next) => {
                                 .status(403)
                                 .json({
                                     "error": {
-                                        "code": 403,
+                                        
                                         "message": "Tu cuenta fue suspendida."
                                     }
                                 });
@@ -92,7 +92,7 @@ module.exports = (request, response, next) => {
                                 .status(410)
                                 .json({
                                     "error": {
-                                        "code": 410,
+                                        
                                         "message": msg
                                     }
                                 });
@@ -106,7 +106,7 @@ module.exports = (request, response, next) => {
                             .status(500)
                             .json({
                                 "error": {
-                                    "code": 500,
+                                    
                                     "message": "Error interno."
                                 }
                             });
@@ -117,7 +117,7 @@ module.exports = (request, response, next) => {
                     .status(401)
                     .json({
                         "error": {
-                            "code": 401,
+                            
                             "message": "El token no es valido."
                         }
                     });
