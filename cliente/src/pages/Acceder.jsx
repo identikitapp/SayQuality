@@ -1,8 +1,9 @@
-import { Link } from 'react-router-dom'
 import React, { useState, useEffect } from 'react'
-import logoColor from '../assets/logoColor.png'
+import { Link } from 'react-router-dom'
 import { BsEyeSlash, BsEye } from 'react-icons/bs'
 import Swal from 'sweetalert2'
+import logoColor from '../assets/logoColor.png'
+import createHeader from '../utils/createHeader'
 
 export function Acceder() {
 	const [correo, setCorreo] = useState('')
@@ -20,18 +21,30 @@ export function Acceder() {
 		await fetch(url, {
 			method: 'POST',
 			body: JSON.stringify(data),
-			headers: {
-				'Content-type': 'application/json',
-			},
+			headers: createHeader(),
 		})
 			.then(response => response.json())
 			.then(result => {
+				if (!result.data) {
+					return Swal.fire({
+						icon: 'error',
+						title: result.error.message,
+						confirmButtonColor: '#0083bb',
+					})
+				}
+
+				console.log(result)
+
 				const token = result.data.token
 
 				localStorage.setItem('token', token)
+
+				Swal.fire({
+					icon: 'success',
+					title: result.data.message,
+					confirmButtonColor: '#0083bb',
+				})
 			})
-			.then(data => console.log(data))
-			.catch(error => console.error(error))
 	}
 
 	function borrarFormulario() {
@@ -40,7 +53,8 @@ export function Acceder() {
 	}
 
 	function validarCorreo() {
-		const emailRegEx = /^[\w\.\-]+@([\w-]+\.)+[\w-]{2,4}$/
+		const emailRegEx =
+			/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 		if (correo.length !== 0) {
 			if (emailRegEx.test(correo)) {
@@ -64,8 +78,7 @@ export function Acceder() {
 	}, [correo])
 
 	function validarPassword() {
-		const passwordRegEx =
-			/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/gm
+		const passwordRegEx = /^.{5,50}$/
 
 		if (password.length !== 0) {
 			if (passwordRegEx.test(password)) {
@@ -98,17 +111,6 @@ export function Acceder() {
 		if (validarFormulario()) {
 			enviarFormulario()
 			borrarFormulario()
-			Swal.fire({
-				icon: 'success',
-				title: 'Se ha iniciado sesión con éxito',
-				confirmButtonColor: '#0083bb',
-			})
-		} else {
-			Swal.fire({
-				icon: 'error',
-				title: 'Hubo un error al iniciar sesión',
-				confirmButtonColor: '#0083bb',
-			})
 		}
 	}
 

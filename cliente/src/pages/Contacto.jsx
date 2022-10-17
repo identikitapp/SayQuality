@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import logoWhite from '../assets/logoWhite.png'
 import Swal from 'sweetalert2'
+import createHeader from '../utils/createHeader'
 
 export function Contacto() {
 	const [email, setEmail] = useState('')
@@ -21,7 +22,7 @@ export function Contacto() {
 		const data = {
 			email: email.trim(),
 			subject: subject.trim(),
-			message: message.trim(),
+			text: text.trim(),
 			form: options,
 			lawyer: lawyer.toString(),
 		}
@@ -31,12 +32,30 @@ export function Contacto() {
 		await fetch(url, {
 			method: 'POST',
 			body: JSON.stringify(data),
-			headers: {
-				'Content-Type': 'application/json',
-			},
+			headers: createHeader(),
 		})
 			.then(response => response.json())
-			.then(result => console.log(result))
+			.then(result => {
+				if (!result.data) {
+					return Swal.fire({
+						icon: 'error',
+						title: result.error.message,
+						confirmButtonColor: '#0083bb',
+					})
+				}
+
+				console.log(result)
+
+				const token = result.data.token
+
+				localStorage.setItem('token', token)
+
+				Swal.fire({
+					icon: 'success',
+					title: result.data.message,
+					confirmButtonColor: '#0083bb',
+				})
+			})
 	}
 
 	function validarEmail() {
@@ -125,17 +144,6 @@ export function Contacto() {
 		if (validarFormulario()) {
 			enviarFormulario()
 			borrarFormulario()
-			Swal.fire({
-				icon: 'success',
-				title: 'El formulario se ha enviado con éxito',
-				confirmButtonColor: '#0083bb',
-			})
-		} else {
-			Swal.fire({
-				icon: 'error',
-				title: 'El formulario no se ha podido enviar',
-				confirmButtonColor: '#0083bb',
-			})
 		}
 	}
 
@@ -143,7 +151,6 @@ export function Contacto() {
 		<section className='contacto'>
 			<div className='contenido'>
 				<img src={logoWhite} alt='Logo Say Quality' loading='lazy' />
-				{/* <p>Para inscribirse a un curso en específico, completar el formulario con los datos solicitados y nos pondremos en contacto a la brevedad</p>	 */}
 			</div>
 
 			<form
@@ -204,7 +211,7 @@ export function Contacto() {
 				</select>
 
 				<label className='lawyer'>
-					¿Usted es abogado?
+					Soy el representante legal de la persona u organizacion que contacta
 					<input
 						type='checkbox'
 						name='lawyer'

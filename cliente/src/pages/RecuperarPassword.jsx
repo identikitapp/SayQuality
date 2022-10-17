@@ -23,7 +23,27 @@ export const RecuperarPassword = () => {
 			headers: createHeader(),
 		})
 			.then(response => response.json())
-			.then(result => console.log(result))
+			.then(result => {
+				if (!result.data) {
+					return Swal.fire({
+						icon: 'error',
+						title: result.error.message,
+						confirmButtonColor: '#0083bb',
+					})
+				}
+
+				console.log(result)
+
+				const token = result.data.token
+
+				localStorage.setItem('token', token)
+
+				Swal.fire({
+					icon: 'success',
+					title: result.data.message,
+					confirmButtonColor: '#0083bb',
+				})
+			})
 	}
 
 	function validarFormulario() {
@@ -56,17 +76,6 @@ export const RecuperarPassword = () => {
 		if (validarFormulario()) {
 			enviarFormulario()
 			borrarFormulario()
-			Swal.fire({
-				icon: 'success',
-				title: 'Te hemos enviado un mail, por favor verifica tu bandeja de entrada',
-				confirmButtonColor: '#0083bb',
-			})
-		} else {
-			Swal.fire({
-				icon: 'error',
-				title: 'Ha ocurrido un error',
-				confirmButtonColor: '#0083bb',
-			})
 		}
 	}
 

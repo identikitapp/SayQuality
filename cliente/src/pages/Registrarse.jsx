@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import logoColor from '../assets/logoColor.png'
 import { BsEye, BsEyeSlash } from 'react-icons/bs'
 import Swal from 'sweetalert2'
+import createHeader from '../utils/createHeader'
 
 export const Registrarse = () => {
 	const [name, setName] = useState('')
@@ -35,12 +36,30 @@ export const Registrarse = () => {
 		await fetch(url, {
 			method: 'POST',
 			body: JSON.stringify(data),
-			headers: {
-				'Content-Type': 'application/json',
-			},
+			headers: createHeader(),
 		})
 			.then(response => response.json())
-			.then(result => console.log(result))
+			.then(result => {
+				if (!result.data) {
+					return Swal.fire({
+						icon: 'error',
+						title: result.error.message,
+						confirmButtonColor: '#0083bb',
+					})
+				}
+
+				console.log(result)
+
+				const token = result.data.token
+
+				localStorage.setItem('token', token)
+
+				Swal.fire({
+					icon: 'success',
+					title: result.data.message,
+					confirmButtonColor: '#0083bb',
+				})
+			})
 	}
 
 	function validarName() {
@@ -92,7 +111,8 @@ export const Registrarse = () => {
 	}, [lastName])
 
 	function validarEmail() {
-		const emailRegEx = /^[\w\.\-]+@([\w-]+\.)+[\w-]{2,4}$/
+		const emailRegEx =
+			/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 		if (email.length !== 0) {
 			if (emailRegEx.test(email)) {
@@ -116,8 +136,7 @@ export const Registrarse = () => {
 	}, [email])
 
 	function validarPassword() {
-		const passwordRegEx =
-			/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/gm
+		const passwordRegEx = /^.{5,50}$/
 
 		if (password.length !== 0) {
 			if (passwordRegEx.test(password)) {
@@ -182,17 +201,6 @@ export const Registrarse = () => {
 		if (validarFormulario()) {
 			enviarFormulario()
 			borrarFormulario()
-			Swal.fire({
-				icon: 'success',
-				title: 'Hemos registrado tu cuenta correctamente',
-				confirmButtonColor: '#0083bb',
-			})
-		} else {
-			Swal.fire({
-				icon: 'error',
-				title: 'Ocurrio un error al registrar tu cuenta',
-				confirmButtonColor: '#0083bb',
-			})
 		}
 	}
 
@@ -245,7 +253,7 @@ export const Registrarse = () => {
 						id='name'
 						type='text'
 						name='name'
-						placeholder='Nombre/s'
+						placeholder='Nombres'
 						onChange={e => setName(e.target.value)}
 						value={name}
 					/>
@@ -253,7 +261,7 @@ export const Registrarse = () => {
 						id='lastName'
 						type='text'
 						name='lastname'
-						placeholder='Apellido/s'
+						placeholder='Apellidos'
 						onChange={e => setLastName(e.target.value)}
 						value={lastName}
 					/>
