@@ -5,10 +5,8 @@ import { BsEyeSlash, BsEye } from 'react-icons/bs'
 import Swal from 'sweetalert2'
 
 export function Acceder() {
-
-
-	const [correo, setCorreo] = useState('');
-	const [password, setPassword] = useState('');
+	const [correo, setCorreo] = useState('')
+	const [password, setPassword] = useState('')
 	const [passwordType, setPasswordType] = useState(false)
 
 	const enviarFormulario = async () => {
@@ -32,9 +30,10 @@ export function Acceder() {
 
 				localStorage.setItem('token', token)
 			})
+			.then(data => console.log(data))
 			.catch(error => console.error(error))
 	}
-	
+
 	function borrarFormulario() {
 		setCorreo('')
 		setPassword('')

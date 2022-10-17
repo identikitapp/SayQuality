@@ -1,11 +1,11 @@
 function createHeader() {
-    let token = window.localStorage("token");
+	let token = localStorage.getItem('token')
 
-    if(!token) {
-        return { "Content-Type": "application/json" }
-    };
+	if (!token) {
+		return { 'Content-Type': 'application/json' }
+	}
 
-    return { "Content-Type": "application/json", "Authorization": "Bearer " + token }
-};
+	return { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token }
+}
 
-export default createHeader;
+export default createHeader

@@ -88,7 +88,7 @@ export function Contacto() {
 	}, [subject])
 
 	function validarMessage() {
-		const messageRegEx = /^[a-zA-Z0-9]*$/
+		const messageRegEx = /^[a-zA-Z0-9\ ]*$/
 
 		if (message.length !== 0) {
 			if (messageRegEx.test(message)) {
@@ -177,9 +177,7 @@ export function Contacto() {
 					value={subject}
 				/>
 
-				<span id='error-message'>
-					El mensaje solo debe contener letras en mayúsculas, minúsculas y numeros
-				</span>
+				<span id='error-message'>El mensaje no debe contener caracteres especiales</span>
 				<label htmlFor='Mensaje'>Mensaje</label>
 				<textarea
 					id='message'
