@@ -22,7 +22,7 @@ export function Contacto() {
 		const data = {
 			email: email.trim(),
 			subject: subject.trim(),
-			text: text.trim(),
+			text: message.trim(),
 			form: options,
 			lawyer: lawyer.toString(),
 		}
@@ -45,10 +45,6 @@ export function Contacto() {
 				}
 
 				console.log(result)
-
-				const token = result.data.token
-
-				localStorage.setItem('token', token)
 
 				Swal.fire({
 					icon: 'success',

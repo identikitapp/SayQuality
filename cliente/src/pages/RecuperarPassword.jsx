@@ -34,10 +34,6 @@ export const RecuperarPassword = () => {
 
 				console.log(result)
 
-				const token = result.data.token
-
-				localStorage.setItem('token', token)
-
 				Swal.fire({
 					icon: 'success',
 					title: result.data.message,

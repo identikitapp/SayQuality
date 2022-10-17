@@ -1,126 +1,125 @@
 .contacto {
-    padding-top: 10rem;
-    min-height: 100vh;
-    background-color: $azulOscuro;
-    gap: 1rem;
-        #error-message,
-        #error-user,
-		#error-email,
-		#error-subject {
-			display: none;
-			color: red;
-			margin: 1rem auto;
-			font-size: 1.5rem;
-			max-width: 42rem;
+	padding-top: 10rem;
+	min-height: 100vh;
+	background-color: $azulOscuro;
+	gap: 1rem;
+	#error-message,
+	#error-user,
+	#error-email,
+	#error-subject {
+		display: none;
+		color: red;
+		margin: 1rem auto;
+		font-size: 1.5rem;
+		max-width: 42rem;
+	}
+
+	img {
+		max-width: 60rem;
+	}
+
+	.contenido {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+	.formulario {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		gap: 0.5rem;
+		margin-left: 2rem;
+		padding-right: 4rem;
+		padding-left: 4rem;
+
+		.lawyer {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 1rem;
 		}
-        
-    img {
-        max-width: 60rem;
-    }
+		.options {
+			font-size: 1.6rem;
+			padding: 0.7rem;
+			border-radius: 0.5rem;
+			margin-bottom: 1rem;
+			background-color: $grisOscuro;
+			color: $gris;
+			border: none;
+		}
+		legend {
+			color: $blanco;
+			font-size: 2rem;
+			margin: 0 auto;
+			margin-bottom: 2rem;
+		}
+		::placeholder {
+			font-size: 1.5rem;
+		}
+		input {
+			height: 3rem;
+			outline: none;
+			border: none;
+			border-radius: 0.5rem;
+			margin: 1rem 0;
+			padding: 0.5rem;
+			background-color: $grisOscuro;
+			color: $blanco;
+			font-size: 1.5rem;
+			&:focus {
+				border: 1px solid $blanco;
+				background-color: $grisOscuro;
+			}
+		}
+		textarea {
+			color: $blanco;
+			font-size: 1.5rem;
+			height: 10rem;
+			border-radius: 0.5rem;
+			margin: 1rem 0;
+			padding: 0.5rem;
+			outline: none;
+			border: none;
+			resize: none;
+			background-color: $grisOscuro;
+			&:focus {
+				border: 1px solid $blanco;
+				background-color: $grisOscuro;
+			}
+		}
+		label {
+			font-size: 2rem;
+			color: $blanco;
+		}
+	}
+	.btn {
+		width: 30%;
+		margin: 1rem auto;
+		height: 3.5rem;
+		background-color: $azul;
+		color: $blanco;
+		border: none;
+		border-radius: 1rem;
+		outline: none;
+		font-size: 2rem;
 
-    .contenido {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        
-    }
-    .formulario {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: .5rem;
-        margin-left: 2rem;
-        padding-right: 4rem;
-        padding-left: 4rem;
+		margin-bottom: 5rem;
 
-        .lawyer {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-        }
-        .options {
-            font-size: 1.6rem;
-            padding: .7rem;
-            border-radius: .5rem;
-            margin-bottom: 1rem;
-            background-color: $grisOscuro;
-            color: $gris;
-            border: none;
-        }
-        legend {
-            color: $blanco;
-            font-size: 2rem;
-            margin: 0 auto;
-            margin-bottom: 2rem;
-        }
-        ::placeholder {
-            font-size: 1.5rem;
-        }
-        input {
-            height: 3rem;
-            outline: none;
-            border: none;
-            border-radius: .5rem;
-            margin: 1rem 0;
-            padding: .5rem;
-            background-color: $grisOscuro;
-            color: $blanco;
-            font-size: 1.5rem;
-            &:focus {
-                border: 1px solid $blanco;
-                background-color: $grisOscuro;
-
-            }
-        }
-        textarea{
-            color: $blanco;
-            font-size: 1.5rem;
-            height: 10rem;
-            border-radius: .5rem;
-            margin: 1rem 0;
-            padding: .5rem;
-            outline: none;
-            border: none;
-            resize: none;
-            background-color: $grisOscuro;
-            &:focus {
-                border: 1px solid $blanco;
-                background-color: $grisOscuro;
-            }
-        }
-        label {
-            font-size: 2rem;
-            color: $blanco;
-        }
-    }
-    .btn {
-        width: 30%;
-        margin: 1rem auto;
-        height: 3.5rem;
-        background-color: $azul;
-        color: $blanco;
-        border: none;
-        border-radius: 1rem;
-        outline: none;
-        font-size: 2rem;
-            
-        &:hover {
-            opacity: .8;
-            cursor: pointer;
-        }      
-    }
+		&:hover {
+			opacity: 0.8;
+			cursor: pointer;
+		}
+	}
 }
 
 @include tablet {
-    .contacto {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-     }
-     .formulario {
-        min-width: 60rem;
-     }
-     
-} 
+	.contacto {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+	.formulario {
+		min-width: 60rem;
+	}
+}

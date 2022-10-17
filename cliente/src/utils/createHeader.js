@@ -1,5 +1,5 @@
 function createHeader() {
-	let token = localStorage.getItem('token')
+	let token = window.localStorage.getItem('token')
 
 	if (!token) {
 		return { 'Content-Type': 'application/json' }
