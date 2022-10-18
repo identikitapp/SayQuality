@@ -39,6 +39,8 @@ export function Acceder() {
 
 				localStorage.setItem('token', token)
 
+				borrarFormulario()
+
 				Swal.fire({
 					icon: 'success',
 					title: result.data.message,
@@ -108,16 +110,15 @@ export function Acceder() {
 	function handleSubmit(e) {
 		e.preventDefault()
 
-		if (validarFormulario()) {
-			enviarFormulario()
-			borrarFormulario()
+		if (!validarFormulario()) {
+			return Swal.fire({
+				icon: 'error',
+				title: 'Por favor, complete el formulario correctamente',
+				confirmButtonColor: '#0083bb',
+			})
 		}
 
-		return Swal.fire({
-			icon: 'error',
-			title: 'Por favor, complete el formulario correctamente',
-			confirmButtonColor: '#0083bb',
-		})
+		enviarFormulario()
 	}
 
 	function mostrarContrasena() {
