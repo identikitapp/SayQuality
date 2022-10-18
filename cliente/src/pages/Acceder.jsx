@@ -112,6 +112,12 @@ export function Acceder() {
 			enviarFormulario()
 			borrarFormulario()
 		}
+
+		return Swal.fire({
+			icon: 'error',
+			title: 'Por favor, complete el formulario correctamente',
+			confirmButtonColor: '#0083bb',
+		})
 	}
 
 	function mostrarContrasena() {

@@ -24,7 +24,7 @@ export function Contacto() {
 			subject: subject.trim(),
 			text: message.trim(),
 			form: options,
-			lawyer: lawyer.toString(),
+			lawyer: new Boolean(lawyer),
 		}
 
 		const url = import.meta.env.VITE_URL_CONTACT_FORM
@@ -141,6 +141,12 @@ export function Contacto() {
 			enviarFormulario()
 			borrarFormulario()
 		}
+
+		return Swal.fire({
+			icon: 'error',
+			title: 'Por favor, complete el formulario correctamente',
+			confirmButtonColor: '#0083bb',
+		})
 	}
 
 	return (

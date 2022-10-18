@@ -73,6 +73,12 @@ export const RecuperarPassword = () => {
 			enviarFormulario()
 			borrarFormulario()
 		}
+
+		return Swal.fire({
+			icon: 'error',
+			title: 'Por favor, complete el formulario correctamente',
+			confirmButtonColor: '#0083bb',
+		})
 	}
 
 	return (
