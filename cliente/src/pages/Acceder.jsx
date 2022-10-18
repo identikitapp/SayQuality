@@ -41,6 +41,8 @@ export function Acceder() {
 
 				borrarFormulario()
 
+				location.reload()
+
 				Swal.fire({
 					icon: 'success',
 					title: result.data.message,

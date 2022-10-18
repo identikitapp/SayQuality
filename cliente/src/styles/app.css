@@ -396,6 +396,23 @@ template {
   transition: 0.3s;
 }
 
+.conditional-item {
+  display: none;
+}
+
+.user-link {
+  display: none;
+}
+
+.user-avatar {
+  color: #202c33;
+  text-decoration: none;
+}
+
+.accederIcon-link {
+  display: none;
+}
+
 .toggle {
   display: none;
   cursor: pointer;
@@ -445,6 +462,23 @@ template {
   }
   .accederIcon {
     display: none;
+  }
+  .user-avatar {
+    display: none;
+  }
+  .conditional-item {
+    display: block;
+  }
+  .user-link {
+    color: #202c33;
+    text-decoration: none;
+    display: block;
+    margin-top: 20rem;
+  }
+  .accederIcon-link {
+    color: #202c33;
+    display: block;
+    margin-top: 20rem;
   }
 }
 .footer {
@@ -789,6 +823,7 @@ template {
   border-radius: 1rem;
   outline: none;
   font-size: 2rem;
+  margin-bottom: 5rem;
 }
 .contacto .btn:hover {
   opacity: 0.8;

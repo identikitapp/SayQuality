@@ -1,9 +1,13 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../assets/logo.png'
 import { FaUserCircle } from 'react-icons/fa'
 import { FaBars } from 'react-icons/fa'
+import createHeader from '../utils/createHeader'
 
 export function Navbar() {
+	const [user, setUser] = useState()
+
 	const toggleMenu = () => {
 		const menu = document.querySelector('.nav-menu')
 		menu.classList.toggle('nav-menu_active')
@@ -13,6 +17,19 @@ export function Navbar() {
 		const menu = document.querySelector('.nav-menu')
 		menu.classList.remove('nav-menu_active')
 	}
+
+	useEffect(() => {
+		const url = import.meta.env.VITE_URL_USERS
+
+		fetch(url, {
+			method: 'GET',
+			headers: createHeader(),
+		})
+			.then(response => response.json())
+			.then(result => setUser(result))
+	}, [])
+
+	console.log(user)
 
 	return (
 		<nav className='navbar'>
@@ -35,6 +52,17 @@ export function Navbar() {
 						Contacto
 					</Link>
 				</li>
+				<li className='conditional-item'>
+					{user === undefined || user.error ? (
+						<Link to='/acceder' className='accederIcon-link' onClick={() => closeMenu()}>
+							<FaUserCircle size={40} />
+						</Link>
+					) : (
+						<Link to='/perfil' className='user-link' onClick={() => closeMenu()}>
+							{user.data.user.username}
+						</Link>
+					)}
+				</li>
 			</ul>
 			{
 				<button
@@ -46,9 +74,16 @@ export function Navbar() {
 					<FaBars size={30} />
 				</button>
 			}
-			<Link to='/acceder' className='accederIcon'>
-				<FaUserCircle size={35} />
-			</Link>
+
+			{user === undefined || user.error ? (
+				<Link to='/acceder' className='accederIcon'>
+					<FaUserCircle size={35} />
+				</Link>
+			) : (
+				<Link to='/perfil' className='user-avatar'>
+					{user.data.user.username}
+				</Link>
+			)}
 		</nav>
 	)
 }

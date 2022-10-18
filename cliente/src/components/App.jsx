@@ -7,6 +7,7 @@ import { Contacto } from '../pages/Contacto'
 import { Acceder } from '../pages/Acceder'
 import { Footer } from './Footer'
 import { Registrarse } from '../pages/Registrarse'
+import { Perfil } from '../pages/Perfil'
 import { RecuperarPassword } from '../pages/RecuperarPassword'
 
 export function App() {
@@ -24,6 +25,7 @@ export function App() {
 					<Route path='/acceder' element={<Acceder />} />
 					<Route path='/registrarse' element={<Registrarse />} />
 					<Route path='/recuperar-password' element={<RecuperarPassword />} />
+					<Route path='/perfil' element={<Perfil />} />
 					<Route path='*' element={<Navigate replace to='/' />} />
 				</Routes>
 			</main>

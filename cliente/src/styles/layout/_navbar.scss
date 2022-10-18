@@ -68,6 +68,23 @@
 	}
 }
 
+.conditional-item {
+	display: none;
+}
+
+.user-link {
+	display: none;
+}
+
+.user-avatar {
+	color: $azulOscuro;
+	text-decoration: none;
+}
+
+.accederIcon-link {
+	display: none;
+}
+
 .toggle {
 	display: none;
 
@@ -117,7 +134,6 @@
 
 		border-bottom: 2px solid transparent;
 
-
 		&:hover {
 			border-bottom: 2px solid $naranja;
 		}
@@ -134,5 +150,30 @@
 
 	.accederIcon {
 		display: none;
+	}
+
+	.user-avatar {
+		display: none;
+	}
+
+	.conditional-item {
+		display: block;
+	}
+
+	.user-link {
+		color: $azulOscuro;
+		text-decoration: none;
+
+		display: block;
+
+		margin-top: 20rem;
+	}
+
+	.accederIcon-link {
+		color: $azulOscuro;
+
+		display: block;
+
+		margin-top: 20rem;
 	}
 }
