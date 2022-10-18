@@ -14,7 +14,7 @@ module.exports = (request, response, next) => {
             .status(400)
             .json({
                 "error": {
-                    
+
                     "message": "El contenido de la cabezera \"authorization\" no es valido."
                 }
             });
@@ -27,7 +27,7 @@ module.exports = (request, response, next) => {
             .status(401)
             .json({
                 "error": {
-                    
+
                     "message": "No se admite ese tipo de tokens"
                 }
             });
@@ -42,7 +42,7 @@ module.exports = (request, response, next) => {
                                 .status(500)
                                 .json({
                                     "error": {
-                                        
+
                                         "message": "Error interno."
                                     }
                                 });
@@ -55,7 +55,7 @@ module.exports = (request, response, next) => {
                                 .status(401)
                                 .json({
                                     "error": {
-                                        
+
                                         "message": "El token no es valido."
                                     }
                                 });
@@ -66,7 +66,7 @@ module.exports = (request, response, next) => {
                                 .status(410)
                                 .json({
                                     "error": {
-                                        
+
                                         "message": "Tu cuenta fue eliminada."
                                     }
                                 });
@@ -75,7 +75,7 @@ module.exports = (request, response, next) => {
                                 .status(403)
                                 .json({
                                     "error": {
-                                        
+
                                         "message": "Tu cuenta fue suspendida."
                                     }
                                 });
@@ -92,11 +92,23 @@ module.exports = (request, response, next) => {
                                 .status(410)
                                 .json({
                                     "error": {
-                                        
+
                                         "message": msg
                                     }
                                 });
-                        }
+                        };
+
+                        sql.GetLogByUserIpAndAction(users[0].ID, request.ip, 3)
+                            .then((logs) => {
+                                if (logs.length == 0) {
+                                    sql.CreateLog(new sql.Log({
+                                        ip: request.ip,
+                                        userID: users[0].ID,
+                                        timestamp: Date.now(),
+                                        action: 3
+                                    }));
+                                };
+                            });
 
                         request.user = users[0];
                         return next();
@@ -106,7 +118,7 @@ module.exports = (request, response, next) => {
                             .status(500)
                             .json({
                                 "error": {
-                                    
+
                                     "message": "Error interno."
                                 }
                             });
@@ -117,7 +129,7 @@ module.exports = (request, response, next) => {
                     .status(401)
                     .json({
                         "error": {
-                            
+
                             "message": "El token no es valido."
                         }
                     });

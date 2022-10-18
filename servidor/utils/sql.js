@@ -239,7 +239,8 @@ module.exports.UpdatePayment = (id, payment) => {
 module.exports.GetPayment = (userID, courseID) => {
     return new Promise((resolve, reject) => {
         connection.query("SELECT * FROM Payments WHERE userID = ? AND courseID = ?", [userID, courseID], (error, results, fields) => {
-            if (error) {console.log(error)
+            if (error) {
+                console.log(error)
                 reject(new Error("Error al obtener el pago"))
             };
 
@@ -402,14 +403,50 @@ module.exports.DeleteMessage = (id, chatID) => {
                     reject(new Error("Error al actualizar el chat"))
                 };
 
-                getMessageByID(id, "delete", (err) =>{
+                getMessageByID(id, "delete", (err) => {
                     if (err) {
                         return reject(err)
                     };
-    
+
                     resolve();
                 });
             });
+        });
+    });
+};
+
+module.exports.GetLog = (ID) => {
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM Logs WHERE ID = ?", [ID], (error, results, fields) => {
+            if (error) {
+                reject(new Error("Error al obtener el registro"))
+            };
+
+            resolve(results)
+        });
+    });
+};
+
+module.exports.GetLogByUserIpAndAction = (userID, ip, action) => {
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM Logs WHERE userID = ? AND ip = ? AND action = ?", [userID, ip, action], (error, results, fields) => {
+            if (error) {
+                reject(new Error("Error al obtener el registro"))
+            };
+
+            resolve(results)
+        });
+    });
+};
+
+module.exports.CreateLog = (log) => {
+    return new Promise((resolve, reject) => {
+        connection.query("INSERT INTO Logs SET userID = ?, courseID = ?, chatID = ?, hash = ?, timestamp = ?, action = ?, email = ?, ip = ?", [log.userID, log.courseID, log.chatID, log.hash, log.timestamp, log.action, log.email, log.ip], (error, results, fields) => {
+            if (error) {
+                reject(new Error("Error al crear el pago"))
+            };
+
+            resolve();
         });
     });
 };
@@ -646,6 +683,65 @@ module.exports.User = class {
             this.type = 1;
         } else {
             this.type = user.type;
+        };
+
+    };
+};
+
+module.exports.Log = class {
+    constructor(log) {
+        if (!log.ID) {
+            this.ID = 0;
+        } else {
+            this.ID = log.ID;
+        };
+
+        if (!log.userID) {
+            this.userID = null;
+        } else {
+            this.userID = log.userID;
+        };
+
+        if (!log.courseID) {
+            this.courseID = null;
+        } else {
+            this.courseID = log.courseID;
+        };
+
+        if (!log.chatID) {
+            this.chatID = null;
+        } else {
+            this.chatID = log.chatID;
+        };
+
+        if (!log.hash) {
+            this.hash = null;
+        } else {
+            this.hash = log.hash;
+        };
+
+        if (!log.email) {
+            this.email = null;
+        } else {
+            this.email = log.email;
+        };
+
+        if (!log.ip) {
+            this.ip = null;
+        } else {
+            this.ip = log.ip;
+        };
+
+        if (!log.action) {
+            this.action = 1;
+        } else {
+            this.action = log.action;
+        };
+
+        if (!log.timestamp) {
+            this.timestamp = Date.now();
+        } else {
+            this.timestamp = log.timestamp;
         };
 
     };
