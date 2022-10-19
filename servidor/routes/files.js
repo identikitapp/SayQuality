@@ -3,6 +3,7 @@ const images = express.Router();
 const sql = require("../utils/sql.js");
 const fs = require("fs");
 const imgs = require("../utils/images.js");
+const rateLimit = require("../utils/rateLimit.js");
 
 images.param('hash', require("../middlewares/hashParam.js"));
 
@@ -28,7 +29,7 @@ images.get("/images/:hash", (req, res) => {
     res.sendFile(req.img);
 });
 
-images.post("/images", (req, res) => {
+images.post("/images", rateLimit.uploadImage, (req, res) => {
     if (!req.user) {
         return res
             .status(401)

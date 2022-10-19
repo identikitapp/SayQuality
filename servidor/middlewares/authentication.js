@@ -42,7 +42,6 @@ module.exports = (request, response, next) => {
                                 .status(500)
                                 .json({
                                     "error": {
-
                                         "message": "Error interno."
                                     }
                                 });
@@ -55,7 +54,6 @@ module.exports = (request, response, next) => {
                                 .status(401)
                                 .json({
                                     "error": {
-
                                         "message": "El token no es valido."
                                     }
                                 });
@@ -66,7 +64,6 @@ module.exports = (request, response, next) => {
                                 .status(410)
                                 .json({
                                     "error": {
-
                                         "message": "Tu cuenta fue eliminada."
                                     }
                                 });
@@ -75,7 +72,6 @@ module.exports = (request, response, next) => {
                                 .status(403)
                                 .json({
                                     "error": {
-
                                         "message": "Tu cuenta fue suspendida."
                                     }
                                 });
@@ -92,7 +88,6 @@ module.exports = (request, response, next) => {
                                 .status(410)
                                 .json({
                                     "error": {
-
                                         "message": msg
                                     }
                                 });

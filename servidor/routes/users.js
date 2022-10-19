@@ -4,6 +4,7 @@ const sql = require("../utils/sql.js");
 const email = require("../utils/email.js");
 const jwt = require("../utils/jwt.js");
 const images = require("../utils/images.js");
+const rateLimit = require("../utils/rateLimit.js");
 const { shallowEqual } = require("shallow-equal-object");
 const shajs = require('sha.js');
 
@@ -116,7 +117,7 @@ users.get("/", (req, res) => {
 
 });
 
-users.post("/", (req, res) => {
+users.post("/", rateLimit.register, (req, res) => {
     let body = req.body;
 
     if (!body.username || typeof body.username != "string" || body.username.length > 55) {
@@ -137,7 +138,6 @@ users.post("/", (req, res) => {
             .json({
                 "redirect": process.env.WEB + "/register",
                 "error": {
-
                     "message": "Por favor ingrese un correo electronico.",
                     "field": "email"
                 }
@@ -150,7 +150,6 @@ users.post("/", (req, res) => {
             .status(422)
             .json({
                 "error": {
-
                     "message": "Por favor ingrese un correo electronico valido.",
                     "field": "email"
                 }
@@ -596,7 +595,7 @@ users.patch("/auth/reset", (req, res) => {
         });
 });
 
-users.post("/auth", (req, res) => {
+users.post("/auth", rateLimit.login, (req, res) => {
     let body = req.body;
 
     if (!body.email) {
@@ -604,7 +603,6 @@ users.post("/auth", (req, res) => {
             .status(422)
             .json({
                 "error": {
-
                     "message": "Por favor ingrese un correo electronico.",
                     "field": "email"
                 }
@@ -791,7 +789,7 @@ users.get("/:ID", (req, res) => {
 
 });
 
-users.patch("/:ID", (req, res) => {
+users.patch("/:ID", rateLimit.updateUser, (req, res) => {
 
     let body = req.body;
     let updatedUser = { ...req.user };
