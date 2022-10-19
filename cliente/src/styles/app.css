@@ -646,6 +646,82 @@ template {
     padding-bottom: 10rem;
   }
 }
+.cursosContainer {
+  margin-top: 60px;
+  min-height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  font-family: "Lexend", sans-serif;
+  background: #202c33;
+}
+
+.cursoCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  max-width: 350px;
+  margin: 0 10rem;
+  color: #fff;
+}
+.cursoCard a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3rem;
+  width: 230px;
+  height: 50px;
+  background-color: #0083bb;
+  color: #fff;
+  font-size: 1.5rem;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+.cursoCard a:hover {
+  transform: scale(1.1);
+  transition: all 0.5s ease;
+}
+.cursoCard img {
+  width: 100%;
+  height: 250px;
+  -o-object-fit: fill;
+     object-fit: fill;
+  border-radius: 1.5rem;
+}
+.cursoCard h2 {
+  font-size: 2.5rem;
+  text-align: center;
+}
+.cursoCard p {
+  height: 200px;
+  overflow: scroll;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
+}
+.cursoCard strong {
+  font-size: 2rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 1100px) {
+  .cursoCard {
+    margin: 0 5rem;
+  }
+}
+@media (max-width: 900px) {
+  .cursoCard {
+    margin: 0 2rem;
+  }
+}
+@media (max-width: 780px) {
+  .cursoCard {
+    margin: 3rem 2rem;
+  }
+}
 .equipo {
   margin-top: 60px;
   min-height: 100vh;
@@ -753,6 +829,7 @@ template {
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  font-size: 1.3rem;
 }
 .contacto .formulario .options {
   font-size: 1.6rem;

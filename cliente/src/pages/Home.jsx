@@ -73,7 +73,7 @@ export function Home() {
 					Un nuevo empleo, mejor salario, mayor calidad de vida, ¡todo lo puedes conseguir
 					con educación! Es el momento de lograr lo que siempre has querido.
 				</span>
-				<Link to='/acceder'>Comenza a estudiar gratis</Link>
+				<Link to='/registrarse'>Comenza a estudiar gratis</Link>
 			</article>
 		</section>
 	)

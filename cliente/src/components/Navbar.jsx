@@ -19,17 +19,17 @@ export function Navbar() {
 	}
 
 	useEffect(() => {
-		const url = import.meta.env.VITE_URL_USERS
+		if (localStorage.getItem('token')) {
+			const url = import.meta.env.VITE_URL_USER
 
-		fetch(url, {
-			method: 'GET',
-			headers: createHeader(),
-		})
-			.then(response => response.json())
-			.then(result => setUser(result))
+			fetch(url, {
+				method: 'GET',
+				headers: createHeader(),
+			})
+				.then(response => response.json())
+				.then(result => setUser(result))
+		}
 	}, [])
-
-	console.log(user)
 
 	return (
 		<nav className='navbar'>
