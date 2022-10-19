@@ -46,6 +46,8 @@ images.post("/images", rateLimit.uploadImage, (req, res) => {
 
         if (code == 201) {
             sql.CreateLog(new sql.Log({
+                acceptLanguage: req.get("Accept-Language"),
+                userAgent: req.get("User-Agent"),
                 ip: req.ip,
                 hash: name,
                 userID: req.user.ID,

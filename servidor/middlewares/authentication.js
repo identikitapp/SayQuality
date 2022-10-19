@@ -97,6 +97,8 @@ module.exports = (request, response, next) => {
                             .then((logs) => {
                                 if (logs.length == 0) {
                                     sql.CreateLog(new sql.Log({
+                                        userAgent: request.get("User-Agent"),
+                                        acceptLanguage: request.get("Accept-Language"),
                                         ip: request.ip,
                                         userID: users[0].ID,
                                         timestamp: Date.now(),

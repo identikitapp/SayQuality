@@ -441,7 +441,7 @@ module.exports.GetLogByUserIpAndAction = (userID, ip, action) => {
 
 module.exports.CreateLog = (log) => {
     return new Promise((resolve, reject) => {
-        connection.query("INSERT INTO Logs SET userID = ?, courseID = ?, chatID = ?, hash = ?, timestamp = ?, action = ?, email = ?, ip = ?", [log.userID, log.courseID, log.chatID, log.hash, log.timestamp, log.action, log.email, log.ip], (error, results, fields) => {
+        connection.query("INSERT INTO Logs SET userID = ?, courseID = ?, chatID = ?, hash = ?, timestamp = ?, action = ?, email = ?, ip = ?, userAgent = ?, acceptLanguage = ?", [log.userID, log.courseID, log.chatID, log.hash, log.timestamp, log.action, log.email, log.ip, log.userAgent, log.acceptLanguage], (error, results, fields) => {
             if (error) {
                 reject(new Error("Error al crear el pago"))
             };
@@ -700,6 +700,18 @@ module.exports.Log = class {
             this.userID = null;
         } else {
             this.userID = log.userID;
+        };
+
+        if (!log.userAgent) {
+            this.userAgent = null;
+        } else {
+            this.userAgent = log.userAgent;
+        };
+
+        if (!log.acceptLanguage) {
+            this.acceptLanguage = null;
+        } else {
+            this.acceptLanguage = log.acceptLanguage;
         };
 
         if (!log.courseID) {

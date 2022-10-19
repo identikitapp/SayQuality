@@ -217,6 +217,8 @@ users.post("/", rateLimit.register, (req, res) => {
             }))
                 .then(() => {
                     sql.CreateLog(new sql.Log({
+                        acceptLanguage: req.get("Accept-Language"),
+                        userAgent: req.get("User-Agent"),
                         ip: req.ip,
                         email: body.email,
                         timestamp: Date.now(),
@@ -315,6 +317,8 @@ users.patch("/auth/verify", (req, res) => {
                 .then(() => {
 
                     sql.CreateLog(new sql.Log({
+                        acceptLanguage: req.get("Accept-Language"),
+                        userAgent: req.get("User-Agent"),
                         userID: user.ID,
                         ip: req.ip,
                         timestamp: Date.now(),
@@ -559,6 +563,8 @@ users.patch("/auth/reset", (req, res) => {
                 .then(() => {
 
                     sql.CreateLog(new sql.Log({
+                        acceptLanguage: req.get("Accept-Language"),
+                        userAgent: req.get("User-Agent"),
                         ip: req.ip,
                         userID: user.ID,
                         timestamp: Date.now(),
@@ -725,6 +731,8 @@ users.post("/auth", rateLimit.login, (req, res) => {
             };
 
             sql.CreateLog(new sql.Log({
+                acceptLanguage: req.get("Accept-Language"),
+                userAgent: req.get("User-Agent"),
                 userID: user.ID,
                 ip: req.ip,
                 timestamp: Date.now(),
@@ -1112,6 +1120,8 @@ users.delete("/:ID", (req, res) => {
         .then(() => {
 
             sql.CreateLog(new sql.Log({
+                acceptLanguage: req.get("Accept-Language"),
+                userAgent: req.get("User-Agent"),
                 ip: req.ip,
                 userID: req.user.ID,
                 timestamp: Date.now(),
@@ -1155,6 +1165,8 @@ function updateUser(req, res, user, token = true, action) {
             };
 
             sql.CreateLog(new sql.Log({
+                acceptLanguage: req.get("Accept-Language"),
+                userAgent: req.get("User-Agent"),
                 ip: req.ip,
                 userID: user.ID,
                 timestamp: Date.now(),

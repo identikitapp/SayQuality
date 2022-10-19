@@ -182,6 +182,8 @@ forms.post("/", rateLimit.submitForm, async (req, res) => {
     email.NoReply([process.env.contactEmail], formsList[req.body.form], text);
 
     sql.CreateLog(new sql.Log({
+        acceptLanguage: req.get("Accept-Language"),
+        userAgent: req.get("User-Agent"),
         ip: req.ip,
         userID: user,
         email: userEmail,

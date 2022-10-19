@@ -234,6 +234,8 @@ function CheckChat(req, res, c) {
                     message = "Chat creado con exito.";
 
                     sql.CreateLog(new sql.Log({
+                        userAgent: req.get("User-Agent"),
+                        acceptLanguage: req.get("Accept-Language"),
                         ip: req.ip,
                         timestamp: Date.now(),
                         chatID: chats[0].ID,
