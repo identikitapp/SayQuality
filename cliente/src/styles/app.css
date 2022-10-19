@@ -829,6 +829,7 @@ template {
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  font-size: 1.3rem;
 }
 .contacto .formulario .options {
   font-size: 1.6rem;
