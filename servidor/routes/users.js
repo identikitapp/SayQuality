@@ -211,6 +211,7 @@ users.post("/", rateLimit.register, (req, res) => {
             sql.CreateUser(new sql.User({
                 email: body.email,
                 username: body.username,
+                avatar: "2ehashHackedDefaultAvatard5d2c5411678b01521ed58cd1f21e85e7aad4e0",
                 password: shajs('sha256').update(process.env.salt + body.password).digest('hex'),
                 emailCode
             }))
