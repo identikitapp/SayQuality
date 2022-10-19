@@ -58,8 +58,12 @@ export function Navbar() {
 							<FaUserCircle size={40} />
 						</Link>
 					) : (
-						<Link to='/perfil' className='user-link' onClick={() => closeMenu()}>
-							{user.data.user.username}
+						<Link to='/perfil' className='user-avatar-link' onClick={() => closeMenu()}>
+							<img
+								className='user-avatar-img'
+								src={import.meta.env.VITE_URL_IMG + user.data.user.avatar}
+								alt={user.data.user.username}
+							></img>
 						</Link>
 					)}
 				</li>
@@ -81,7 +85,11 @@ export function Navbar() {
 				</Link>
 			) : (
 				<Link to='/perfil' className='user-avatar'>
-					{user.data.user.username}
+					<img
+						className='user-avatar-img'
+						src={import.meta.env.VITE_URL_IMG + user.data.user.avatar}
+						alt={user.data.user.username}
+					></img>
 				</Link>
 			)}
 		</nav>

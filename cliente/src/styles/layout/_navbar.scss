@@ -72,13 +72,19 @@
 	display: none;
 }
 
-.user-link {
+.user-avatar-link {
 	display: none;
 }
 
 .user-avatar {
-	color: $azulOscuro;
-	text-decoration: none;
+	width: 4rem;
+
+	margin-top: 0.5rem;
+}
+
+.user-avatar-img {
+	border: 2px solid $azulOscuro;
+	border-radius: 50%;
 }
 
 .accederIcon-link {
@@ -128,7 +134,7 @@
 		text-align: center;
 		list-style: none;
 
-		width: 10rem;
+		width: 13rem;
 
 		margin: 3rem 0;
 
@@ -142,6 +148,8 @@
 	.nav-menu-link {
 		color: $azulOscuro;
 		text-decoration: none;
+
+		font-size: 2.5rem;
 	}
 
 	.toggle {
@@ -160,13 +168,12 @@
 		display: block;
 	}
 
-	.user-link {
-		color: $azulOscuro;
-		text-decoration: none;
-
+	.user-avatar-link {
 		display: block;
 
 		margin-top: 20rem;
+
+		width: 6rem;
 	}
 
 	.accederIcon-link {

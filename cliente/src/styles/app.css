@@ -400,13 +400,18 @@ template {
   display: none;
 }
 
-.user-link {
+.user-avatar-link {
   display: none;
 }
 
 .user-avatar {
-  color: #202c33;
-  text-decoration: none;
+  width: 4rem;
+  margin-top: 0.5rem;
+}
+
+.user-avatar-img {
+  border: 2px solid #202c33;
+  border-radius: 50%;
 }
 
 .accederIcon-link {
@@ -446,7 +451,7 @@ template {
   .nav-menu-item {
     text-align: center;
     list-style: none;
-    width: 10rem;
+    width: 13rem;
     margin: 3rem 0;
     border-bottom: 2px solid transparent;
   }
@@ -456,6 +461,7 @@ template {
   .nav-menu-link {
     color: #202c33;
     text-decoration: none;
+    font-size: 2.5rem;
   }
   .toggle {
     display: block;
@@ -469,11 +475,10 @@ template {
   .conditional-item {
     display: block;
   }
-  .user-link {
-    color: #202c33;
-    text-decoration: none;
+  .user-avatar-link {
     display: block;
     margin-top: 20rem;
+    width: 6rem;
   }
   .accederIcon-link {
     color: #202c33;
