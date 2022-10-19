@@ -258,6 +258,8 @@ courses.post("/payments", (req, res) => {
             if (payment.body.status == "approved") {
                 authorized = true;
                 sql.CreateLog(new sql.Log({
+                    acceptLanguage: req.get("Accept-Language"),
+                    userAgent: req.get("User-Agent"),
                     userID,
                     courseID,
                     ip: req.ip,
