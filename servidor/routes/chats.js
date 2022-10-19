@@ -1,6 +1,7 @@
 const express = require("express");
 const chats = express.Router();
 const sql = require("../utils/sql.js");
+const rateLimit = require("../utils/rateLimit.js");
 const email = require("../utils/email.js");
 const jwt = require("../utils/jwt.js");
 const images = require("../utils/images.js");
@@ -47,7 +48,7 @@ chats.get("/", (req, res, next) => {
 
 });
 
-chats.post("/", (req, res) => {
+chats.post("/", rateLimit.createChat, (req, res) => {
     if (!req.user) {
         return res
             .status(401)
