@@ -24,7 +24,13 @@ export function Cursos() {
 		<section className='cursosContainer'>
 			{cursos.map(curso => (
 				<article key={curso.id} className='cursoCard'>
-					<img src={import.meta.env.VITE_URL_IMG + curso.picture} alt={curso.name} />
+					<img
+						src={import.meta.env.VITE_URL_IMG + curso.picture}
+						alt={curso.name}
+						loading='lazy'
+						width={300}
+						height={250}
+					/>
 					<h2>{curso.name}</h2>
 					<p>{curso.description}</p>
 					<strong>U$D {curso.price}</strong>
