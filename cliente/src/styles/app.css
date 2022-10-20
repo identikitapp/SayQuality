@@ -695,6 +695,7 @@ template {
   -o-object-fit: fill;
      object-fit: fill;
   border-radius: 1.5rem;
+  background: #fff;
 }
 .cursoCard h2 {
   font-size: 2.5rem;
@@ -1342,4 +1343,80 @@ template {
   to {
     transform: rotate(360deg);
   }
+}
+.verify {
+  margin-top: 60px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5;
+  font-family: "Lexend", sans-serif;
+}
+.verify .formVerify {
+  width: 500px;
+  height: 500px;
+  border-radius: 1.25rem;
+  margin: 0 auto;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.verify .formVerify .passwordContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.verify .formVerify #password,
+.verify .formVerify #password2 {
+  width: 80%;
+}
+.verify .formVerify .mostrarContraseña {
+  font-size: 2rem;
+}
+.verify .formVerify .mostrarContraseña:hover {
+  cursor: pointer;
+}
+.verify .formVerify #error-password-input,
+.verify .formVerify #error-password2-input {
+  display: none;
+  color: red;
+  margin: 1rem auto;
+  font-size: 1.5rem;
+  max-width: 42rem;
+}
+.verify .formVerify .invalid {
+  background-color: #ffdddd;
+}
+.verify .formVerify input {
+  font-size: 2rem;
+  padding: 1rem;
+  outline: none;
+  border: none;
+  border-radius: 0.5rem;
+  margin: 1rem;
+  background-color: #fff;
+  border-bottom: 1.5px solid #c8cebd;
+  color: #000;
+}
+.verify .formVerify input:focus {
+  border: 1px solid #fff;
+  border-bottom: 2px solid #3b444b;
+}
+.verify .formVerify button {
+  font-size: 2rem;
+  outline: none;
+  border: 2px solid #0083bb;
+  border-radius: 0.5rem;
+  color: #fff;
+  background-color: #0083bb;
+  width: 300px;
+  margin: 4rem 0 0 0;
+  padding: 1rem;
+}
+.verify .formVerify button:hover {
+  border: 2px solid #000;
+  cursor: pointer;
 }/*# sourceMappingURL=app.css.map */
