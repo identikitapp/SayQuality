@@ -10,6 +10,9 @@ import { Registrarse } from '../pages/Registrarse'
 import { Perfil } from '../pages/Perfil'
 import { Verify } from './Verify'
 import { RecuperarPassword } from '../pages/RecuperarPassword'
+import { Perfil } from '../pages/Perfil'
+import { CuestionarioPerfil } from '../pages/CuestionarioPerfil'
+import { AjustesPerfil } from '../pages/AjustesPerfil'
 
 export function App() {
 	return (
@@ -26,8 +29,12 @@ export function App() {
 					<Route path='/acceder' element={<Acceder />} />
 					<Route path='/registrarse' element={<Registrarse />} />
 					<Route path='/recuperar-password' element={<RecuperarPassword />} />
+
 					<Route path='/perfil' element={<Perfil />} />
 					<Route path='/:code' element={<Verify />} />
+					<Route path='/cuestionario' element={<CuestionarioPerfil />} />
+					<Route path='/ajustes' element={<AjustesPerfil />} />
+
 					<Route path='*' element={<Navigate replace to='/' />} />
 				</Routes>
 			</main>

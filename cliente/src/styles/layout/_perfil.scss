@@ -53,8 +53,14 @@
         list-style: none;
         font-size: 2rem;
         font-weight: bold;
+        background-color: $azulOscuro;
+        border: none;
         color: $blanco;
         margin-top: 5rem;
+
+        &:hover {
+            cursor: pointer;
+        }
         .icon {
             margin-right: .5rem;
             color: $naranja;
@@ -243,6 +249,3 @@
     }
 }
 
-
-
- 

@@ -14,25 +14,10 @@ export const Ajustes = () => {
               <label htmlFor="apellido">Apellido</label>
               <input type="text" placeholder='Apellido' name='lastName' />
             </div>
-            
-            <div className='inputs'>
-                <label htmlFor="Nombre a mostrar">Nombre a mostrar</label>
-                <input type="text" placeholder='Nombre a mostrar'  />
-            </div>
            
             <div className='inputs'>
               <label htmlFor="Correo Electronico">Correo Electronico</label>
               <input type="email" placeholder='Correo Electronico'  />
-            </div>
-            
-            <div className='inputs'>
-              <label htmlFor="DNI">DNI</label>
-              <input type="number" placeholder='Nombre a mostrar'  />
-            </div>
-           
-            <div className='inputs'>
-              <label htmlFor="Celular">Celular</label>
-              <input type="text" placeholder='Celular'  />
             </div>
             
             <div className='inputs'>

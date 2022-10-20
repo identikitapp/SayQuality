@@ -5,6 +5,7 @@ import Swal from 'sweetalert2'
 import logoColor from '../assets/logoColor.png'
 import createHeader from '../utils/createHeader'
 
+
 export function Acceder() {
 	const [correo, setCorreo] = useState('')
 	const [password, setPassword] = useState('')
@@ -13,6 +14,7 @@ export function Acceder() {
 	const navigate = useNavigate()
 
 	const enviarFormulario = async () => {
+		
 		const data = {
 			email: correo.trim(),
 			password: password.trim(),
@@ -133,6 +135,7 @@ export function Acceder() {
 		}
 	}
 
+	
 	return (
 		<section className='acceder'>
 			<div className='logo-acceder'>
@@ -184,6 +187,7 @@ export function Acceder() {
 
 					<button>Iniciar Sesion</button>
 				</form>
+				
 
 				<div className='checkbox'>
 					<p>

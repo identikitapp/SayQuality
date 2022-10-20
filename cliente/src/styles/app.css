@@ -1171,8 +1171,13 @@ template {
   list-style: none;
   font-size: 2rem;
   font-weight: bold;
+  background-color: #202c33;
+  border: none;
   color: #fff;
   margin-top: 5rem;
+}
+.contenedor_perfil aside .secciones .enlaces_secciones:hover {
+  cursor: pointer;
 }
 .contenedor_perfil aside .secciones .enlaces_secciones .icon {
   margin-right: 0.5rem;
