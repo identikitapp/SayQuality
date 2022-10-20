@@ -34,9 +34,7 @@ export const RecuperarPassword = () => {
 
 				console.log(result)
 
-				const token = result.data.token
-
-				localStorage.setItem('token', token)
+				borrarFormulario()
 
 				Swal.fire({
 					icon: 'success',
@@ -73,10 +71,15 @@ export const RecuperarPassword = () => {
 	function handleSubmit(e) {
 		e.preventDefault()
 
-		if (validarFormulario()) {
-			enviarFormulario()
-			borrarFormulario()
+		if (!validarFormulario()) {
+			return Swal.fire({
+				icon: 'error',
+				title: 'Por favor, complete el formulario correctamente',
+				confirmButtonColor: '#0083bb',
+			})
 		}
+
+		enviarFormulario()
 	}
 
 	return (

@@ -11,6 +11,7 @@ const formsList = {
 };
 const sql = require("../utils/sql.js");
 const email = require("../utils/email.js");
+const rateLimit = require("../utils/rateLimit.js");
 const jwt = require("../utils/jwt.js");
 const images = require("../utils/images.js");
 const shajs = require('sha.js');
@@ -24,16 +25,16 @@ forms.get("/", (req, res) => {
     });
 });
 
-forms.post("/", async (req, res) => {
+forms.post("/", rateLimit.submitForm, async (req, res) => {
     let body = req.body;
     let userEmail;
+    let user;
 
-    if (!req.body.form || req.body.form < 0 || req.body.form > 5) {
+    if (typeof req.body.form != "number" || req.body.form < 0 || req.body.form > 6) {
         return res
             .status(422)
             .json({
                 "error": {
-                    
                     "message": "Ingresa un formulario valido.",
                     "field": "form"
                 }
@@ -42,11 +43,11 @@ forms.post("/", async (req, res) => {
 
     if (!!req.user && !!req.body.email) {
         return res
-            .status(409)
+            .status(422)
             .json({
                 "error": {
-                    
-                    "message": "No puedes colocar un email diferente al de tu usuario.",
+
+                    "message": "No puedes colocar un email si tienes la sesion iniciada.",
                     "field": "email"
                 }
             });
@@ -58,15 +59,28 @@ forms.post("/", async (req, res) => {
                 .status(422)
                 .json({
                     "error": {
-                        
                         "message": "Por favor ingrese un correo electronico.",
                         "field": "email"
                     }
                 });
         } else {
+
+            if (body.email.length > 320 || !/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(body.email)) {
+                return res
+                    .status(422)
+                    .json({
+                        "error": {
+                            "message": "Por favor ingrese un correo electronico valido.",
+                            "field": "email"
+                        }
+                    });
+            };
+
+            user = null;
             userEmail = req.body.email;
         };
     } else {
+        user = req.user.ID;
         userEmail = req.user.email;
     };
 
@@ -75,7 +89,6 @@ forms.post("/", async (req, res) => {
             .status(422)
             .json({
                 "error": {
-                    
                     "message": "Por favor ingrese un asunto.",
                     "field": "subject"
                 }
@@ -87,8 +100,18 @@ forms.post("/", async (req, res) => {
             .status(422)
             .json({
                 "error": {
-                    
                     "message": "El asunto es demasiado largo.",
+                    "field": "subject"
+                }
+            });
+    };
+
+    if (body.subject < 5) {
+        return res
+            .status(422)
+            .json({
+                "error": {
+                    "message": "El asunto es demasiado corto.",
                     "field": "subject"
                 }
             });
@@ -99,7 +122,7 @@ forms.post("/", async (req, res) => {
             .status(422)
             .json({
                 "error": {
-                    
+
                     "message": "Por favor ingrese un cuerpo.",
                     "field": "body"
                 }
@@ -111,8 +134,18 @@ forms.post("/", async (req, res) => {
             .status(422)
             .json({
                 "error": {
-                    
                     "message": "El cuerpo es demasiado largo, si es necesario coloque enlaces a otros documentos.",
+                    "field": "body"
+                }
+            });
+    };
+
+    if (body.text < 20) {
+        return res
+            .status(422)
+            .json({
+                "error": {
+                    "message": "El cuerpo es demasiado corto.",
                     "field": "body"
                 }
             });
@@ -128,7 +161,6 @@ forms.post("/", async (req, res) => {
                 .status(422)
                 .json({
                     "error": {
-                        
                         "message": "Verifica si eres un representante.",
                         "field": "lawyer"
                     }
@@ -141,7 +173,6 @@ forms.post("/", async (req, res) => {
             .status(422)
             .json({
                 "error": {
-                    
                     "message": "Esta opcion no requiere un representante.",
                     "field": "lawyer"
                 }
@@ -149,6 +180,16 @@ forms.post("/", async (req, res) => {
     };
 
     email.NoReply([process.env.contactEmail], formsList[req.body.form], text);
+
+    sql.CreateLog(new sql.Log({
+        acceptLanguage: req.get("Accept-Language"),
+        userAgent: req.get("User-Agent"),
+        ip: req.ip,
+        userID: user,
+        email: userEmail,
+        timestamp: Date.now(),
+        action: 13
+    }));
 
     return res
         .status(201)

@@ -10,8 +10,9 @@ export function Acceder() {
 	const [correo, setCorreo] = useState('')
 	const [password, setPassword] = useState('')
 	const [passwordType, setPasswordType] = useState(false)
-	
-	const navigate = useNavigate();
+
+	const navigate = useNavigate()
+
 	const enviarFormulario = async () => {
 		
 		const data = {
@@ -41,9 +42,13 @@ export function Acceder() {
 				const token = result.data.token
 
 				localStorage.setItem('token', token)
-				
-				navigate("/perfil")
+
+				borrarFormulario()
+
+				navigate('/perfil')
 			})
+
+		location.reload()
 	}
 
 	function borrarFormulario() {
@@ -107,10 +112,15 @@ export function Acceder() {
 	function handleSubmit(e) {
 		e.preventDefault()
 
-		if (validarFormulario()) {
-			enviarFormulario()
-			borrarFormulario()
+		if (!validarFormulario()) {
+			return Swal.fire({
+				icon: 'error',
+				title: 'Por favor, complete el formulario correctamente',
+				confirmButtonColor: '#0083bb',
+			})
 		}
+
+		enviarFormulario()
 	}
 
 	function mostrarContrasena() {

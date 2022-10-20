@@ -50,9 +50,7 @@ export const Registrarse = () => {
 
 				console.log(result)
 
-				const token = result.data.token
-
-				localStorage.setItem('token', token)
+				borrarFormulario()
 
 				Swal.fire({
 					icon: 'success',
@@ -198,10 +196,15 @@ export const Registrarse = () => {
 	function handleSubmit(e) {
 		e.preventDefault()
 
-		if (validarFormulario()) {
-			enviarFormulario()
-			borrarFormulario()
+		if (!validarFormulario()) {
+			return Swal.fire({
+				icon: 'error',
+				title: 'Por favor, complete el formulario correctamente',
+				confirmButtonColor: '#0083bb',
+			})
 		}
+
+		enviarFormulario()
 	}
 
 	function mostrarContrasena() {
@@ -241,9 +244,7 @@ export const Registrarse = () => {
 				<span id='error-lastName-input'>El apellido que ingreso es invalido</span>
 				<span id='error-email-input'>El email que ingreso es invalido</span>
 				<span id='error-password-input'>
-					La contraseña que ingreso es invalida, la contraseña debe contener 8 caracteres
-					como minimo, utilizar un caracter especial, una mayuscula, una minuscula y un
-					numero
+					La contraseña que ingreso es invalida, debe tener al menos 5 caracteres
 				</span>
 				<span id='error-password2-input'>
 					La contraseña que ingreso no coincide con la anterior

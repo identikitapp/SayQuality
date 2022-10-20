@@ -1,0 +1,20 @@
+.loaderContainer {
+	display: flex;
+	justify-content: center;
+
+	color: $negro;
+
+	min-height: 100vh;
+
+	margin-top: 20rem;
+}
+
+.loader {
+	animation: loader 1s linear infinite;
+}
+
+@keyframes loader {
+	to {
+		transform: rotate(360deg);
+	}
+}
