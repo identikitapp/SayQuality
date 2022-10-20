@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { BsEyeSlash, BsEye } from 'react-icons/bs'
 import Swal from 'sweetalert2'
 import logoColor from '../assets/logoColor.png'
 import createHeader from '../utils/createHeader'
 
+
 export function Acceder() {
 	const [correo, setCorreo] = useState('')
 	const [password, setPassword] = useState('')
 	const [passwordType, setPasswordType] = useState(false)
-
+	
+	const navigate = useNavigate();
 	const enviarFormulario = async () => {
+		
 		const data = {
 			email: correo.trim(),
 			password: password.trim(),
@@ -38,12 +41,8 @@ export function Acceder() {
 				const token = result.data.token
 
 				localStorage.setItem('token', token)
-
-				Swal.fire({
-					icon: 'success',
-					title: result.data.message,
-					confirmButtonColor: '#0083bb',
-				})
+				
+				navigate("/perfil")
 			})
 	}
 
@@ -126,6 +125,7 @@ export function Acceder() {
 		}
 	}
 
+	
 	return (
 		<section className='acceder'>
 			<div className='logo-acceder'>
@@ -177,6 +177,7 @@ export function Acceder() {
 
 					<button>Iniciar Sesion</button>
 				</form>
+				
 
 				<div className='checkbox'>
 					<p>
