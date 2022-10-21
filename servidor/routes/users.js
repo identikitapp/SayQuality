@@ -18,7 +18,6 @@ users.get("/", (req, res) => {
             .status(422)
             .json({
                 "error": {
-
                     "message": "Por favor ingrese un tipo de usuario."
                 }
             });
@@ -33,7 +32,6 @@ users.get("/", (req, res) => {
             .status(422)
             .json({
                 "error": {
-
                     "message": "El parametro type no es un numero valido."
                 }
             });
@@ -44,7 +42,6 @@ users.get("/", (req, res) => {
             .status(422)
             .json({
                 "error": {
-
                     "message": "Ingresa un tipo de usuario valido."
                 }
             });
@@ -55,7 +52,6 @@ users.get("/", (req, res) => {
             .status(423)
             .json({
                 "error": {
-
                     "message": "No se puede hacer eso."
                 }
             });
@@ -108,8 +104,7 @@ users.get("/", (req, res) => {
                 .status(500)
                 .json({
                     "error": {
-
-                        "message": "Error interno.",
+                        "message": "Error interno."
                     }
                 });
         });
@@ -125,7 +120,6 @@ users.post("/", rateLimit.register, (req, res) => {
             .status(422)
             .json({
                 "error": {
-
                     "message": "El nombre de usuario es demasiado largo o no lo a ingresado.",
                     "field": "username"
                 }
@@ -162,7 +156,6 @@ users.post("/", rateLimit.register, (req, res) => {
             .status(422)
             .json({
                 "error": {
-
                     "message": "Por favor ingrese una contraseña.",
                     "field": "password"
                 }
@@ -174,7 +167,6 @@ users.post("/", rateLimit.register, (req, res) => {
             .status(422)
             .json({
                 "error": {
-
                     "message": "La contraseña es muy larga.",
                     "field": "password"
                 }
@@ -186,7 +178,6 @@ users.post("/", rateLimit.register, (req, res) => {
             .status(422)
             .json({
                 "error": {
-
                     "message": "La contraseña es muy corta.",
                     "field": "password"
                 }
@@ -200,7 +191,6 @@ users.post("/", rateLimit.register, (req, res) => {
                     .status(409)
                     .json({
                         "error": {
-
                             "message": "El correo electrinico ya esta en uso."
                         }
                     });
@@ -216,14 +206,18 @@ users.post("/", rateLimit.register, (req, res) => {
                 emailCode
             }))
                 .then(() => {
-                    sql.CreateLog(new sql.Log({
-                        acceptLanguage: req.get("Accept-Language"),
-                        userAgent: req.get("User-Agent"),
-                        ip: req.ip,
-                        email: body.email,
-                        timestamp: Date.now(),
-                        action: 2
-                    }));
+                    sql.GetUserByCode(emailCode)
+                        .then((users) => {
+                            sql.CreateLog(new sql.Log({
+                                userID: users[0].ID,
+                                acceptLanguage: req.get("Accept-Language"),
+                                userAgent: req.get("User-Agent"),
+                                ip: req.ip,
+                                email: body.email,
+                                timestamp: Date.now(),
+                                action: 2
+                            }));
+                        });
 
                     email.NoReply([body.email], "Su codigo de verificacion!", process.env.WEB + "/verify?code=" + emailCode)
 
@@ -240,7 +234,6 @@ users.post("/", rateLimit.register, (req, res) => {
                         .status(500)
                         .json({
                             "error": {
-
                                 "message": "Error interno."
                             }
                         });
@@ -251,7 +244,6 @@ users.post("/", rateLimit.register, (req, res) => {
                 .status(500)
                 .json({
                     "error": {
-
                         "message": "Error interno."
                     }
                 });
@@ -267,8 +259,7 @@ users.patch("/auth/verify", (req, res) => {
             .status(422)
             .json({
                 "error": {
-
-                    "message": "No se ingreso el codigo.",
+                    "message": "No se ingreso el codigo."
                 }
             });
     };
@@ -278,8 +269,7 @@ users.patch("/auth/verify", (req, res) => {
             .status(422)
             .json({
                 "error": {
-
-                    "message": "El codigo debe ser un string.",
+                    "message": "El codigo debe ser un string."
                 }
             });
     };
@@ -291,8 +281,7 @@ users.patch("/auth/verify", (req, res) => {
                     .status(422)
                     .json({
                         "error": {
-
-                            "message": "El codigo ingresado no es valido.",
+                            "message": "El codigo ingresado no es valido."
                         }
                     });
             };
@@ -304,8 +293,7 @@ users.patch("/auth/verify", (req, res) => {
                     .status(409)
                     .json({
                         "error": {
-
-                            "message": "Ya se encuentra verificado.",
+                            "message": "Ya se encuentra verificado."
                         }
                     });
             };
@@ -338,8 +326,7 @@ users.patch("/auth/verify", (req, res) => {
                         .status(500)
                         .json({
                             "error": {
-
-                                "message": "Error interno.",
+                                "message": "Error interno."
                             }
                         });
                 });
@@ -349,14 +336,13 @@ users.patch("/auth/verify", (req, res) => {
                 .status(500)
                 .json({
                     "error": {
-
-                        "message": "Error interno.",
+                        "message": "Error interno."
                     }
                 });
         });
 });
 
-users.post("/auth/recovery", (req, res) => {
+users.post("/auth/recovery", rateLimit.recovery, (req, res) => {
     let body = req.body;
 
     if (!body.email) {
@@ -364,7 +350,6 @@ users.post("/auth/recovery", (req, res) => {
             .status(422)
             .json({
                 "error": {
-
                     "message": "Por favor ingrese un correo electronico.",
                     "field": "email"
                 }
@@ -377,7 +362,6 @@ users.post("/auth/recovery", (req, res) => {
             .status(422)
             .json({
                 "error": {
-
                     "message": "Por favor ingrese un correo electronico valido.",
                     "field": "email"
                 }
@@ -390,7 +374,6 @@ users.post("/auth/recovery", (req, res) => {
             .status(401)
             .json({
                 "error": {
-
                     "message": "No tienes autorizacion para hacer eso."
                 }
             });
@@ -403,7 +386,6 @@ users.post("/auth/recovery", (req, res) => {
                     .status(401)
                     .json({
                         "error": {
-
                             "message": "El correo electronico no esta registrado.",
                             "field": "email"
                         }
@@ -443,8 +425,7 @@ users.post("/auth/recovery", (req, res) => {
                             .status(500)
                             .json({
                                 "error": {
-
-                                    "message": "Error interno.",
+                                    "message": "Error interno."
                                 }
                             });
                     });
@@ -453,7 +434,6 @@ users.post("/auth/recovery", (req, res) => {
                     .status(410)
                     .json({
                         "error": {
-
                             "message": "Tu cuenta fue eliminada."
                         }
                     });
@@ -462,7 +442,6 @@ users.post("/auth/recovery", (req, res) => {
                     .status(403)
                     .json({
                         "error": {
-
                             "message": "Tu cuenta fue suspendida."
                         }
                     });
@@ -473,15 +452,10 @@ users.post("/auth/recovery", (req, res) => {
                 .status(500)
                 .json({
                     "error": {
-
                         "message": "Error interno.",
                     }
                 });
         });
-
-
-
-
 });
 
 users.patch("/auth/reset", (req, res) => {
@@ -492,8 +466,7 @@ users.patch("/auth/reset", (req, res) => {
             .status(422)
             .json({
                 "error": {
-
-                    "message": "No se ingreso el codigo.",
+                    "message": "No se ingreso el codigo."
                 }
             });
     };
@@ -503,8 +476,7 @@ users.patch("/auth/reset", (req, res) => {
             .status(422)
             .json({
                 "error": {
-
-                    "message": "El codigo debe ser un string.",
+                    "message": "El codigo debe ser un string."
                 }
             });
     };
@@ -514,8 +486,7 @@ users.patch("/auth/reset", (req, res) => {
             .status(422)
             .json({
                 "error": {
-
-                    "message": "No se ingreso la contraseña.",
+                    "message": "No se ingreso la contraseña."
                 }
             });
     };
@@ -525,8 +496,7 @@ users.patch("/auth/reset", (req, res) => {
             .status(422)
             .json({
                 "error": {
-
-                    "message": "La contraseña debe ser un string.",
+                    "message": "La contraseña debe ser un string."
                 }
             });
     };
@@ -538,8 +508,7 @@ users.patch("/auth/reset", (req, res) => {
                     .status(422)
                     .json({
                         "error": {
-
-                            "message": "El codigo ingresado no es valido.",
+                            "message": "El codigo ingresado no es valido."
                         }
                     });
             };
@@ -551,7 +520,7 @@ users.patch("/auth/reset", (req, res) => {
                     .status(409)
                     .json({
                         "error": {
-                            "message": "Debes verificar tu cuenta.",
+                            "message": "Debes verificar tu cuenta."
                         }
                     });
             };
@@ -584,8 +553,7 @@ users.patch("/auth/reset", (req, res) => {
                         .status(500)
                         .json({
                             "error": {
-
-                                "message": "Error interno.",
+                                "message": "Error interno."
                             }
                         });
                 });
@@ -595,8 +563,7 @@ users.patch("/auth/reset", (req, res) => {
                 .status(500)
                 .json({
                     "error": {
-
-                        "message": "Error interno.",
+                        "message": "Error interno."
                     }
                 });
         });
@@ -606,7 +573,7 @@ users.post("/auth", rateLimit.login, (req, res) => {
     let body = req.body;
 
     if (!body.email) {
-        res
+        return res
             .status(422)
             .json({
                 "error": {
@@ -614,20 +581,17 @@ users.post("/auth", rateLimit.login, (req, res) => {
                     "field": "email"
                 }
             });
-        return;
     };
 
     if (typeof body.email != "string") {
-        res
+        return res
             .status(422)
             .json({
                 "error": {
-
                     "message": "Por favor ingrese un correo electronico valido.",
                     "field": "email"
                 }
             });
-        return;
     };
 
 
@@ -636,7 +600,6 @@ users.post("/auth", rateLimit.login, (req, res) => {
             .status(422)
             .json({
                 "error": {
-
                     "message": "No se ingreso la contraseña.",
                 }
             });
@@ -647,7 +610,6 @@ users.post("/auth", rateLimit.login, (req, res) => {
             .status(422)
             .json({
                 "error": {
-
                     "message": "La contraseña debe ser un string.",
                 }
             });
@@ -656,16 +618,14 @@ users.post("/auth", rateLimit.login, (req, res) => {
     sql.GetUserByEmail(body.email)
         .then((users) => {
             if (users.length == 0) {
-                res
+                return res
                     .status(401)
                     .json({
                         "error": {
-
                             "message": "El correo electronico no esta registrado.",
                             "field": "email"
                         }
                     });
-                return;
             };
 
             let user = users[0];
@@ -677,7 +637,6 @@ users.post("/auth", rateLimit.login, (req, res) => {
                     .status(401)
                     .json({
                         "error": {
-
                             "message": "La contraseña es incorrecta.",
                             "field": "password"
                         }
@@ -685,12 +644,19 @@ users.post("/auth", rateLimit.login, (req, res) => {
                 return;
             };
 
-            if (user.status == 3) {
+            if (user.status == 1) {
+                return res
+                    .status(401)
+                    .json({
+                        "error": {
+                            "message": "Debes verificar tu cuenta."
+                        }
+                    });
+            } else if (user.status == 3) {
                 return res
                     .status(410)
                     .json({
                         "error": {
-
                             "message": "Tu cuenta fue eliminada."
                         }
                     });
@@ -699,7 +665,6 @@ users.post("/auth", rateLimit.login, (req, res) => {
                     .status(403)
                     .json({
                         "error": {
-
                             "message": "Tu cuenta fue suspendida."
                         }
                     });
@@ -709,6 +674,15 @@ users.post("/auth", rateLimit.login, (req, res) => {
                 user.deleteAccount = false;
                 return sql.UpdateUser(user.ID, user)
                     .then(() => {
+                        sql.CreateLog(new sql.Log({
+                            acceptLanguage: req.get("Accept-Language"),
+                            userAgent: req.get("User-Agent"),
+                            userID: user.ID,
+                            ip: req.ip,
+                            timestamp: Date.now(),
+                            action: 1
+                        }));
+
                         res
                             .status(200)
                             .json({
@@ -723,7 +697,6 @@ users.post("/auth", rateLimit.login, (req, res) => {
                             .status(500)
                             .json({
                                 "error": {
-
                                     "message": "Error interno.",
                                 }
                             });
@@ -755,7 +728,6 @@ users.post("/auth", rateLimit.login, (req, res) => {
                 .status(500)
                 .json({
                     "error": {
-
                         "message": "Error interno.",
                     }
                 });
@@ -856,7 +828,6 @@ users.patch("/:ID", rateLimit.updateUser, (req, res) => {
                 .json({
                     "redirect": process.env.WEB + "/register",
                     "error": {
-
                         "message": "Por favor ingrese un correo electronico.",
                         "field": "email"
                     }
@@ -868,7 +839,6 @@ users.patch("/:ID", rateLimit.updateUser, (req, res) => {
                 .status(422)
                 .json({
                     "error": {
-
                         "message": "Por favor ingrese un correo electronico valido.",
                         "field": "email"
                     }
@@ -886,7 +856,6 @@ users.patch("/:ID", rateLimit.updateUser, (req, res) => {
                 .status(422)
                 .json({
                     "error": {
-
                         "message": "Por favor ingrese una contraseña.",
                         "field": "password"
                     }
@@ -898,7 +867,6 @@ users.patch("/:ID", rateLimit.updateUser, (req, res) => {
                 .status(422)
                 .json({
                     "error": {
-
                         "message": "La contraseña es muy larga.",
                         "field": "password"
                     }
@@ -910,7 +878,6 @@ users.patch("/:ID", rateLimit.updateUser, (req, res) => {
                 .status(422)
                 .json({
                     "error": {
-
                         "message": "La contraseña es muy corta.",
                         "field": "password"
                     }
@@ -929,7 +896,6 @@ users.patch("/:ID", rateLimit.updateUser, (req, res) => {
                 .status(422)
                 .json({
                     "error": {
-
                         "message": "La biografia es demasiado larga o no lo a ingresado.",
                         "field": "biography"
                     }
@@ -944,7 +910,6 @@ users.patch("/:ID", rateLimit.updateUser, (req, res) => {
                 .status(422)
                 .json({
                     "error": {
-
                         "message": "El avatar es invalido.",
                         "field": "biography"
                     }
@@ -956,7 +921,6 @@ users.patch("/:ID", rateLimit.updateUser, (req, res) => {
                 .status(422)
                 .json({
                     "error": {
-
                         "message": "El avatar es invalido.",
                         "field": "avatar"
                     }
@@ -972,7 +936,6 @@ users.patch("/:ID", rateLimit.updateUser, (req, res) => {
                 .status(422)
                 .json({
                     "error": {
-
                         "message": "El linkedin es invalido o no lo ha ingresado.",
                         "field": "linkedin"
                     }
@@ -987,7 +950,6 @@ users.patch("/:ID", rateLimit.updateUser, (req, res) => {
                 .status(422)
                 .json({
                     "error": {
-
                         "message": "El facebook es invalido o no lo ha ingresado.",
                         "field": "facebook"
                     }
@@ -1002,7 +964,6 @@ users.patch("/:ID", rateLimit.updateUser, (req, res) => {
                 .status(422)
                 .json({
                     "error": {
-
                         "message": "El twitter es invalido o no lo ha ingresado.",
                         "field": "twitter"
                     }
@@ -1017,7 +978,6 @@ users.patch("/:ID", rateLimit.updateUser, (req, res) => {
                 .status(422)
                 .json({
                     "error": {
-
                         "message": "El canal de youtube es invalido o no lo ha ingresado.",
                         "field": "youtube"
                     }
@@ -1032,7 +992,6 @@ users.patch("/:ID", rateLimit.updateUser, (req, res) => {
                 .status(422)
                 .json({
                     "error": {
-
                         "message": "El github es invalido o no lo ha ingresado.",
                         "field": "github"
                     }
@@ -1059,7 +1018,6 @@ users.patch("/:ID", rateLimit.updateUser, (req, res) => {
                         .status(409)
                         .json({
                             "error": {
-
                                 "message": "El correo electrinico ya esta en uso."
                             }
                         });
@@ -1075,7 +1033,6 @@ users.patch("/:ID", rateLimit.updateUser, (req, res) => {
                     .status(500)
                     .json({
                         "error": {
-
                             "message": "Error interno."
                         }
                     });
@@ -1093,7 +1050,6 @@ users.delete("/:ID", (req, res) => {
             .status(401)
             .json({
                 "error": {
-
                     "message": "Debes iniciar sesion para hacer eso."
                 }
             });
@@ -1104,7 +1060,6 @@ users.delete("/:ID", (req, res) => {
             .status(403)
             .json({
                 "error": {
-
                     "message": "No tienes autorizacion para hacer eso."
                 }
             });
@@ -1142,8 +1097,7 @@ users.delete("/:ID", (req, res) => {
                 .status(500)
                 .json({
                     "error": {
-
-                        "message": "Error interno.",
+                        "message": "Error interno."
                     }
                 });
         });
@@ -1182,7 +1136,6 @@ function updateUser(req, res, user, token = true, action) {
                 .status(500)
                 .json({
                     "error": {
-
                         "message": "Error interno."
                     }
                 });

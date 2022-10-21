@@ -19,7 +19,6 @@ images.get(["/", "/images"], (req, res) => {
         .status(423)
         .json({
             "error": {
-
                 "message": "No se puede hacer eso."
             }
         });
@@ -35,7 +34,6 @@ images.post("/images", rateLimit.uploadImage, (req, res) => {
             .status(401)
             .json({
                 "error": {
-
                     "message": "Debes iniciar sesion para hacer eso."
                 }
             });
@@ -69,7 +67,6 @@ images.post("/images", rateLimit.uploadImage, (req, res) => {
             .status(415)
             .json({
                 "error": {
-
                     "message": e.message
                 }
             });
@@ -84,7 +81,6 @@ images.get("/:stageID", (req, res) => {
             .status(404)
             .json({
                 "error": {
-
                     "message": "El archivo no existe."
                 }
             });
@@ -97,7 +93,6 @@ images.get("/:stageID/:file", (req, res) => {
             .status(401)
             .json({
                 "error": {
-
                     "message": "Debes iniciar sesion para hacer eso."
                 }
             });
@@ -110,7 +105,6 @@ images.get("/:stageID/:file", (req, res) => {
                     .status(401)
                     .json({
                         "error": {
-
                             "message": "Debes comprar el producto."
                         }
                     });
@@ -121,7 +115,6 @@ images.get("/:stageID/:file", (req, res) => {
                     .status(401)
                     .json({
                         "error": {
-
                             "message": "Debes comprar el producto."
                         }
                     });
@@ -134,7 +127,6 @@ images.get("/:stageID/:file", (req, res) => {
                     .status(404)
                     .json({
                         "error": {
-
                             "message": "El archivo no existe."
                         }
                     });
@@ -145,8 +137,7 @@ images.get("/:stageID/:file", (req, res) => {
                 .status(500)
                 .json({
                     "error": {
-
-                        "message": "Error interno.",
+                        "message": "Error interno."
                     }
                 });
         });
