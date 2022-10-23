@@ -1520,6 +1520,7 @@ template {
   align-items: center;
   font-size: 2rem;
   margin: 2rem 0;
+  padding: 0;
   cursor: pointer;
 }
 .courseDetails div ul li {
@@ -1541,4 +1542,15 @@ template {
 .courseDetails div ul li:hover {
   transition: all 0.3s ease;
   opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .courseDetails article div {
+    margin: 0;
+  }
+}
+@media (max-width: 420px) {
+  .courseDetails article img {
+    width: 90%;
+  }
 }/*# sourceMappingURL=app.css.map */
