@@ -11,7 +11,6 @@ module.exports = function (req, res, next, name) {
                     .status(404)
                     .json({
                         "error": {
-                            
                             "message": "El curso no existe."
                         }
                     });
@@ -48,7 +47,6 @@ module.exports = function (req, res, next, name) {
                             .status(500)
                             .json({
                                 "error": {
-                                    
                                     "message": "Error interno.",
                                 }
                             });
@@ -59,7 +57,6 @@ module.exports = function (req, res, next, name) {
                         .status(500)
                         .json({
                             "error": {
-                                
                                 "message": "Error interno.",
                             }
                         });
@@ -70,7 +67,6 @@ module.exports = function (req, res, next, name) {
                 .status(500)
                 .json({
                     "error": {
-                        
                         "message": "Error interno.",
                     }
                 });

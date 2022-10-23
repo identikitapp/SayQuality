@@ -11,7 +11,6 @@ module.exports = function (req, res, next, name) {
                 .status(500)
                 .json({
                     "error": {
-                        
                         "message": "Error interno.",
                     }
                 });

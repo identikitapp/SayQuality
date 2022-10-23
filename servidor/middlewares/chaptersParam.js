@@ -8,7 +8,6 @@ module.exports = function (req, res, next, chapterID) {
                     .status(404)
                     .json({
                         "error": {
-                            
                             "message": "El curso no existe."
                         }
                     });
@@ -26,7 +25,6 @@ module.exports = function (req, res, next, chapterID) {
                 .status(500)
                 .json({
                     "error": {
-                        
                         "message": "Error interno.",
                     }
                 });

@@ -1,8 +1,6 @@
 var jwt = require('jsonwebtoken');
 
-
 module.exports.Create = (ID, password) => {
-
     let date = new Date();
     date.setMonth(date.getMonth() + 12);
 
@@ -20,7 +18,6 @@ module.exports.Create = (ID, password) => {
 };
 
 module.exports.Check = (token) => {
-
     return new Promise((resolve, reject) => {
         jwt.verify(token, process.env.jwtSecret, function (err, decoded) {
             if (err) {

@@ -59,7 +59,15 @@ module.exports = (request, response, next) => {
                                 });
                         };
 
-                        if (user.status == 3) {
+                        if (user.status == 1) {
+                            return response
+                                .status(401)
+                                .json({
+                                    "error": {
+                                        "message": "Debes verificar tu cuenta."
+                                    }
+                                });
+                        } else if (user.status == 3) {
                             return response
                                 .status(410)
                                 .json({

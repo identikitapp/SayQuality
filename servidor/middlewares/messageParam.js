@@ -8,7 +8,6 @@ module.exports = function (req, res, next, MsgID) {
                     .status(404)
                     .json({
                         "error": {
-                            
                             "message": "El message no existe."
                         }
                     });
@@ -19,7 +18,6 @@ module.exports = function (req, res, next, MsgID) {
                     .status(410)
                     .json({
                         "error": {
-                            
                             "message": "El message fue eliminado."
                         }
                     });
@@ -33,7 +31,6 @@ module.exports = function (req, res, next, MsgID) {
                 .status(500)
                 .json({
                     "error": {
-                        
                         "message": "Error interno.",
                     }
                 });
