@@ -19,7 +19,7 @@ export function Navbar() {
 	}
 
 	useEffect(() => {
-		if (localStorage.getItem('token')) {
+		if (!!localStorage.getItem('token')) {
 			const url = import.meta.env.VITE_URL_USER
 
 			fetch(url, {
