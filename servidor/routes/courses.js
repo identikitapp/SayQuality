@@ -46,7 +46,6 @@ courses.get("/:name", (req, res) => {
 });
 
 courses.get("/:name/payment", (req, res) => {
-
     if (!req.user) {
         return res
             .status(401)
@@ -57,78 +56,87 @@ courses.get("/:name/payment", (req, res) => {
             });
     };
 
-    if (req.paramCourse.price == 0) {
-        return sql.GetPayment(req.user.ID, req.paramCourse.ID)
-            .then((payments) => {
-                let r;
+    return sql.GetPayment(req.user.ID, req.paramCourse.ID)
+        .then((payments) => {
+            if (req.paramCourse.price == 0) {
                 if (payments.length == 0) {
-                    r = sql.CreatePayment(new sql.Payment({
+                    sql.CreatePayment(new sql.Payment({
                         userID: req.user.ID,
                         courseID: req.paramCourse.ID,
                         authorized: true,
                         mpPaymentID: null
                     }));
                 } else {
-                    r = sql.UpdatePaymentByUserAndCourse(payment.body.id, new sql.Payment({
+                    sql.UpdatePaymentByUserAndCourse(req.user.ID, req.paramCourse.ID, new sql.Payment({
                         userID: req.user.ID,
                         courseID: req.paramCourse.ID,
                         authorized: true
                     }))
                 };
 
-                res
+                return res
                     .status(202)
                     .json({
                         data: {
                             message: "Pago realizado presuntamente."
                         }
                     });
+            };
 
-                return r;
-            })
-            .catch((error) => {
-                return res
-                    .status(500)
-                    .json({
-                        "error": {
-                            "message": "Error interno."
-                        }
-                    });
-            });
-    };
+            if (payments.length != 0) {
+                if (payments[0].authorized) {
+                    return res
+                        .status(409)
+                        .json({
+                            data: {
+                                message: "El pago ya habia sido realizado."
+                            }
+                        });
+                };
+            };
 
-    let preference = {
-        "auto_return": "all",
-        "external_reference": req.user.ID.toString() + ":" + req.paramCourse.ID.toString(),
-        "back_urls": {
-            "success": process.env.WEB + "/courses/" + req.paramCourse.name,
-            "pending": process.env.WEB + "/courses/" + req.paramCourse.name,
-            "failure": process.env.WEB + "/courses/" + req.paramCourse.name
-        },
-        "items": [
-            {
-                "id": req.paramCourse.ID.toString(),
-                "title": req.paramCourse.name,
-                "description": req.paramCourse.description.slice(0, 256),
-                "picture_url": process.env.HTTPHost + "/files/images/" + req.paramCourse.picture,
-                "category_id": "Online Course",
-                "quantity": 1,
-                "currency_id": req.paramCourse.currency,
-                "unit_price": req.paramCourse.price
-            },
-        ]
-    };
+            let preference = {
+                "auto_return": "all",
+                "external_reference": req.user.ID.toString() + ":" + req.paramCourse.ID.toString(),
+                "back_urls": {
+                    "success": process.env.WEB + "/courses/" + req.paramCourse.name,
+                    "pending": process.env.WEB + "/courses/" + req.paramCourse.name,
+                    "failure": process.env.WEB + "/courses/" + req.paramCourse.name
+                },
+                "items": [
+                    {
+                        "id": req.paramCourse.ID.toString(),
+                        "title": req.paramCourse.name,
+                        "description": req.paramCourse.description.slice(0, 256),
+                        "picture_url": process.env.HTTPHost + "/files/images/" + req.paramCourse.picture,
+                        "category_id": "Online Course",
+                        "quantity": 1,
+                        "currency_id": req.paramCourse.currency,
+                        "unit_price": req.paramCourse.price
+                    },
+                ]
+            };
 
-    mercadopago.preferences
-        .create(preference)
-        .then(function (response) {
-            res
-                .status(200)
-                .json({
-                    data: {
-                        message: "Pago obtenido con exito.",
-                        preference: response.body.id
-                    }
+            mercadopago.preferences
+                .create(preference)
+                .then(function (response) {
+                    res
+                        .status(200)
+                        .json({
+                            data: {
+                                message: "Pago obtenido con exito.",
+                                preference: response.body.id
+                            }
+                        });
+                })
+                .catch((error) => {
+                    return res
+                        .status(500)
+                        .json({
+                            "error": {
+                                "message": "Error interno."
+                            }
+                        });
                 });
         })
         .catch((error) => {
@@ -140,7 +148,6 @@ courses.get("/:name/payment", (req, res) => {
                     }
                 });
         });
-
 });
 
 courses.get("/chapters/:chapterID", (req, res) => {

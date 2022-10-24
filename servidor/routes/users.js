@@ -127,7 +127,7 @@ users.post("/", rateLimit.register, (req, res) => {
     };
 
     if (!body.email || typeof body.email != "string") {
-        res
+        return res
             .status(422)
             .json({
                 "redirect": process.env.WEB + "/register",
@@ -136,11 +136,10 @@ users.post("/", rateLimit.register, (req, res) => {
                     "field": "email"
                 }
             });
-        return;
     };
 
     if (body.email.length > 320 || !/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(body.email)) {
-        res
+        return res
             .status(422)
             .json({
                 "error": {
@@ -148,7 +147,6 @@ users.post("/", rateLimit.register, (req, res) => {
                     "field": "email"
                 }
             });
-        return;
     };
 
     if (!body.password || typeof body.password != "string") {
@@ -346,7 +344,7 @@ users.post("/auth/recovery", rateLimit.recovery, (req, res) => {
     let body = req.body;
 
     if (!body.email) {
-        res
+        return res
             .status(422)
             .json({
                 "error": {
@@ -354,11 +352,10 @@ users.post("/auth/recovery", rateLimit.recovery, (req, res) => {
                     "field": "email"
                 }
             });
-        return;
     };
 
     if (typeof body.email != "string") {
-        res
+        return res
             .status(422)
             .json({
                 "error": {
@@ -366,7 +363,6 @@ users.post("/auth/recovery", rateLimit.recovery, (req, res) => {
                     "field": "email"
                 }
             });
-        return;
     };
 
     if (!!req.user && body.email != req.user.email) {
@@ -382,7 +378,7 @@ users.post("/auth/recovery", rateLimit.recovery, (req, res) => {
     sql.GetUserByEmail(body.email)
         .then((users) => {
             if (users.length == 0) {
-                res
+                return res
                     .status(401)
                     .json({
                         "error": {
@@ -390,7 +386,6 @@ users.post("/auth/recovery", rateLimit.recovery, (req, res) => {
                             "field": "email"
                         }
                     });
-                return;
             };
 
             let user = users[0];
@@ -633,7 +628,7 @@ users.post("/auth", rateLimit.login, (req, res) => {
             let password = shajs('sha256').update(process.env.salt + body.password).digest('hex');
 
             if (password != user.password) {
-                res
+                return res
                     .status(401)
                     .json({
                         "error": {
@@ -641,7 +636,6 @@ users.post("/auth", rateLimit.login, (req, res) => {
                             "field": "password"
                         }
                     });
-                return;
             };
 
             if (user.status == 1) {
@@ -734,7 +728,7 @@ users.post("/auth", rateLimit.login, (req, res) => {
         });
 });
 
-users.get("/:ID", (req, res) => {
+users.get("/:ID", async (req, res) => {
 
     let user = {
         username: req.paramUser.username,
@@ -750,8 +744,31 @@ users.get("/:ID", (req, res) => {
     };
 
     if (!!req.user) {
-        if (req.paramUser.ID == req.user.ID) {
-            user.email = req.paramUser.email;
+        try {
+            if (req.paramUser.ID == req.user.ID) {
+                user.email = req.paramUser.email;
+
+                let courses = [];
+                let payments = await sql.GetPaymentsByUser(req.user.ID);
+
+                for (let index = 0; index < payments.length; index++) {
+                    const payment = payments[index];
+                    if (!payment.authorized) continue;
+
+                    let course = await sql.GetCourse(payment.courseID);
+                    courses.push(course);
+                };
+
+                user.courses = courses;
+            };
+        } catch (e) {
+            return res
+                .status(500)
+                .json({
+                    "error": {
+                        "message": "Error interno.",
+                    }
+                });
         };
     };
 
