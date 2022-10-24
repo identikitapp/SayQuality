@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Swal from 'sweetalert2'
+// import Swal from 'sweetalert2'
 import { Loader } from '../components/Loader'
 import createHeader from '../utils/createHeader'
 import { AiFillFileText, AiFillLock } from 'react-icons/ai'

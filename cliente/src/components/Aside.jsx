@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { BsFillPlayFill } from 'react-icons/bs'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, NavLink } from 'react-router-dom'
 import createHeader from '../utils/createHeader'
 
 export const Aside = () => {
@@ -19,7 +19,9 @@ export const Aside = () => {
 	}
 	const logout = () => {
 		localStorage.removeItem('token')
-		navigate('/acceder')
+		navigate('/')
+
+		location.reload()
 	}
 
 	useEffect(() => {
@@ -54,22 +56,38 @@ export const Aside = () => {
 						<img src={import.meta.env.VITE_URL_IMG + user.avatar} alt={user.username} />
 					</div>
 					<div className='secciones'>
-						<button className='enlaces_secciones' onClick={handleClick0}>
+						<NavLink
+							to='/perfil'
+							className={({ isActive }) => (isActive ? 'active' : '')}
+						>
 							<BsFillPlayFill className='icon' />
 							Cursos
-						</button>
-						<button className='enlaces_secciones' onClick={handleClick1}>
+						</NavLink>
+
+						<NavLink
+							to='/cuestionario'
+							className={({ isActive }) => (isActive ? 'active' : '')}
+						>
 							<BsFillPlayFill className='icon' />
 							Cuestionarios
-						</button>
-						<button className='enlaces_secciones' onClick={handleClick2}>
+						</NavLink>
+
+						<NavLink
+							to='/ajustes'
+							className={({ isActive }) => (isActive ? 'active' : '')}
+						>
 							<BsFillPlayFill className='icon' />
 							Ajustes
-						</button>
-						<button className='enlaces_secciones' onClick={logout}>
+						</NavLink>
+
+						<NavLink
+							to='/acceder'
+							className={({ isActive }) => (isActive ? 'active' : '')}
+							onClick={logout}
+						>
 							<BsFillPlayFill className='icon' />
 							Cerrar Sesión
-						</button>
+						</NavLink>
 					</div>
 				</>
 			)}
