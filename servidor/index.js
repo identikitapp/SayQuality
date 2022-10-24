@@ -5,6 +5,7 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 
+app.disable('x-powered-by');
 const privateKey = fs.readFileSync('sslcert/privkey.pem', 'utf8');
 const certificate = fs.readFileSync('sslcert/fullchain.pem', 'utf8');
 const credentials = { key: privateKey, cert: certificate };

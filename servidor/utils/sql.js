@@ -140,6 +140,18 @@ module.exports.GetCourses = () => {
     });
 };
 
+module.exports.GetCourse = (ID) => {
+    return new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM Courses WHERE ID = ?", [ID], (error, results, fields) => {
+            if (error) {
+                reject(new Error("Error al obtener los cursos"))
+            };
+
+            resolve(results)
+        });
+    });
+};
+
 module.exports.GetStages = (courseID) => {
     return new Promise((resolve, reject) => {
         connection.query("SELECT * FROM Stages WHERE courseID = ?", [courseID], (error, results, fields) => {
