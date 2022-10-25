@@ -1,8 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import { BiImageAdd } from 'react-icons/bi';
 import { BsFillPlayFill } from 'react-icons/bs';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import createHeader from '../utils/createHeader'
 
 
@@ -11,18 +10,11 @@ export const Aside = () => {
   const [user, setUser] = useState();
   const navigate = useNavigate()
 
-    let handleClick0 = () => {
-      navigate("/perfil")
-    };
-    let handleClick1 = () => {
-      navigate("/cuestionario")
-    };
-    let handleClick2 = () => {
-      navigate("/ajustes")
-    };
     const logout = () => {
       localStorage.removeItem('token')
       navigate("/acceder")
+
+      location.reload()
     };
 
     useEffect(() => {
@@ -40,7 +32,7 @@ export const Aside = () => {
          return response.json()
         } 
       })
-              .then(data =>setUser(data.data.user))
+              .then(data => setUser(data.data.user))
 
   }, [])
 
@@ -48,14 +40,24 @@ export const Aside = () => {
           <aside>
             <div className='imagen_perfil'>
                 <p>Estudiante</p>
-                <img src={import.meta.env.VITE_URL_IMG + user.avatar}
-                alt={user.username} />
+                {/* <img
+								className='user-avatar-img'
+								src={import.meta.env.VITE_URL_IMG + user.data.user.avatar}
+								alt={user.data.user.username}
+							></img> */}
             </div>
             <div className='secciones'>
-                    <button className='enlaces_secciones' onClick={handleClick0}><BsFillPlayFill className='icon'/>Cursos</button>
-                    <button className='enlaces_secciones' onClick={handleClick1} ><BsFillPlayFill className='icon'/>Cuestionarios</button>
-                    <button className='enlaces_secciones' onClick={handleClick2}><BsFillPlayFill className='icon'/>Ajustes</button>
-                    <button className='enlaces_secciones' onClick={logout}><BsFillPlayFill className='icon'/>Cerrar Sesión</button>
+                    <NavLink to="/perfil" className={({isActive}) => isActive ? "active" : ""}>
+                      <BsFillPlayFill className='icon'/>Cursos</NavLink>
+
+                    <NavLink to="/cuestionario" className={({isActive}) => isActive ? "active" : ""} >
+                      <BsFillPlayFill className='icon'/>Cuestionarios</NavLink>
+
+                    <NavLink to="/ajustes" className={({isActive}) => isActive ? "active" : ""}>
+                      <BsFillPlayFill className='icon'/>Ajustes</NavLink>
+
+                    <NavLink to="/acceder" className={({isActive}) => isActive ? "active" : ""} onClick={logout}>
+                      <BsFillPlayFill className='icon'/>Cerrar Sesión</NavLink>
             </div>
         </aside>
 

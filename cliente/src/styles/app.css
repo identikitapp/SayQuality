@@ -695,6 +695,7 @@ template {
   -o-object-fit: fill;
      object-fit: fill;
   border-radius: 1.5rem;
+  background: #fff;
 }
 .cursoCard h2 {
   font-size: 2.5rem;
@@ -1127,7 +1128,7 @@ template {
   display: grid;
   grid-template-columns: 1fr;
   background-color: #f5f5f5;
-  box-shadow: inset 0px 0px 8px 6px rgba(0, 0, 0, 0.33);
+  box-shadow: inset 0px 0px 5px 1px rgba(0, 0, 0, 0.33);
 }
 .contenedor_perfil aside {
   background-color: #202c33;
@@ -1135,6 +1136,7 @@ template {
 }
 .contenedor_perfil aside .imagen_perfil {
   min-height: 30rem;
+  max-width: 30rem;
   display: flex;
   flex-direction: column;
   padding-top: 2rem;
@@ -1164,7 +1166,7 @@ template {
   margin-left: 3rem;
   margin-bottom: 3rem;
 }
-.contenedor_perfil aside .secciones .enlaces_secciones {
+.contenedor_perfil aside .secciones a {
   display: flex;
   align-items: center;
   list-style: none;
@@ -1175,10 +1177,11 @@ template {
   color: #fff;
   margin-top: 5rem;
 }
-.contenedor_perfil aside .secciones .enlaces_secciones:hover {
+.contenedor_perfil aside .secciones a:hover {
+  color: #ff7400;
   cursor: pointer;
 }
-.contenedor_perfil aside .secciones .enlaces_secciones .icon {
+.contenedor_perfil aside .secciones a .icon {
   margin-right: 0.5rem;
   color: #ff7400;
 }
@@ -1194,7 +1197,7 @@ template {
   border-radius: 0.5rem;
   padding: 0.5rem;
   background-color: #fff;
-  box-shadow: 0px 1px 10px 4px rgba(0, 0, 0, 0.43);
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.35);
 }
 .contenedor_perfil .button_inscripto {
   margin-top: 3rem;
@@ -1207,7 +1210,7 @@ template {
   padding: 0.5rem;
   color: #ff7400;
   background-color: #fff;
-  box-shadow: 0px 1px 10px 4px rgba(0, 0, 0, 0.43);
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.35);
 }
 .contenedor_perfil .cursos_informacion {
   font-size: 1.5rem;
@@ -1244,41 +1247,60 @@ template {
     padding: 1rem;
   }
 }
+@media (min-width: 768px) {
+  .formulario_ajustes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    place-items: center;
+  }
+}
+@media (min-width: 480px) {
+  .formulario_ajustes {
+    display: grid;
+    place-items: center;
+  }
+}
 .formulario_ajustes {
-  margin-top: 5rem;
-  margin-bottom: 5rem;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  place-items: center;
+  padding-left: 2rem;
   min-width: 10rem;
   font-size: 2rem;
-  gap: 3rem;
+  gap: 0.5rem;
 }
 .formulario_ajustes .inputs {
+  margin-top: 2rem;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   max-width: 30rem;
+  gap: 0.5rem;
 }
 .formulario_ajustes .inputs input {
-  margin-top: 1rem;
   height: 5rem;
   border: none;
   border-radius: 0.5rem;
 }
 
+@media (min-width: 480px) {
+  .informacion_biografica {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 30rem;
+  }
+}
 .informacion_biografica {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  margin-top: 5rem;
   height: 30rem;
-  margin: 0 auto;
+  margin-left: 2rem;
 }
 .informacion_biografica label {
   font-size: 2rem;
   padding-bottom: 1rem;
 }
 .informacion_biografica textarea {
-  min-width: 40rem;
+  width: 30rem;
   height: 30rem;
   resize: none;
   border: none;
@@ -1322,6 +1344,33 @@ template {
   background-color: #ff7400;
   border-radius: 0.5rem;
   padding: 0.3rem;
+}
+
+.error {
+  color: red;
+}
+
+.active {
+  color: #ff7400;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+.btn .btn-guardar {
+  background-color: #ff7400;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+.btn .btn-guardar:hover {
+  cursor: pointer;
+  opacity: 0.9;
 }
 
 .loaderContainer {

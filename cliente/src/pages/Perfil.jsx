@@ -5,6 +5,7 @@ import { InformacionPerfil } from '../components/InformacionPerfil'
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import createHeader from '../utils/createHeader'
+import { Loader } from '../components/Loader'
 
 export const Perfil = () => {
 	const navigate = useNavigate()
@@ -19,6 +20,7 @@ export const Perfil = () => {
             })
                 .then(response => {
 					if (response.ok) {
+					<Loader/>
 					return	navigate("/perfil")
 					} 
 					return navigate ("/acceder")

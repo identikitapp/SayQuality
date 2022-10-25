@@ -9,7 +9,6 @@ import { Footer } from './Footer'
 import { Registrarse } from '../pages/Registrarse'
 import { Perfil } from '../pages/Perfil'
 import { RecuperarPassword } from '../pages/RecuperarPassword'
-import { Perfil } from '../pages/Perfil'
 import { CuestionarioPerfil } from '../pages/CuestionarioPerfil'
 import { AjustesPerfil } from '../pages/AjustesPerfil'
 
