@@ -51,6 +51,7 @@ export const Ajustes = () => {
 			.then(response => response.json())
 			.then(result => {
 				if (!result.data) {
+					console.log(result.error)
 					return Swal.fire({
 						icon: 'error',
 						title: result.error.message,

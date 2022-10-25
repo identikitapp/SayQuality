@@ -12,9 +12,6 @@ const formsList = {
 const sql = require("../utils/sql.js");
 const email = require("../utils/email.js");
 const rateLimit = require("../utils/rateLimit.js");
-const jwt = require("../utils/jwt.js");
-const images = require("../utils/images.js");
-const shajs = require('sha.js');
 
 forms.get("/", (req, res) => {
     res.json({
@@ -122,7 +119,6 @@ forms.post("/", rateLimit.submitForm, async (req, res) => {
             .status(422)
             .json({
                 "error": {
-
                     "message": "Por favor ingrese un cuerpo.",
                     "field": "body"
                 }

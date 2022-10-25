@@ -2,8 +2,6 @@ const isImage = require('is-image');
 const fs = require("fs");
 const shajs = require('sha.js');
 
-//shajs('sha256').update('42').digest('hex')
-
 module.exports.Check = (hash) => {
     try {
         return fs.existsSync(process.env.imgPath + "/" + hash + ".png");
@@ -17,9 +15,6 @@ module.exports.Get = (hash) => {
 };
 
 module.exports.Create = (content) => {
-    //data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA..."
-    //  if (/data:image\/(png|jpeg|jpg|webp);base64,.+/.test(data)) {
-
     let name = shajs('sha256').update(content).digest('hex');
     let path = process.env.imgPath + "/" + name + ".png";
 
@@ -41,9 +36,5 @@ module.exports.Create = (content) => {
             name
         };
     };
-
-    /* } else {
-         throw new Error("Los datos enviados no pueden ser aceptados");
-     };*/
 };
 

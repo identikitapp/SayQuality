@@ -6,7 +6,6 @@ module.exports = function (req, res, next, ID) {
             .status(401)
             .json({
                 "error": {
-                    
                     "message": "Debes iniciar sesion para hacer eso."
                 }
             });
@@ -19,7 +18,6 @@ module.exports = function (req, res, next, ID) {
                     .status(404)
                     .json({
                         "error": {
-                            
                             "message": "El chat no existe."
                         }
                     });
@@ -31,7 +29,6 @@ module.exports = function (req, res, next, ID) {
                         .status(403)
                         .json({
                             "error": {
-                                
                                 "message": "No estas autorizado para hacer eso."
                             }
                         });
@@ -46,7 +43,6 @@ module.exports = function (req, res, next, ID) {
                 .status(500)
                 .json({
                     "error": {
-                        
                         "message": "Error interno.",
                     }
                 });

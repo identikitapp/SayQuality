@@ -1,10 +1,6 @@
 const express = require("express");
 const courses = express.Router();
 const sql = require("../utils/sql.js");
-const email = require("../utils/email.js");
-const jwt = require("../utils/jwt.js");
-const images = require("../utils/images.js");
-const shajs = require('sha.js');
 const mercadopago = require("mercadopago");
 
 mercadopago.configure({
@@ -32,8 +28,7 @@ courses.get("/", (req, res) => {
                 .status(500)
                 .json({
                     "error": {
-
-                        "message": "Error interno.",
+                        "message": "Error interno."
                     }
                 });
         });
@@ -51,91 +46,97 @@ courses.get("/:name", (req, res) => {
 });
 
 courses.get("/:name/payment", (req, res) => {
-
     if (!req.user) {
         return res
             .status(401)
             .json({
                 "error": {
-
                     "message": "Debes iniciar sesion para hacer eso."
                 }
             });
     };
 
-    if (req.paramCourse.price == 0) {
-        return sql.GetPayment(req.user.ID, req.paramCourse.ID)
-            .then((payments) => {
-                let r;
+    return sql.GetPayment(req.user.ID, req.paramCourse.ID)
+        .then((payments) => {
+            if (req.paramCourse.price == 0) {
                 if (payments.length == 0) {
-                    r = sql.CreatePayment(new sql.Payment({
+                    sql.CreatePayment(new sql.Payment({
                         userID: req.user.ID,
                         courseID: req.paramCourse.ID,
                         authorized: true,
                         mpPaymentID: null
                     }));
                 } else {
-                    r = sql.UpdatePaymentByUserAndCourse(payment.body.id, new sql.Payment({
+                    sql.UpdatePaymentByUserAndCourse(req.user.ID, req.paramCourse.ID, new sql.Payment({
                         userID: req.user.ID,
                         courseID: req.paramCourse.ID,
                         authorized: true
                     }))
                 };
 
-                res
+                return res
                     .status(202)
                     .json({
                         data: {
                             message: "Pago realizado presuntamente."
                         }
                     });
+            };
 
-                return r;
-            })
-            .catch((error) => {
-                return res
-                    .status(500)
-                    .json({
-                        "error": {
+            if (payments.length != 0) {
+                if (payments[0].authorized) {
+                    return res
+                        .status(409)
+                        .json({
+                            data: {
+                                message: "El pago ya habia sido realizado."
+                            }
+                        });
+                };
+            };
 
-                            "message": "Error interno.",
-                        }
-                    });
-            });
-    };
+            let preference = {
+                "auto_return": "all",
+                "external_reference": req.user.ID.toString() + ":" + req.paramCourse.ID.toString(),
+                "back_urls": {
+                    "success": process.env.WEB + "/courses/" + req.paramCourse.name,
+                    "pending": process.env.WEB + "/courses/" + req.paramCourse.name,
+                    "failure": process.env.WEB + "/courses/" + req.paramCourse.name
+                },
+                "items": [
+                    {
+                        "id": req.paramCourse.ID.toString(),
+                        "title": req.paramCourse.name,
+                        "description": req.paramCourse.description.slice(0, 256),
+                        "picture_url": process.env.HTTPHost + "/files/images/" + req.paramCourse.picture,
+                        "category_id": "Online Course",
+                        "quantity": 1,
+                        "currency_id": req.paramCourse.currency,
+                        "unit_price": req.paramCourse.price
+                    },
+                ]
+            };
 
-    let preference = {
-        "auto_return": "all",
-        "external_reference": req.user.ID.toString() + ":" + req.paramCourse.ID.toString(),
-        "back_urls": {
-            "success": process.env.WEB + "/courses/" + req.paramCourse.name,
-            "pending": process.env.WEB + "/courses/" + req.paramCourse.name,
-            "failure": process.env.WEB + "/courses/" + req.paramCourse.name
-        },
-        "items": [
-            {
-                "id": req.paramCourse.ID.toString(),
-                "title": req.paramCourse.name,
-                "description": req.paramCourse.description.slice(0, 256),
-                "picture_url": process.env.HTTPHost + "/files/images/" + req.paramCourse.picture,
-                "category_id": "Online Course",
-                "quantity": 1,
-                "currency_id": req.paramCourse.currency,
-                "unit_price": req.paramCourse.price
-            },
-        ]
-    };
-
-    mercadopago.preferences
-        .create(preference)
-        .then(function (response) {
-            res
-                .status(200)
-                .json({
-                    data: {
-                        message: "Pago obtenido con exito.",
-                        preference: response.body.id
-                    }
+            mercadopago.preferences
+                .create(preference)
+                .then(function (response) {
+                    res
+                        .status(200)
+                        .json({
+                            data: {
+                                message: "Pago obtenido con exito.",
+                                preference: response.body.id
+                            }
+                        });
+                })
+                .catch((error) => {
+                    return res
+                        .status(500)
+                        .json({
+                            "error": {
+                                "message": "Error interno."
+                            }
+                        });
                 });
         })
         .catch((error) => {
@@ -143,12 +144,10 @@ courses.get("/:name/payment", (req, res) => {
                 .status(500)
                 .json({
                     "error": {
-
-                        "message": "Error interno.",
+                        "message": "Error interno."
                     }
                 });
         });
-
 });
 
 courses.get("/chapters/:chapterID", (req, res) => {
@@ -169,7 +168,6 @@ courses.get("/chapters/:chapterID/homework", (req, res) => {
             .status(401)
             .json({
                 "error": {
-
                     "message": "Debes iniciar sesion para hacer eso."
                 }
             });
@@ -182,7 +180,6 @@ courses.get("/chapters/:chapterID/homework", (req, res) => {
                     .status(404)
                     .json({
                         "error": {
-
                             "message": "No hay tarea."
                         }
                     });
@@ -206,8 +203,7 @@ courses.get("/chapters/:chapterID/homework", (req, res) => {
                 .status(500)
                 .json({
                     "error": {
-
-                        "message": "Error interno.",
+                        "message": "Error interno."
                     }
                 });
         });
@@ -231,7 +227,6 @@ courses.post("/payments", (req, res) => {
             .status(422)
             .json({
                 "error": {
-
                     "message": "Solo se acepta el tipo de notificación payment."
                 }
             });
@@ -242,7 +237,6 @@ courses.post("/payments", (req, res) => {
             .status(422)
             .json({
                 "error": {
-
                     "message": "No se puede aceptar esa accion."
                 }
             });
@@ -290,8 +284,7 @@ courses.post("/payments", (req, res) => {
                             .status(500)
                             .json({
                                 "error": {
-
-                                    "message": "Error interno.",
+                                    "message": "Error interno."
                                 }
                             });
                     });
@@ -317,8 +310,7 @@ courses.post("/payments", (req, res) => {
                             .status(500)
                             .json({
                                 "error": {
-
-                                    "message": "Error interno.",
+                                    "message": "Error interno."
                                 }
                             });
                     });
@@ -331,8 +323,7 @@ courses.post("/payments", (req, res) => {
                     .status(400)
                     .json({
                         "error": {
-
-                            "message": "El pago es falso.",
+                            "message": "El pago es falso."
                         }
                     });
             }
@@ -341,8 +332,7 @@ courses.post("/payments", (req, res) => {
                 .status(500)
                 .json({
                     "error": {
-
-                        "message": "Error interno.",
+                        "message": "Error interno."
                     }
                 });
         });

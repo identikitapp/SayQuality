@@ -5,6 +5,7 @@ import createHeader from '../utils/createHeader'
 
 export const RecuperarPassword = () => {
 	const [correo, setCorreo] = useState('')
+	const [value, setValue] = useState(null)
 
 	const borrarFormulario = () => {
 		setCorreo('')
@@ -30,6 +31,15 @@ export const RecuperarPassword = () => {
 						title: result.error.message,
 						confirmButtonColor: '#0083bb',
 					})
+				}
+
+				if (
+					(result.data.message =
+						'Se envio un correo para el restablecimiento de su contraseña.')
+				) {
+					setValue('0')
+				} else {
+					setValue('1')
 				}
 
 				console.log(result)
@@ -90,8 +100,8 @@ export const RecuperarPassword = () => {
 			<div className='iniciar-sesion'>
 				<form className='formulario_recuperar' onSubmit={e => handleSubmit(e)}>
 					<p className='instrucciones'>
-						Por favor, introduce tu correo electrónico. Recibiras un mensaje con
-						instrucciones sobre como restablecer tu contraseña
+						Por favor, introduce tu correo electrónico. Recibiras un mensaje con el cual
+						podras recuperar tu cuenta.
 					</p>
 					<span id='mensaje' className='mensaje'>
 						El correo que ingreso es invalido
@@ -105,8 +115,25 @@ export const RecuperarPassword = () => {
 						onChange={e => setCorreo(e.target.value)}
 						value={correo}
 					/>
+					<span className='span-options'>¿Que accion desea realizar?</span>
+
+					{value === null ? (
+						<select className='select-options' name='select-options'>
+							<option value='0'>Restablecer contraseña</option>
+							<option value='1'>Recuperar codigo de verificacion</option>
+						</select>
+					) : (
+						<select className='select-options' name='select-options'>
+							{value === '0' ? (
+								<option value='0'>Restablecer contraseña</option>
+							) : (
+								<option value='1'>Recuperar codigo de verificacion</option>
+							)}
+						</select>
+					)}
+
 					<button className='recuperar' type='submit'>
-						Recuperar Contraseña
+						Recuperar Cuenta
 					</button>
 				</form>
 			</div>

@@ -9,7 +9,6 @@ module.exports = (req, res, next, hash) => {
             .status(404)
             .json({
                 "error": {
-                    
                     "message": "La imagen no existe."
                 }
             });

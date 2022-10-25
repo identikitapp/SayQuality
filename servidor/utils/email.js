@@ -7,7 +7,7 @@ const transporter = nodemailer.createTransport({
   auth: {
     user: process.env.SMTPUsername,
     pass: process.env.SMTPPassword,
-  },
+  }
 });
 
 module.exports.NoReply = (to, subject, text) => {

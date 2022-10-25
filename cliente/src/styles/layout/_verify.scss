@@ -1,0 +1,100 @@
+.verify {
+	margin-top: 60px;
+
+	min-height: 100vh;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	background: #f5f5f5;
+
+	font-family: 'Lexend', sans-serif;
+
+	.formVerify {
+		width: 500px;
+		height: 500px;
+
+		border-radius: 1.25rem;
+
+		margin: 0 auto;
+
+		background: $blanco;
+
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+
+		.passwordContainer {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		#password,
+		#password2 {
+			width: 80%;
+		}
+
+		.mostrarContraseña {
+			font-size: 2rem;
+
+			&:hover {
+				cursor: pointer;
+			}
+		}
+
+		#error-password-input,
+		#error-password2-input {
+			display: none;
+
+			color: red;
+			margin: 1rem auto;
+
+			font-size: 1.5rem;
+
+			max-width: 42rem;
+		}
+
+		.invalid {
+			background-color: #ffdddd;
+		}
+
+		input {
+			font-size: 2rem;
+			padding: 1rem;
+			outline: none;
+			border: none;
+			border-radius: 0.5rem;
+			margin: 1rem;
+			background-color: $blanco;
+			border-bottom: 1.5px solid $gris;
+			color: $negro;
+			&:focus {
+				border: 1px solid $blanco;
+				border-bottom: 2px solid $grisOscuro;
+			}
+		}
+
+		button {
+			font-size: 2rem;
+
+			outline: none;
+			border: 2px solid $azul;
+			border-radius: 0.5rem;
+
+			color: $blanco;
+			background-color: $azul;
+
+			width: 300px;
+
+			margin: 4rem 0 0 0;
+			padding: 1rem;
+
+			&:hover {
+				border: 2px solid $negro;
+				cursor: pointer;
+			}
+		}
+	}
+}

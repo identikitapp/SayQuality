@@ -1,65 +1,89 @@
 import React from 'react'
-import { useState, useEffect } from 'react';
-import { BsFillPlayFill } from 'react-icons/bs';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react'
+import { BsFillPlayFill } from 'react-icons/bs'
+import { useNavigate, NavLink } from 'react-router-dom'
 import createHeader from '../utils/createHeader'
-
+import Swal from 'sweetalert2'
 
 export const Aside = () => {
+	const [user, setUser] = useState(null)
+	const navigate = useNavigate()
 
-  const [user, setUser] = useState();
-  const navigate = useNavigate()
+	
+	const logout = () => {
+		localStorage.removeItem('token')
+		navigate('/')
 
-    const logout = () => {
-      localStorage.removeItem('token')
-      navigate("/acceder")
+		location.reload()
+	}
 
-      location.reload()
-    };
+	useEffect(() => {
+		const url = import.meta.env.VITE_URL_USER
 
-    useEffect(() => {
+		fetch(url, {
+			method: 'GET',
+			headers: createHeader(),
+		})
+			.then(response => response.json())
+			.then(result => {
+				if (!result.data) {
+					return Swal.fire({
+						icon: 'error',
+						title: result.error.message,
+						confirmButtonColor: '#0083bb',
+					})
+				}
 
-          const url = import.meta.env.VITE_URL_USER
+				return setUser(result.data.user)
+			})
+	}, [])
 
-          fetch(url, {
-              method: 'GET',
-              headers: createHeader(),
-          })
-              .then(response => {
-                console.log(response)
-        if (response.ok) {
+	return (
+		<aside>
+			{user === null ? (
+				navigate('/acceder')
+			) : (
+				<>
+					<div className='imagen_perfil'>
+						<p>Estudiante</p>
+						<img src={import.meta.env.VITE_URL_IMG + user.avatar} alt={user.username} />
+					</div>
+					<div className='secciones'>
+						<NavLink
+							to='/perfil'
+							className={({ isActive }) => (isActive ? 'active' : '')}
+						>
+							<BsFillPlayFill className='icon' />
+							Cursos
+						</NavLink>
 
-         return response.json()
-        } 
-      })
-              .then(data => setUser(data.data.user))
+						<NavLink
+							to='/cuestionario'
+							className={({ isActive }) => (isActive ? 'active' : '')}
+						>
+							<BsFillPlayFill className='icon' />
+							Cuestionarios
+						</NavLink>
 
-  }, [])
+						<NavLink
+							to='/ajustes'
+							className={({ isActive }) => (isActive ? 'active' : '')}
+						>
+							<BsFillPlayFill className='icon' />
+							Ajustes
+						</NavLink>
 
-  return (
-          <aside>
-            <div className='imagen_perfil'>
-                <p>Estudiante</p>
-                {/* <img
-								className='user-avatar-img'
-								src={import.meta.env.VITE_URL_IMG + user.data.user.avatar}
-								alt={user.data.user.username}
-							></img> */}
-            </div>
-            <div className='secciones'>
-                    <NavLink to="/perfil" className={({isActive}) => isActive ? "active" : ""}>
-                      <BsFillPlayFill className='icon'/>Cursos</NavLink>
-
-                    <NavLink to="/cuestionario" className={({isActive}) => isActive ? "active" : ""} >
-                      <BsFillPlayFill className='icon'/>Cuestionarios</NavLink>
-
-                    <NavLink to="/ajustes" className={({isActive}) => isActive ? "active" : ""}>
-                      <BsFillPlayFill className='icon'/>Ajustes</NavLink>
-
-                    <NavLink to="/acceder" className={({isActive}) => isActive ? "active" : ""} onClick={logout}>
-                      <BsFillPlayFill className='icon'/>Cerrar Sesión</NavLink>
-            </div>
-        </aside>
-
-  )
+						<NavLink
+							to='/acceder'
+							className={({ isActive }) => (isActive ? 'active' : '')}
+							onClick={logout}
+						>
+							<BsFillPlayFill className='icon' />
+							Cerrar Sesión
+						</NavLink>
+					</div>
+				</>
+			)}
+		</aside>
+	)
 }

@@ -7,11 +7,12 @@ import { Contacto } from '../pages/Contacto'
 import { Acceder } from '../pages/Acceder'
 import { Footer } from './Footer'
 import { Registrarse } from '../pages/Registrarse'
-import { Perfil } from '../pages/Perfil'
+import { Verify } from './Verify'
 import { RecuperarPassword } from '../pages/RecuperarPassword'
 import { CuestionarioPerfil } from '../pages/CuestionarioPerfil'
 import { AjustesPerfil } from '../pages/AjustesPerfil'
-
+import { CourseDetails } from '../pages/CourseDetails'
+import { Perfil } from '../pages/Perfil'
 
 export function App() {
 	return (
@@ -28,8 +29,9 @@ export function App() {
 					<Route path='/acceder' element={<Acceder />} />
 					<Route path='/registrarse' element={<Registrarse />} />
 					<Route path='/recuperar-password' element={<RecuperarPassword />} />
-	
+					<Route path='/cursos/:name' element={<CourseDetails />} />
 					<Route path='/perfil' element={<Perfil />} />
+					<Route path='/:code' element={<Verify />} />
 					<Route path='/cuestionario' element={<CuestionarioPerfil />} />
 					<Route path='/ajustes' element={<AjustesPerfil />} />
 

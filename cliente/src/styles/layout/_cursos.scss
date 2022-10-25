@@ -15,23 +15,42 @@
 
 .cursoCard {
 	display: flex;
-	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 
-	height: auto;
-	max-width: 350px;
-
-	margin: 0 10rem;
-
 	color: $blanco;
+
+	max-width: 992px;
+
+	margin: 0;
+
+	img {
+		height: 250px;
+		width: 45%;
+		object-fit: fill;
+
+		border-radius: 1.5rem;
+
+		background: $blanco;
+	}
+
+	div {
+		display: flex;
+		flex-flow: column wrap;
+		align-items: center;
+		justify-content: center;
+
+		width: 55%;
+
+		margin-left: 2rem;
+	}
 
 	a {
 		display: flex;
 		align-items: center;
 		justify-content: center;
 
-		margin-top: 3rem;
+		margin-top: 2rem;
 
 		width: 230px;
 		height: 50px;
@@ -50,53 +69,57 @@
 		}
 	}
 
-	img {
-		width: 100%;
-		height: 250px;
-		object-fit: fill;
-
-		border-radius: 1.5rem;
-
-		background: $blanco;
-	}
-
 	h2 {
 		font-size: 2.5rem;
 		text-align: center;
 	}
 
 	p {
-		height: 200px;
-
-		overflow: scroll;
-
 		font-size: 1.5rem;
 
-		margin-bottom: 1rem;
+		margin-bottom: 2rem;
 		padding: 0 1rem;
 	}
 
 	strong {
 		font-size: 2rem;
-
-		margin-top: 2rem;
 	}
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 992px) {
 	.cursoCard {
-		margin: 0 5rem;
+		margin: 0 1rem;
 	}
 }
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
 	.cursoCard {
-		margin: 0 2rem;
+		margin: 3rem 0;
+
+		img {
+			width: 400px;
+		}
+
+		div {
+			width: 80%;
+
+			margin-left: 0;
+		}
 	}
 }
 
-@media (max-width: 780px) {
+@media (max-width: 586px) {
 	.cursoCard {
-		margin: 3rem 2rem;
+		div {
+			width: 90%;
+		}
+	}
+}
+
+@media (max-width: 430px) {
+	.cursoCard {
+		img {
+			width: 90%;
+		}
 	}
 }

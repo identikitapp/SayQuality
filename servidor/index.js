@@ -5,6 +5,7 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 
+app.disable('x-powered-by');
 const privateKey = fs.readFileSync('sslcert/privkey.pem', 'utf8');
 const certificate = fs.readFileSync('sslcert/fullchain.pem', 'utf8');
 const credentials = { key: privateKey, cert: certificate };
@@ -33,8 +34,8 @@ httpsServer.on('upgrade', function upgrade(request, socket, head) {
 wss.on("connection", require("./middlewares/websocketChat"));
 
 app.use(express.urlencoded({ extended: true }));
-app.use(["/forms", "/chats", "/courses", "/users"], express.json({limit: "1mb"}));
-app.use(["/files"], express.text({type: "image/png", limit: "8mb", defaultCharset: "binary"}));
+app.use(["/forms", "/chats", "/courses", "/users"], express.json({ limit: "1mb" }));
+app.use(["/files"], express.text({ type: "image/png", limit: "8mb", defaultCharset: "binary" }));
 app.use(cors());
 
 app.use(require("./middlewares/headerCheck.js"));
