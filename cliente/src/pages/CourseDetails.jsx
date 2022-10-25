@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 // import Swal from 'sweetalert2'
 import { Loader } from '../components/Loader'
 import createHeader from '../utils/createHeader'
@@ -11,6 +11,7 @@ export function CourseDetails() {
 	const [loading, setLoading] = useState(true)
 
 	const navigate = useNavigate()
+	const { name } = useParams()
 
 	useEffect(() => {
 		const url = import.meta.env.VITE_URL_USER
@@ -28,18 +29,7 @@ export function CourseDetails() {
 	}, [])
 
 	useEffect(() => {
-		// Tuve que obtener el nombre del curso desde la URL usando este metodo por que no me funcionaba con useParams()
-		const query = window.location.href.split('/').at(-1)
-
-		function courseName(query) {
-			if (!!query.includes('manual')) {
-				return 'testing manual'
-			} else {
-				return 'testing e2e con cypress'
-			}
-		}
-
-		const url = import.meta.env.VITE_URL_COURSE + courseName(query)
+		const url = import.meta.env.VITE_URL_COURSE + name
 
 		fetch(url, {
 			method: 'GET',
