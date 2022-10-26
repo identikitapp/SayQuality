@@ -1204,6 +1204,9 @@ template {
   color: #fff;
   margin-top: 5rem;
 }
+.contenedor_perfil aside .secciones a .active {
+  color: #ff7400;
+}
 .contenedor_perfil aside .secciones a:hover {
   color: #ff7400;
   cursor: pointer;
@@ -1375,10 +1378,6 @@ template {
 
 .error {
   color: red;
-}
-
-.active {
-  color: #ff7400;
 }
 
 .btn {

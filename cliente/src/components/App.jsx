@@ -9,7 +9,7 @@ import { Footer } from './Footer'
 import { Registrarse } from '../pages/Registrarse'
 import { Verify } from './Verify'
 import { RecuperarPassword } from '../pages/RecuperarPassword'
-import { CuestionarioPerfil } from '../pages/CuestionarioPerfil'
+// import { CuestionarioPerfil } from '../pages/CuestionarioPerfil'
 import { AjustesPerfil } from '../pages/AjustesPerfil'
 import { CourseDetails } from '../pages/CourseDetails'
 import { Perfil } from '../pages/Perfil'
@@ -32,7 +32,7 @@ export function App() {
 					<Route path='/cursos/:name' element={<CourseDetails />} />
 					<Route path='/perfil' element={<Perfil />} />
 					<Route path='/:code' element={<Verify />} />
-					<Route path='/cuestionario' element={<CuestionarioPerfil />} />
+					{/* <Route path='/cuestionario' element={<CuestionarioPerfil />} /> */}
 					<Route path='/ajustes' element={<AjustesPerfil />} />
 
 					<Route path='*' element={<Navigate replace to='/' />} />

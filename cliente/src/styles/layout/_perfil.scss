@@ -58,6 +58,10 @@
         color: $blanco;
         margin-top: 5rem;
 
+        .active {
+            color: $naranja;
+        }
+        
         &:hover {
             color: $naranja;
             cursor: pointer;
@@ -272,9 +276,7 @@
 .error {
     color: red;
 }
-.active {
-    color: $naranja;
-}
+
 
 .btn {
     display: flex;
