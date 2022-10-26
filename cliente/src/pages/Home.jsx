@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { IoIosRocket } from 'react-icons/io'
+import { SiWhatsapp } from 'react-icons/si'
 
 export function Home() {
 	return (
@@ -75,6 +76,10 @@ export function Home() {
 				</span>
 				<Link to='/registrarse'>Comenza a estudiar gratis</Link>
 			</article>
+
+			<a href='http://api.whatsapp.com/send?phone='>
+				<SiWhatsapp className='whatsapp' size={45} />
+			</a>
 		</section>
 	)
 }

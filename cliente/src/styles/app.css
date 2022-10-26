@@ -636,6 +636,13 @@ template {
   transition: all 0.5s ease;
 }
 
+.whatsapp {
+  position: fixed;
+  bottom: 4rem;
+  right: 5rem;
+  color: #48c857;
+}
+
 @media (max-width: 1020px) {
   .home article:nth-child(2) .cardsContainer {
     flex-flow: row wrap;
