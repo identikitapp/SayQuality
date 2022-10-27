@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import { Aside } from '../components/Aside'
 import { Buttons } from '../components/Buttons'
-import { InformacionPerfil } from '../components/InformacionPerfil'
+import { InformacionCursos } from '../components/InformacionCursos'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import createHeader from '../utils/createHeader'
@@ -37,7 +37,7 @@ export const Perfil = () => {
 				<Aside />
 			<section className='panel_informacion'>
 				<Buttons />
-				<InformacionPerfil />
+				<InformacionCursos />
 			</section>
 		</div>
 	)

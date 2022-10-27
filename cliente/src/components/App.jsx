@@ -32,7 +32,6 @@ export function App() {
 					<Route path='/cursos/:name' element={<CourseDetails />} />
 					<Route path='/perfil' element={<Perfil />} />
 					<Route path='/:code' element={<Verify />} />
-					{/* <Route path='/cuestionario' element={<CuestionarioPerfil />} /> */}
 					<Route path='/ajustes' element={<AjustesPerfil />} />
 
 					<Route path='*' element={<Navigate replace to='/' />} />

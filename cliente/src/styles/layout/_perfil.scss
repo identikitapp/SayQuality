@@ -175,8 +175,9 @@
     }
 }
 .formulario_ajustes {
-    padding-left: 2rem;
-    min-width: 10rem;
+    display: grid;
+    justify-content: space-around;
+    align-items: center;
     font-size: 2rem;
     gap: .5rem;
 
@@ -224,6 +225,7 @@
         resize: none;
         border: none;
         border-radius: .5rem;
+        font-size: 2rem;
         
     }
 }
@@ -232,19 +234,23 @@
 
 .avatar {
     display: flex;
-    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
     margin-top: 5rem;
     font-size: 2rem;
-    .avatar_icon {
-        display: flex;
-        align-items: center;
-        gap: .5rem;
-    }
-    button {
-        border: none;
+
+    ::-webkit-file-upload-button {
         background-color: $naranja;
-        border-radius: .5rem;
-        padding: .3rem;
+        border: none;
+       border-radius: .5rem;
+       padding: .5rem;
+
+       &:hover {
+        cursor: pointer;
+        opacity: .9;
+        } 
     }
 }
 
@@ -259,6 +265,14 @@
     font-size: 2rem;
     margin-bottom: 5rem;
 
+    .campo {
+        font-size: 1.2rem;
+        color: red;
+        text-align: center;
+    }
+    ::placeholder {
+        padding-left: .5rem;
+    }
     input {
         border: none;
         height: 3rem;
@@ -291,10 +305,11 @@
         border: none;
         border-radius: .5rem;
         padding: .5rem;
+        transition: all .4s;
 
         &:hover {
             cursor: pointer;
-            opacity: .9;
+            transform: scale(1.1);
         }
     }
 }

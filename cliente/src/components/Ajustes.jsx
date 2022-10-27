@@ -1,11 +1,13 @@
 import React from 'react'
-import { BiImageAdd } from 'react-icons/bi'
+import { useCallback } from 'react'
 import { useState, useEffect } from 'react'
 import Swal from 'sweetalert2'
 import createHeader from '../utils/createHeader'
 
 export const Ajustes = () => {
+
 	
+		
 	const [nombre, setNombre] = useState('')
 	const [apellido, setApellido] = useState('')
 	const [correo, setCorreo] = useState('')
@@ -24,8 +26,43 @@ export const Ajustes = () => {
 	const [error1, setError1] = useState(null)
 	const [error2, setError2] = useState(null)
 
+	const [img, setImg] = useState(null)
 
+	function getImg(e) {
+		setImg(e.target.files[0])	
+		
+				const urlImg = import.meta.env.VITE_URL_IMG
+				let token = window.localStorage.getItem('token')
+				
+				fetch(urlImg, {
+					method: 'POST',
+					body: JSON.stringify({
+						avatar: img
+					}),
+					headers: {
+						'Content-Type': 'Image/png',
+						'Authorization': 'Bearer ' + token 
+					}
+				})
+					.then(response => response.json())
+					.then(result => {					
+						console.log(result)
 
+						if (!result.data) {
+							console.log(result.error)
+							return Swal.fire({
+								icon: 'error',
+								title: result.error.message,
+								confirmButtonColor: '#0083bb',
+							}) 
+						} 
+					setAvatar(result.data.name)
+					console.log(result.data.name)
+
+				})	
+	}
+
+		
 	const enviarFormulario = async () => {
 
 		const data = {
@@ -34,11 +71,11 @@ export const Ajustes = () => {
 			email: correo.trim(),
 			newPassword: newPassword.trim(),
 			biography: biography.trim(),
-			avatar: avatar.trim(),
 			linkedin: linkedin.trim(),
 			facebook: facebook.trim(),
 			twitter: twitter.trim(),
-			github: github.trim()
+			github: github.trim(),
+			avatar: avatar
 		}
 
 		const url = import.meta.env.VITE_URL_USER
@@ -64,6 +101,7 @@ export const Ajustes = () => {
 					confirmButtonColor: '#0083bb',
 				}) 
 			})
+		location.reload()
 	}
 
 	const handleChangeLinkedin = (e) => {setLinkedin(e.target.value)}
@@ -71,8 +109,7 @@ export const Ajustes = () => {
 	const handleChangeTwitter = (e) => {setTwitter(e.target.value)}
 	const handleChangeGithub = (e) => {setGithub(e.target.value)}
 	const handleChangePassword = (e) => {setPassword(e.target.value)}
-	const handleChangeNewPassword = (e) => {setNewPassword(e.target.value)}
-	const handleChangeAvatar = (e) => {setAvatar(e.target.value)}
+	const handleChangeNewPassword = (e) => {setNewPassword(e.target.files[0])}
 	const handleChangeBiography = (e) => {setBiography(e.target.value)}
 
 	// Validar Nombre
@@ -138,21 +175,9 @@ export const Ajustes = () => {
 	}, [correo])
 	// ==============================
 
-	// function validarFormulario() {
-	// 	if (validarCorreo() && validarNombre() && validarApellido()) return true
-	// }
 
 	function handleSubmit(e) {
 		e.preventDefault()
-
-		// if (!validarFormulario()) {
-		// 	return Swal.fire({
-		// 		icon: 'error',
-		// 		title: 'Por favor, complete el formulario correctamente',
-		// 		confirmButtonColor: '#0083bb',
-		// 	})
-		// }
-
 		enviarFormulario()
 	}
 
@@ -250,8 +275,6 @@ export const Ajustes = () => {
 
 
 			<div className='info'>
-
-				
 				<div className='informacion_biografica'>
 					<label htmlFor='Informacion'>Informacion Biográfica</label>
 					<textarea 
@@ -263,24 +286,26 @@ export const Ajustes = () => {
 				</div>
 
 				<div className='avatar'>
-					<p className='avatar_icon'>
-						Avatar
+						<p>Agregar avatar</p>
 						<input
 						type="file"
-						value={avatar}
-						onChange={(e) => setAvatar(e.target.files[0])}
-						/>
-						<BiImageAdd/>
-					</p>
-					<p>Mostrar Foto de perfil</p>
+						id='file'
+						onChange={(e) => {		
+							getImg(e)
+						}}
+						accept="image/*"
+						/>	
+						
 				</div>
 
 				<div className='cambiar_contraseña'>
-					<label>Contraseña Actual</label>
+					<label><p className='campo'>*Campo Requerido</p>Contraseña Actual</label>
+					
 					<input type='text' 
 					placeholder='Contraseña actual' 
 					value={password}
 					onChange={handleChangePassword}
+					required
 					/>
 				</div>
 				<div className='cambiar_contraseña'>
@@ -291,6 +316,7 @@ export const Ajustes = () => {
 					onChange={handleChangeNewPassword}
 					/>
 				</div>
+				
 				<div className='btn'>
 					<button className='btn-guardar' type='submit'>Guardar Cambios</button>
 				</div>
