@@ -1,14 +1,19 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-// import Swal from 'sweetalert2'
 import { Loader } from '../components/Loader'
 import createHeader from '../utils/createHeader'
 import { AiFillFileText, AiFillLock } from 'react-icons/ai'
+import { useMercadopago } from 'react-sdk-mercadopago'
 
 export function CourseDetails() {
 	const [user, setUser] = useState(false)
 	const [curso, setCurso] = useState()
 	const [loading, setLoading] = useState(true)
+	const [preferenceId, setPreferenceId] = useState(null)
+
+	const mercadopago = useMercadopago.v2('TEST-c653f95d-13cb-4887-af46-94b566e9c37a', {
+		locale: 'es-AR',
+	})
 
 	const navigate = useNavigate()
 	const { name } = useParams()
@@ -40,14 +45,33 @@ export function CourseDetails() {
 			.then(() => setLoading(false))
 	}, [user])
 
-	if (loading) {
-		return <Loader />
-	}
-
-	function handleSubmit(e) {
+	async function handleSubmit(e) {
 		e.preventDefault()
 
-		console.log('Curso comprado')
+		await fetch(import.meta.env.VITE_URL_COURSE + name + '/payment', {
+			method: 'GET',
+			headers: createHeader(),
+		})
+			.then(response => response.json())
+			.then(result => setPreferenceId(result.data.preference))
+	}
+
+	useEffect(() => {
+		if (mercadopago) {
+			mercadopago.checkout({
+				preference: {
+					id: preferenceId,
+				},
+				render: {
+					container: '.payment',
+					label: 'Pagar con mercado pago',
+				},
+			})
+		}
+	}, [preferenceId])
+
+	if (loading) {
+		return <Loader />
 	}
 
 	return (
@@ -68,7 +92,7 @@ export function CourseDetails() {
 					<strong>Requisitos del curso:</strong>
 					<span>{curso.requirements.toLowerCase().replaceAll('\n', ', ')}</span>
 					<strong>Precio: U$D{curso.price}</strong>
-					<form onSubmit={e => handleSubmit(e)}>
+					<form className='payment' onSubmit={e => handleSubmit(e)}>
 						<button type='submit'>Adquirir curso</button>
 					</form>
 				</div>
