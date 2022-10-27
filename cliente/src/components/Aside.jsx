@@ -4,6 +4,7 @@ import { BsFillPlayFill } from 'react-icons/bs'
 import { useNavigate, NavLink } from 'react-router-dom'
 import createHeader from '../utils/createHeader'
 import Swal from 'sweetalert2'
+import { useCallback } from 'react'
 
 export const Aside = () => {
 	const [user, setUser] = useState(null)
@@ -17,7 +18,7 @@ export const Aside = () => {
 		location.reload()
 	}
 
-	useEffect(() => {
+	const peticion = useCallback (() => {
 		const url = import.meta.env.VITE_URL_USER
 
 		fetch(url, {
@@ -36,6 +37,10 @@ export const Aside = () => {
 
 				return setUser(result.data.user)
 			})
+	})
+		
+	useEffect(() => {
+		peticion()
 	}, [])
 
 	return (
@@ -57,13 +62,6 @@ export const Aside = () => {
 							Cursos
 						</NavLink>
 
-						<NavLink
-							to='/cuestionario'
-							className={({ isActive }) => (isActive ? 'active' : '')}
-						>
-							<BsFillPlayFill className='icon' />
-							Cuestionarios
-						</NavLink>
 
 						<NavLink
 							to='/ajustes'

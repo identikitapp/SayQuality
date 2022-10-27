@@ -4,11 +4,13 @@ import { Aside } from '../components/Aside'
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import createHeader from '../utils/createHeader'
+import { useCallback } from 'react'
 
 export const AjustesPerfil = () => {
 	const navigate = useNavigate()
 
-	useEffect(() => {
+
+	useCallback(() => {
         if (localStorage.getItem('token')) {
             const url = import.meta.env.VITE_URL_USER
 
@@ -25,6 +27,7 @@ export const AjustesPerfil = () => {
         	}
     }, [])
 
+	
 	
 
 	return (

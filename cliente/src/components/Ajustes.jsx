@@ -56,8 +56,13 @@ export const Ajustes = () => {
 						icon: 'error',
 						title: result.error.message,
 						confirmButtonColor: '#0083bb',
-					})
-				}
+					}) 
+				} 
+				return Swal.fire({
+					icon: 'success',
+					title: 'Tus cambios se han guardado con exito',
+					confirmButtonColor: '#0083bb',
+				}) 
 			})
 	}
 
