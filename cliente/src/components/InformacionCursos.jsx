@@ -1,7 +1,8 @@
 import React from 'react'
 import { useState, useEffect, useCallback } from 'react'
-import { Cursos } from '../pages/Cursos'
 import createHeader from '../utils/createHeader'
+import logo from '../assets/logo.png'
+import {Link} from 'react-router-dom'
 
 export const InformacionCursos= () => {
 
@@ -46,9 +47,9 @@ export const InformacionCursos= () => {
         <div className='cursos_informacion'>
 			
 			{courses.map((curso) => (
-				<div key={curso.ID}>
-					<li>{curso.name}</li>
-					<li>{curso.description}</li>
+				<div className='contenedor_cursos' key={curso.ID}>
+					<Link><img src={logo} alt="img curso" /></Link> 
+					<li className='curso'>{curso.name}</li>
 				</div>
        		 
 			 

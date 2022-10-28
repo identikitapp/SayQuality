@@ -1,5 +1,4 @@
 import React from 'react'
-import { useCallback } from 'react'
 import { useState, useEffect } from 'react'
 import Swal from 'sweetalert2'
 import createHeader from '../utils/createHeader'
@@ -33,26 +32,23 @@ export const Ajustes = () => {
 		
 				const urlImg = import.meta.env.VITE_URL_IMG
 				let token = window.localStorage.getItem('token')
+				const reader = new FileReader()
 				
 				fetch(urlImg, {
 					method: 'POST',
-					body: JSON.stringify({
-						avatar: img
-					}),
+					body: reader.readAsBinaryString(img),
 					headers: {
-						'Content-Type': 'Image/png',
+						'Content-Type': 'Image/png',           
 						'Authorization': 'Bearer ' + token 
 					}
 				})
-					.then(response => response.json())
+					.then(response => response.json())	
 					.then(result => {					
-						console.log(result)
-
 						if (!result.data) {
 							console.log(result.error)
 							return Swal.fire({
 								icon: 'error',
-								title: result.error.message,
+								title: "error",
 								confirmButtonColor: '#0083bb',
 							}) 
 						} 
@@ -297,25 +293,27 @@ export const Ajustes = () => {
 						/>	
 						
 				</div>
-
+			<div className='contenedor_contraseñas'>
 				<div className='cambiar_contraseña'>
-					<label><p className='campo'>*Campo Requerido</p>Contraseña Actual</label>
-					
-					<input type='text' 
-					placeholder='Contraseña actual' 
-					value={password}
-					onChange={handleChangePassword}
-					required
-					/>
-				</div>
-				<div className='cambiar_contraseña'>
-					<label>Cambiar contraseña</label>
-					<input type='text' 
-					placeholder='Cambiar Contraseña' 
-					value={newPassword}
-					onChange={handleChangeNewPassword}
-					/>
-				</div>
+						<label><p className='campo'>*Campo Requerido</p>Contraseña Actual</label>
+						
+						<input type='text' 
+						placeholder='Contraseña actual' 
+						value={password}
+						onChange={handleChangePassword}
+						required
+						/>
+					</div>
+					<div className='cambiar_contraseña contraseña-nueva'>
+						<label>Contraseña Nueva</label>
+						<input type='text' 
+						placeholder='Contraseña Nueva' 
+						value={newPassword}
+						onChange={handleChangeNewPassword}
+						/>
+					</div>
+			</div>
+				
 				
 				<div className='btn'>
 					<button className='btn-guardar' type='submit'>Guardar Cambios</button>

@@ -1,12 +1,12 @@
 import React from 'react'
 import { Aside } from '../components/Aside';
-import { InformacionPerfil } from '../components/InformacionCursos';
+import { InformacionCursos } from '../components/InformacionCursos';
 export const CursosPerfil = () => {
   return (
     <div className='contenedor_perfil'>
        <Aside />
     <section className='panel_informacion'>
-        <InformacionPerfil />
+        <InformacionCursos/>
     </section>
     </div>
   )
