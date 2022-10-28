@@ -4,19 +4,21 @@ import { Loader } from '../components/Loader'
 import createHeader from '../utils/createHeader'
 import { AiFillFileText, AiFillLock } from 'react-icons/ai'
 import { useMercadopago } from 'react-sdk-mercadopago'
+import Swal from 'sweetalert2'
 
 export function CourseDetails() {
 	const [user, setUser] = useState(false)
 	const [curso, setCurso] = useState()
 	const [loading, setLoading] = useState(true)
 	const [preferenceId, setPreferenceId] = useState(null)
+	const [coursePay, setCoursePay] = useState(false)
+
+	const navigate = useNavigate()
+	const { name } = useParams()
 
 	const mercadopago = useMercadopago.v2('TEST-c653f95d-13cb-4887-af46-94b566e9c37a', {
 		locale: 'es-AR',
 	})
-
-	const navigate = useNavigate()
-	const { name } = useParams()
 
 	useEffect(() => {
 		const url = import.meta.env.VITE_URL_USER
@@ -48,25 +50,48 @@ export function CourseDetails() {
 	async function handleSubmit(e) {
 		e.preventDefault()
 
-		await fetch(import.meta.env.VITE_URL_COURSE + name + '/payment', {
-			method: 'GET',
-			headers: createHeader(),
-		})
-			.then(response => response.json())
-			.then(result => setPreferenceId(result.data.preference))
+		if (!coursePay) {
+			await fetch(import.meta.env.VITE_URL_COURSE + name + '/payment', {
+				method: 'GET',
+				headers: createHeader(),
+			})
+				.then(response => response.json())
+				.then(result => setPreferenceId(result.data.preference))
+				.then(() => setCoursePay(true))
+
+			if (name === 'testing manual') {
+				Swal.fire({
+					icon: 'success',
+					title: '¡Curso adquirido con exito!',
+					confirmButtonColor: '#0083bb',
+				})
+			}
+		}
+
+		if (coursePay) {
+			if (name === 'testing manual') {
+				Swal.fire({
+					icon: 'info',
+					title: 'El curso ya se encuentra en tu cuenta',
+					confirmButtonColor: '#0083bb',
+				})
+			}
+		}
 	}
 
 	useEffect(() => {
-		if (mercadopago) {
-			mercadopago.checkout({
-				preference: {
-					id: preferenceId,
-				},
-				render: {
-					container: '.payment',
-					label: 'Pagar con mercado pago',
-				},
-			})
+		if (name !== 'testing manual') {
+			if (mercadopago) {
+				mercadopago.checkout({
+					preference: {
+						id: preferenceId,
+					},
+					render: {
+						container: '.payment',
+						label: 'Pagar con mercado pago',
+					},
+				})
+			}
 		}
 	}, [preferenceId])
 
