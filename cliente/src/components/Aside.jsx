@@ -27,6 +27,7 @@ export const Aside = () => {
 		})
 			.then(response => response.json())
 			.then(result => {
+				console.log(result)
 				if (!result.data) {
 					return Swal.fire({
 						icon: 'error',
@@ -61,8 +62,7 @@ export const Aside = () => {
 							<BsFillPlayFill className='icon' />
 							Cursos
 						</NavLink>
-
-
+						
 						<NavLink
 							to='/ajustes'
 							className={({ isActive }) => (isActive ? 'active' : '')}

@@ -1342,24 +1342,27 @@ template {
   resize: none;
   border: none;
   border-radius: 0.5rem;
+  font-size: 2rem;
 }
 
 .avatar {
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
   margin-top: 5rem;
   font-size: 2rem;
 }
-.avatar .avatar_icon {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.avatar button {
-  border: none;
+.avatar ::-webkit-file-upload-button {
   background-color: #ff7400;
+  border: none;
   border-radius: 0.5rem;
-  padding: 0.3rem;
+  padding: 0.5rem;
+}
+.avatar ::-webkit-file-upload-button:hover {
+  cursor: pointer;
+  opacity: 0.9;
 }
 
 .cambiar_contraseña {
@@ -1370,6 +1373,15 @@ template {
   gap: 2rem;
   font-size: 2rem;
   margin-bottom: 5rem;
+}
+.cambiar_contraseña ::-moz-placeholder {
+  padding-left: 0.5rem;
+}
+.cambiar_contraseña :-ms-input-placeholder {
+  padding-left: 0.5rem;
+}
+.cambiar_contraseña ::placeholder {
+  padding-left: 0.5rem;
 }
 .cambiar_contraseña input {
   border: none;
@@ -1400,10 +1412,11 @@ template {
   border: none;
   border-radius: 0.5rem;
   padding: 0.5rem;
+  transition: all 0.4s;
 }
 .btn .btn-guardar:hover {
   cursor: pointer;
-  opacity: 0.9;
+  transform: scale(1.1);
 }
 
 .loaderContainer {
