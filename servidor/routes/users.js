@@ -791,7 +791,7 @@ users.patch("/:ID", rateLimit.updateUser, (req, res) => {
 
     let body = req.body;
     let updatedUser = { ...req.user };
-    let tokenCreate = false;
+    let tokenCreate = true;
     let action = 4;
 
     if (!req.user) {
@@ -863,6 +863,7 @@ users.patch("/:ID", rateLimit.updateUser, (req, res) => {
         };
 
         action = 8;
+        tokenCreate = false;
         updatedUser.email = body.email;
     };
 
@@ -902,7 +903,6 @@ users.patch("/:ID", rateLimit.updateUser, (req, res) => {
         };
 
         action = 6;
-        tokenCreate = true;
         updatedUser.password = shajs('sha256').update(process.env.salt + body.newPassword).digest('hex');
     };
 

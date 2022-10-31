@@ -15,17 +15,29 @@ module.exports.Get = (hash) => {
 };
 
 module.exports.Create = (content) => {
-    let name = shajs('sha256').update(content).digest('hex');
+
+    let regex = /^data:.+\/(.+);base64,(.*)$/;
+    let matches = content.match(regex);
+
+    if(matches.length != 3){
+        throw new Error("Los datos enviados no son Data URLs");
+    };
+
+    let data = matches[2];
+    let buffer = Buffer.from(data, 'base64');
+
+    let name = shajs('sha256').update(buffer.toString("binary")).digest('hex');
     let path = process.env.imgPath + "/" + name + ".png";
 
     if (fs.existsSync(path)) {
         return {
             code: 200,
-            name
+            name,
+            message: "La imagen ya existe."
         };
     };
 
-    fs.appendFileSync(path, content, { encoding: "binary" });
+    fs.appendFileSync(path, buffer);
 
     if (!isImage(path)) {
         fs.unlinkSync(path);
@@ -33,7 +45,8 @@ module.exports.Create = (content) => {
     } else {
         return {
             code: 201,
-            name
+            name,
+            message: "Imagen creada con exito."
         };
     };
 };
