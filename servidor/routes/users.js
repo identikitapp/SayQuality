@@ -748,18 +748,38 @@ users.get("/:ID", async (req, res) => {
             if (req.paramUser.ID == req.user.ID) {
                 user.email = req.paramUser.email;
 
-                let courses = [];
+                user.courses = [];
                 let payments = await sql.GetPaymentsByUser(req.user.ID);
 
                 for (let index = 0; index < payments.length; index++) {
                     const payment = payments[index];
                     if (!payment.authorized) continue;
 
-                    let course = await sql.GetCourse(payment.courseID);
-                    courses.push(course);
-                };
+                    let courses = await sql.GetCourse(payment.courseID);
+                    let stages = await sql.GetStages(payment.courseID);
 
-                user.courses = courses;
+                    let course = courses[0];
+                    let completeStage = [];
+
+                    for (let index = 0; index < stages.length; index++) {
+                        let s = stages[index];
+
+                        delete s.courseID;
+
+                        let chapters = await sql.GetChapters(s.ID);
+                        for (let index2 = 0; index2 < chapters.length; index2++) {
+                            const c = chapters[index2];
+                            c.homework = new Boolean(c.homework);
+                            delete c.stageID;
+                        };
+
+                        s.chapters = chapters;
+                        completeStage.push(s);
+                    };
+
+                    course.stages = completeStage;
+                    user.courses.push(course);
+                };
             };
         } catch (e) {
             return res
