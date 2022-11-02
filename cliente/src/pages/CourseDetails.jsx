@@ -16,7 +16,7 @@ export function CourseDetails() {
 	const navigate = useNavigate()
 	const { name } = useParams()
 
-	const mercadopago = useMercadopago.v2('TEST-c653f95d-13cb-4887-af46-94b566e9c37a', {
+	const mercadopago = useMercadopago.v2(import.meta.env.VITE_URL_TEST_PUBLIC_KEY_MP, {
 		locale: 'es-AR',
 	})
 

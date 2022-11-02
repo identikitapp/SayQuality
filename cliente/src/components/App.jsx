@@ -12,6 +12,7 @@ import { RecuperarPassword } from '../pages/RecuperarPassword'
 import { AjustesPerfil } from '../pages/AjustesPerfil'
 import { CourseDetails } from '../pages/CourseDetails'
 import { Perfil } from '../pages/Perfil'
+import { TakeCourse } from '../pages/TakeCourse'
 
 export function App() {
 	return (
@@ -32,7 +33,7 @@ export function App() {
 					<Route path='/perfil' element={<Perfil />} />
 					<Route path='/:code' element={<Verify />} />
 					<Route path='/ajustes' element={<AjustesPerfil />} />
-
+					<Route path='/perfil/:name' element={<TakeCourse />} />
 					<Route path='*' element={<Navigate replace to='/' />} />
 				</Routes>
 			</main>

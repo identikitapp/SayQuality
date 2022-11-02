@@ -40,7 +40,7 @@ images.post("/images", rateLimit.uploadImage, (req, res) => {
     };
 
     try {
-        let { name, code } = imgs.Create(req.body);
+        let { name, code, message } = imgs.Create(req.body);
 
         if (code == 201) {
             sql.CreateLog(new sql.Log({
@@ -58,7 +58,7 @@ images.post("/images", rateLimit.uploadImage, (req, res) => {
             .status(code)
             .json({
                 data: {
-                    message: "Imagen creada con exito.",
+                    message,
                     name
                 }
             });
@@ -67,7 +67,7 @@ images.post("/images", rateLimit.uploadImage, (req, res) => {
             .status(415)
             .json({
                 "error": {
-                    "message": e.message
+                    "message": "Error de semantica"
                 }
             });
     };
