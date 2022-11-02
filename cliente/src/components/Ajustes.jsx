@@ -5,13 +5,13 @@ import createHeader from '../utils/createHeader'
 
 export const Ajustes = () => {
 	const [nombre, setNombre] = useState('')
-	const [apellido, setApellido] = useState('')
 	const [correo, setCorreo] = useState('')
 
 	const [linkedin, setLinkedin] = useState('')
 	const [facebook, setFacebook] = useState('')
 	const [twitter, setTwitter] = useState('')
 	const [github, setGithub] = useState('')
+	const [youtube, setYoutube] = useState('')
 
 	const [password, setPassword] = useState('')
 	const [newPassword, setNewPassword] = useState('')
@@ -19,13 +19,12 @@ export const Ajustes = () => {
 
 	const [error, setError] = useState(null)
 	const [error1, setError1] = useState(null)
-	const [error2, setError2] = useState(null)
 
 	const [user, setUser] = useState(null)
 
-	const peticion = useCallback (() => {
+	const peticion = useCallback(() => {
 		const url = import.meta.env.VITE_URL_USER
-		
+
 		fetch(url, {
 			method: 'GET',
 			headers: createHeader(),
@@ -43,74 +42,45 @@ export const Ajustes = () => {
 
 				return setUser(result.data.user)
 			})
-			
 	})
-		
+
 	useEffect(() => {
 		peticion()
 	}, [])
 	function getImg(e) {
-		const urlImg = import.meta.env.VITE_URL_IMG;
-		let token = window.localStorage.getItem('token');
-		const reader = new FileReader();
-		reader.readAsDataURL(e);
-	
+		const urlImg = import.meta.env.VITE_URL_IMG
+		let token = window.localStorage.getItem('token')
+		const reader = new FileReader()
+		reader.readAsDataURL(e)
+
 		reader.addEventListener('error', () => {
-			console.error(`Error occurred reading file: ${selectedFile.name}`);
-		});
-	
-		reader.addEventListener('load', (evt) => {
+			console.error(`Error occurred reading file: ${selectedFile.name}`)
+		})
+
+		reader.addEventListener('load', evt => {
 			fetch(urlImg, {
 				method: 'POST',
 				body: reader.result,
 				headers: {
 					'Content-Type': 'image/png',
-					'Authorization': 'Bearer ' + token
-				}
+					Authorization: 'Bearer ' + token,
+				},
 			})
 				.then(response => response.json())
 				.then(result => {
 					if (!result.data) {
-						console.log(result.error);
+						console.log(result.error)
 						return Swal.fire({
 							icon: 'error',
-							title: "error",
+							title: 'error',
 							confirmButtonColor: '#0083bb',
-						});
-					};
-					setAvatar(result.data.name);
-					console.log(result.data.name);
-	
+						})
+					}
+					setAvatar(result.data.name)
+					console.log(result.data.name)
 				})
-		});
-	};
-
-	const [selectedFile, setSelectedFile] = useState()
-    const [preview, setPreview] = useState()
-
-    // create a preview as a side effect, whenever selected file is changed
-    useEffect(() => {
-        if (!selectedFile) {
-            setPreview(undefined)
-            return
-        }
-
-        const objectUrl = URL.createObjectURL(selectedFile)
-        setPreview(objectUrl)
-
-        // free memory when ever this component is unmounted
-        return () => URL.revokeObjectURL(objectUrl)
-    }, [selectedFile])
-
-    const onSelectFile = e => {
-        if (!e.target.files || e.target.files.length === 0) {
-            setSelectedFile(undefined)
-            return
-        }
-
-        // I've kept this example simple by using the first image instead of multiple
-        setSelectedFile(e.target.files[0])
-    }
+		})
+	}
 
 	const enviarFormulario = async () => {
 		const data = {
@@ -122,7 +92,8 @@ export const Ajustes = () => {
 			linkedin: linkedin.trim(),
 			facebook: facebook.trim(),
 			twitter: twitter.trim(),
-			github: github.trim()
+			github: github.trim(),
+			youtube: youtube.trim()
 		}
 		const url = import.meta.env.VITE_URL_USER
 
@@ -162,6 +133,9 @@ export const Ajustes = () => {
 	const handleChangeGithub = e => {
 		setGithub(e.target.value)
 	}
+	const handleChangeYoutube = e => {
+		setYoutube(e.target.value)
+	}
 	const handleChangePassword = e => {
 		setPassword(e.target.value)
 	}
@@ -192,27 +166,6 @@ export const Ajustes = () => {
 
 	// ==========================
 
-	// Validar Apellido
-
-	function validarApellido(apellido) {
-		return /^[A-Za-z\ ]{3,20}$/.test(apellido)
-	}
-
-	const handleChangeApellido = e => {
-		if (!validarApellido(e.target.value)) {
-			setError2('Apellido Invalido')
-		} else {
-			setError2(null)
-		}
-		setApellido(e.target.value)
-	}
-
-	useEffect(() => {
-		validarApellido()
-	}, [apellido])
-
-	// ===============================
-
 	// Validar Email
 	function validarCorreo(email) {
 		return /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
@@ -241,33 +194,35 @@ export const Ajustes = () => {
 	}
 
 	return (
-		
-		<>	
-		
-		<div>
-				{			
-			
-				user !== null ? (
-					<div>
-						<p>{}</p>
+		<>
+			<div>
+				{user !== null ? (
+					<>
+					<p className='datos_actualizados'>Mis datos</p>
+					<div className='contenedor_user'>
+						<div className='user'>
+							<p><strong>Nombre:</strong> {user.username}</p>
+							<p><strong>Email:</strong> {user.email}</p>
+							<p><strong>Biografia:</strong> {user.biography}</p>
+						</div>
+						<div className='redes'>
+							<p><strong>Linkedin:</strong> {user.linkedin}</p>
+							<p><strong>Twitter:</strong> {user.twitter}</p>
+							<p><strong>Github:</strong> {user.github}</p>
+							<p><strong>Facebook:</strong> {user.facebook}</p>
+							<p><strong>Youtube:</strong> {user.youtube}</p>
+						</div>
 					</div>
-					
-				) :
-				
-				(
+					</>
+				) : (
 					<p>usuario no encontrado</p>
-				)
-						
-				}
-		
-		</div>
-			
-				
+				)}
+			</div>
 
 			<form onSubmit={e => handleSubmit(e)} autoComplete='off'>
 				<div className='formulario_ajustes'>
 					{/* Formulario Informacion Personal */}
-				
+
 					<div className='inputs'>
 						<label htmlFor='Nombre'>Nombre</label>
 						<input
@@ -278,18 +233,6 @@ export const Ajustes = () => {
 							onChange={handleChangeNombre}
 						/>
 						{error1 && <h2 className='error'>{error1}</h2>}
-					</div>
-
-					<div className='inputs'>
-						<label htmlFor='apellido'>Apellido</label>
-						<input
-							type='text'
-							placeholder='Apellido'
-							name='lastName'
-							value={apellido}
-							onChange={handleChangeApellido}
-						/>
-						{error2 && <h2 className='error'>{error2}</h2>}
 					</div>
 
 					<div className='inputs'>
@@ -350,6 +293,17 @@ export const Ajustes = () => {
 							onChange={handleChangeGithub}
 						/>
 					</div>
+
+					<div className='inputs'>
+						<label htmlFor='youtube'>Youtube</label>
+						<input
+							type='text'
+							name='youtube'
+							placeholder='Youtube'
+							value={youtube}
+							onChange={handleChangeYoutube}
+						/>
+					</div>
 				</div>
 
 				<div className='info'>
@@ -364,7 +318,6 @@ export const Ajustes = () => {
 					</div>
 
 					<div className='avatar'>
-						{selectedFile && <img src={preview} />}
 						<p>Agregar avatar</p>
 						<input
 							type='file'

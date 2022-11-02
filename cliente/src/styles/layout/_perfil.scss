@@ -79,15 +79,12 @@
 .buttons {
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
     margin: 5rem 0;
     .buttons_cursos {
         border: none;
-        font-size: 1.4rem;
-        border-radius: .5rem;
-        padding: .5rem;
+        font-size: 2.5rem;
         background-color: $grisFondo;
-        box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.25);
     }
 }
 
@@ -124,26 +121,6 @@
 
 
 }
-
-@include telefono {
-    .contenedor_perfil { 
-        .buttons {
-            .buttons_cursos {
-                font-size: 2rem;
-                padding: 1rem;
-              }
-          }
-
-          .button_inscripto {
-            button {
-                font-size: 2rem;  
-                padding: 1rem; 
-                margin-bottom: 1rem;
-            }
-        }
-    }
-}
-
 
 // ====================================================================== //
 // AJUSTES
@@ -344,4 +321,43 @@ align-items: center;
         list-style: none;
         text-align: center;
     }
+}
+
+// ========================== DATOS DEL USUARIO =====================================
+
+@include tablet {
+    .contenedor_user {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        place-items: center;
+        margin: 1rem;
+    }
+}
+.contenedor_user {
+    min-height: 40rem;
+    display: grid;
+    justify-content: center;
+   
+
+    .user {
+        font-size: 2.5rem;
+        p {
+            padding: 1rem;
+        }
+    }
+
+    .redes {
+        font-size: 2.5rem;
+        p {
+            padding: 1rem;
+        }
+    }
+}
+
+.datos_actualizados {
+    margin: 2rem 0;
+    font-size: 2.5rem;
+    display: flex;
+    justify-content: center;
+    text-decoration: underline;
 }
