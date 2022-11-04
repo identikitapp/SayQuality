@@ -7,9 +7,10 @@ import Swal from 'sweetalert2'
 import { useCallback } from 'react'
 
 export const Aside = () => {
+	
 	const [user, setUser] = useState(null)
 	const navigate = useNavigate()
-
+	console.log()
 	
 	const logout = () => {
 		localStorage.removeItem('token')
@@ -20,7 +21,7 @@ export const Aside = () => {
 
 	const peticion = useCallback (() => {
 		const url = import.meta.env.VITE_URL_USER
-
+		
 		fetch(url, {
 			method: 'GET',
 			headers: createHeader(),
@@ -38,6 +39,7 @@ export const Aside = () => {
 
 				return setUser(result.data.user)
 			})
+			
 	})
 		
 	useEffect(() => {
@@ -45,6 +47,7 @@ export const Aside = () => {
 	}, [])
 
 	return (
+		
 		<aside>
 			{user === null ? (
 				navigate('/acceder')
