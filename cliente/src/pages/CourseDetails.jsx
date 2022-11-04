@@ -11,7 +11,7 @@ export function CourseDetails() {
 	const [curso, setCurso] = useState()
 	const [loading, setLoading] = useState(true)
 	const [preferenceId, setPreferenceId] = useState(null)
-	const [coursePay, setCoursePay] = useState(false)
+	const [createPayBtn, setCreatePayBtn] = useState(false)
 
 	const navigate = useNavigate()
 	const { name } = useParams()
@@ -50,32 +50,24 @@ export function CourseDetails() {
 	async function handleSubmit(e) {
 		e.preventDefault()
 
-		if (!coursePay) {
+		console.log(createPayBtn)
+
+		if (!createPayBtn) {
 			await fetch(import.meta.env.VITE_URL_COURSE + name + '/payment', {
 				method: 'GET',
 				headers: createHeader(),
 			})
 				.then(response => response.json())
 				.then(result => setPreferenceId(result.data.preference))
-				.then(() => setCoursePay(true))
-
-			if (name === 'testing manual') {
-				Swal.fire({
-					icon: 'success',
-					title: '¡Curso adquirido con exito!',
-					confirmButtonColor: '#0083bb',
-				})
-			}
+				.then(() => setCreatePayBtn(true))
 		}
 
-		if (coursePay) {
-			if (name === 'testing manual') {
-				Swal.fire({
-					icon: 'info',
-					title: 'El curso ya se encuentra en tu cuenta',
-					confirmButtonColor: '#0083bb',
-				})
-			}
+		if (name === 'testing manual') {
+			Swal.fire({
+				icon: 'info',
+				title: 'El curso ya se encuentra en tu cuenta',
+				confirmButtonColor: '#0083bb',
+			})
 		}
 	}
 
@@ -93,7 +85,7 @@ export function CourseDetails() {
 				})
 			}
 		}
-	}, [preferenceId])
+	}, [createPayBtn])
 
 	if (loading) {
 		return <Loader />
