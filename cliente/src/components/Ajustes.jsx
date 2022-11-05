@@ -16,11 +16,13 @@ export const Ajustes = () => {
 	const [password, setPassword] = useState('')
 	const [newPassword, setNewPassword] = useState('')
 	const [biography, setBiography] = useState('')
+	const [avatar, setAvatar] = useState('')
 
 	const [error, setError] = useState(null)
 	const [error1, setError1] = useState(null)
 
-	const [user, setUser] = useState(null)
+	// const [user, setUser] = useState(null)
+	const [selectedFile, setSelectedFile] = useState()
 
 	const peticion = useCallback(() => {
 		const url = import.meta.env.VITE_URL_USER
@@ -39,14 +41,25 @@ export const Ajustes = () => {
 						confirmButtonColor: '#0083bb',
 					})
 				}
-
-				return setUser(result.data.user)
+				let me = result.data.user
+				console.log(me)
+				
+				document.getElementById("nombre").value = me.username;
+				document.getElementById("email").value = me.email;
+				document.getElementById("facebook").value = me.facebook;
+				document.getElementById("linkedin").value = me.linkedin;
+				document.getElementById("youtube").value = me.youtube;
+				document.getElementById("twitter").value = me.twitter;
+				document.getElementById("github").value = me.github;
+				document.getElementById("biography").value = me.biography;
+				
 			})
 	})
 
 	useEffect(() => {
 		peticion()
 	}, [])
+
 	function getImg(e) {
 		const urlImg = import.meta.env.VITE_URL_IMG
 		let token = window.localStorage.getItem('token')
@@ -93,7 +106,9 @@ export const Ajustes = () => {
 			facebook: facebook.trim(),
 			twitter: twitter.trim(),
 			github: github.trim(),
-			youtube: youtube.trim()
+			youtube: youtube.trim(),
+			avatar: avatar
+			
 		}
 		const url = import.meta.env.VITE_URL_USER
 
@@ -192,44 +207,21 @@ export const Ajustes = () => {
 		e.preventDefault()
 		enviarFormulario()
 	}
-
+	
 	return (
 		<>
-			<div>
-				{user !== null ? (
-					<>
-					<p className='datos_actualizados'>Mis datos</p>
-					<div className='contenedor_user'>
-						<div className='user'>
-							<p><strong>Nombre:</strong> {user.username}</p>
-							<p><strong>Email:</strong> {user.email}</p>
-							<p><strong>Biografia:</strong> {user.biography}</p>
-						</div>
-						<div className='redes'>
-							<p><strong>Linkedin:</strong> {user.linkedin}</p>
-							<p><strong>Twitter:</strong> {user.twitter}</p>
-							<p><strong>Github:</strong> {user.github}</p>
-							<p><strong>Facebook:</strong> {user.facebook}</p>
-							<p><strong>Youtube:</strong> {user.youtube}</p>
-						</div>
-					</div>
-					</>
-				) : (
-					<p>usuario no encontrado</p>
-				)}
-			</div>
 
 			<form onSubmit={e => handleSubmit(e)} autoComplete='off'>
 				<div className='formulario_ajustes'>
 					{/* Formulario Informacion Personal */}
-
+					
 					<div className='inputs'>
 						<label htmlFor='Nombre'>Nombre</label>
 						<input
+							id='nombre'
 							type='text'
 							placeholder='Nombre'
-							name='name'
-							value={nombre}
+							name='name'		
 							onChange={handleChangeNombre}
 						/>
 						{error1 && <h2 className='error'>{error1}</h2>}
@@ -240,9 +232,8 @@ export const Ajustes = () => {
 						<input
 							type='email'
 							placeholder='Correo Electronico'
-							id='message'
+							id='email'
 							name='email'
-							value={correo}
 							onChange={handleChangeEmail}
 						/>
 						{error && <h2 className='error'>{error}</h2>}
@@ -253,66 +244,77 @@ export const Ajustes = () => {
 					<div className='inputs'>
 						<label htmlFor='facebook'>Facebook</label>
 						<input
+							className='facebook'
 							type='text'
 							name='facebook'
 							placeholder='Facebook'
-							value={facebook}
+							id='facebook'
 							onChange={handleChangeFacebook}
 						/>
+						<span>facebook.com/</span>
 					</div>
 
 					<div className='inputs'>
 						<label htmlFor='Linkedin'>Linkedin</label>
 						<input
+							className='linkedin'
 							type='text'
 							name='linkedin'
 							placeholder='Linkedin'
-							value={linkedin}
+							id='linkedin'
 							onChange={handleChangeLinkedin}
 						/>
+						<span>linkedin.com/</span>
 					</div>
-
+					
+					
 					<div className='inputs'>
-						<label htmlFor='twitter'>Twitter</label>
+						<label htmlFor='twitter'>Twitter</label>		
 						<input
+							className='twitter'
 							type='text'
 							name='twitter'
 							placeholder='twiter'
-							value={twitter}
+							id='twitter'
 							onChange={handleChangeTwitter}
 						/>
+						<span >twitter.com/</span>
 					</div>
 
 					<div className='inputs'>
 						<label htmlFor='twitter'>Github</label>
 						<input
+							className='twitter'
 							type='text'
 							name='github'
 							placeholder='Github'
-							value={github}
+							id='github'
 							onChange={handleChangeGithub}
 						/>
+						<span>github.com/</span>
 					</div>
 
 					<div className='inputs'>
 						<label htmlFor='youtube'>Youtube</label>
 						<input
+							className='youtube'
 							type='text'
 							name='youtube'
 							placeholder='Youtube'
-							value={youtube}
+							id='youtube'
 							onChange={handleChangeYoutube}
 						/>
+						<span>youtube.com/</span>
 					</div>
 				</div>
 
 				<div className='info'>
 					<div className='informacion_biografica'>
-						<label htmlFor='Informacion'>Informacion Biográfica</label>
+						<label htmlFor='Informacion'>Descripcion</label>
 						<textarea
 							type='text'
 							name='biography'
-							value={biography}
+							id='biography'
 							onChange={handleChangeBiography}
 						/>
 					</div>
@@ -325,7 +327,7 @@ export const Ajustes = () => {
 							name='file'
 							onChange={e => {
 								getImg(e.target.files[0])
-								onSelectFile
+								selectedFile
 							}}
 							accept='image/*'
 						/>
@@ -339,7 +341,7 @@ export const Ajustes = () => {
 							<input
 								type='text'
 								placeholder='Contraseña actual'
-								value={password}
+								id='password'
 								onChange={handleChangePassword}
 								required
 							/>
@@ -349,7 +351,7 @@ export const Ajustes = () => {
 							<input
 								type='text'
 								placeholder='Contraseña Nueva'
-								value={newPassword}
+								id='newPassword'
 								onChange={handleChangeNewPassword}
 							/>
 						</div>

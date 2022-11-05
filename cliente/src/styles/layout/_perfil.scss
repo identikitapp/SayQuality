@@ -21,11 +21,13 @@
         margin: 0 auto;
         align-items: center;
         justify-content: center;
-
-        .icon-add {
-            color: $blanco;
+        img {
+            height: 17rem;
+            width: 17rem;
         }
+        
         p {
+            font-family: $fuente;
             padding-bottom: 1rem;
             font-size: 2.5rem;
             color: $blanco;
@@ -44,6 +46,7 @@
 
     // Enlaces 
     .secciones {
+        font-family: $fuente;
         min-height: 30rem;
         margin-left: 3rem;
         margin-bottom: 3rem;
@@ -77,6 +80,7 @@
     
 // Botones cursos
 .buttons {
+    font-family: $fuente;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -124,7 +128,7 @@
 
 // ====================================================================== //
 // AJUSTES
-@include tablet {
+@media (min-width: 890px){
     .formulario_ajustes {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -143,20 +147,39 @@
     align-items: center;
     font-size: 2rem;
     gap: .5rem;
-
-    .inputs {
+   
+    .inputs {   
+        font-family: $fuente;
+        position: relative;
         margin-top: 2rem;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        max-width: 30rem;
+        width: 35rem;
         gap: .5rem;
-        
-        input {
+
+        input {      
             height: 5rem;
             border: none;
-            border-radius: .5rem;
-        
+            border-radius: .5rem;  
+        }
+        .facebook {
+            padding-left: 15.7rem;
+        }
+        .linkedin {
+            padding-left: 14.3rem;
+        }
+        .twitter {
+            padding-left: 12.7rem;
+        }
+        .youtube {
+            padding-left: 14.6rem;
+        }
+        span {
+            font-family: $fuente;
+            font-style: italic;
+            position: absolute;
+            transform: translate(5%, 60%);
         }
     }
 }
@@ -172,21 +195,24 @@
 
     }
 }
+
 .informacion_biografica {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     margin-top: 5rem;
-    height: 30rem;
-    margin-left: 2rem;
+    width: 100%;
+    
     label {
+        font-family: $fuente;
         font-size: 2rem;
         padding-bottom: 1rem;
     }
     textarea {
-        width: 30rem;
-        height: 30rem;
+        font-family: $fuente;
+        width: 80%;
+        height: 35rem;
         resize: none;
         border: none;
         border-radius: .5rem;
@@ -198,6 +224,7 @@
 // Seccion Agregar Avatar //
 
 .avatar {
+    font-family: $fuente;
    display: flex;
    flex-direction: column;
    align-items: center;
@@ -210,10 +237,11 @@
         border: none;
        border-radius: .5rem;
        padding: .5rem;
+       transition: all .3s;
 
        &:hover {
         cursor: pointer;
-        opacity: .9;
+        color: $blanco;
         } 
     }
 }
@@ -244,6 +272,7 @@
     padding-top: 1.5rem;
 }
 .cambiar_contraseña {
+font-family: $fuente;
 display: flex;
 flex-direction: column;
 align-items: center;  
@@ -287,16 +316,17 @@ align-items: center;
     margin-bottom: 2rem;
 
     .btn-guardar {
+        font-family: $fuente;
         background-color: $naranja;
-        color: $blanco;
+        color: $negro;
         border: none;
         border-radius: .5rem;
         padding: .5rem;
-        transition: all .4s;
+        transition: all .3s;
 
         &:hover {
+            color: $blanco;
             cursor: pointer;
-            opacity: .9;
         }
     }
 }
@@ -311,13 +341,18 @@ align-items: center;
     }
 }
 .contenedor_cursos {
+    font-family: $fuente;
     gap: 2rem;
     border-bottom: 1px solid $gris;
     padding-bottom: 2rem;
     img {
+        width: 20rem;
+        height: 20rem;
         margin-bottom: 2rem;
     }
     .curso {
+        
+        font-size: 3rem;
         list-style: none;
         text-align: center;
     }
@@ -361,3 +396,4 @@ align-items: center;
     justify-content: center;
     text-decoration: underline;
 }
+

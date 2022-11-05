@@ -1,5 +1,5 @@
 .header {
-	font-family: 'Lexend', sans-serif;
+	font-family: $fuente;
 	font-size: 2rem;
 
 	background: $blanco;
@@ -51,7 +51,7 @@
 }
 
 .nav-menu-link {
-	color: $azulOscuro;
+	color: $negro;
 	text-decoration: none;
 }
 
