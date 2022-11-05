@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import logoWhite from '../assets/logoWhite.png'
 import Swal from 'sweetalert2'
+import { Loader } from '../components/Loader'
 import createHeader from '../utils/createHeader'
 
 export function Contacto() {
@@ -11,6 +12,7 @@ export function Contacto() {
 	const [lawyer, setLawyer] = useState('')
 	const [user, setUser] = useState(null)
 	const [forms, setForms] = useState([])
+	const [loading, setLoading] = useState(true)
 
 	const getUser = () => {
 		if (localStorage.getItem('token')) {
@@ -34,6 +36,7 @@ export function Contacto() {
 		})
 			.then(response => response.json())
 			.then(result => setForms(Object.values(result.data.data)))
+			.then(() => setLoading(false))
 	}
 
 	useEffect(() => {
@@ -197,6 +200,10 @@ export function Contacto() {
 		}
 
 		enviarFormulario()
+	}
+
+	if (loading) {
+		return <Loader />
 	}
 
 	return (
