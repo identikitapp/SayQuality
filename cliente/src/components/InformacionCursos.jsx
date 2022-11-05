@@ -38,10 +38,10 @@ export const InformacionCursos= () => {
 			(
 				
 				courses.map((curso) => (
-					<div className='contenedor_cursos' key={curso.ID}>
-						<Link><img src={import.meta.env.VITE_URL_IMG + curso.picture}/></Link>
+					<Link to={"/perfil/" + curso.name } className='contenedor_cursos' key={curso.ID}>
+						<img src={import.meta.env.VITE_URL_IMG + curso.picture}/>
 						<li className='curso'>{curso.name}</li>
-					</div>
+					</Link>
 		 
 				))	
 			) 

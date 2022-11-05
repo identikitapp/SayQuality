@@ -343,6 +343,7 @@ template {
   display: flex;
   justify-content: center;
   position: fixed;
+  z-index: 100;
   top: 0;
   left: 0;
   width: 100%;
@@ -1256,6 +1257,8 @@ template {
 .contenedor_perfil .cursos_informacion {
   font-size: 1.5rem;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: space-evenly;
   padding-bottom: 0.5rem;
   border-top: 1px solid #c8cebd;
@@ -1483,6 +1486,9 @@ template {
   width: 20rem;
   height: 20rem;
   margin-bottom: 2rem;
+}
+.contenedor_cursos li {
+  color: #000;
 }
 .contenedor_cursos .curso {
   font-size: 3rem;
