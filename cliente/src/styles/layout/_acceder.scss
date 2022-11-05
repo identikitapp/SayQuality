@@ -21,6 +21,7 @@
 	}
 
 	.iniciar-sesion {
+		font-family: $fuente;
 		background-color: $grisFondo;
 		height: 100vh;
 		padding-top: 10rem;
@@ -160,6 +161,7 @@
 			::placeholder {
 				padding-left: 0.5rem;
 				font-size: 1.5rem;
+				font-family: $fuente;
 			}
 			input {
 				font-size: 2rem;
@@ -198,7 +200,7 @@
 	}
 
 	.span-options {
-		font-size: 1.2rem;
+		font-size: 1.4rem;
 
 		margin: 2rem 0 0;
 	}

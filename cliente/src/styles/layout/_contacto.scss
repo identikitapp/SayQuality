@@ -42,6 +42,7 @@
 			font-size: 1.3rem;
 		}
 		.options {
+			font-family: $fuente;
 			font-size: 1.6rem;
 			padding: 0.7rem;
 			border-radius: 0.5rem;
@@ -51,13 +52,16 @@
 			border: none;
 		}
 		legend {
+			font-family: $fuente;
 			color: $blanco;
 			font-size: 2rem;
 			margin: 0 auto;
 			margin-bottom: 2rem;
 		}
 		::placeholder {
-			font-size: 1.5rem;
+			font-size: 1.7rem;
+			color: $gris;
+			font-family: $fuente;
 		}
 		input {
 			height: 3rem;
@@ -75,6 +79,7 @@
 			}
 		}
 		textarea {
+			font-family: $fuente;
 			color: $blanco;
 			font-size: 1.5rem;
 			height: 10rem;
@@ -89,13 +94,16 @@
 				border: 1px solid $blanco;
 				background-color: $grisOscuro;
 			}
+	
 		}
 		label {
+			font-family: $fuente;
 			font-size: 2rem;
 			color: $blanco;
 		}
 	}
 	.btn {
+		font-family: $fuente;
 		width: 30%;
 		margin: 1rem auto;
 		height: 3.5rem;
