@@ -54,8 +54,8 @@ export const Aside = () => {
 			) : (
 				<>
 					<div className='imagen_perfil'>
-						<p>Estudiante</p>
-						<img src={import.meta.env.VITE_URL_IMG + user.avatar} alt={user.username} />
+						<p>{user.username}</p>
+						<img src={import.meta.env.VITE_URL_IMG + user.avatar}/>
 					</div>
 					<div className='secciones'>
 						<NavLink

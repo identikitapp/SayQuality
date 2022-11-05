@@ -21,7 +21,10 @@
         margin: 0 auto;
         align-items: center;
         justify-content: center;
-
+        img {
+            height: 17rem;
+            width: 17rem;
+        }
         .icon-add {
             color: $blanco;
         }
@@ -124,7 +127,7 @@
 
 // ====================================================================== //
 // AJUSTES
-@include tablet {
+@media (min-width: 890px){
     .formulario_ajustes {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -143,20 +146,39 @@
     align-items: center;
     font-size: 2rem;
     gap: .5rem;
-
+    // -webkit-backface-visibility: hidden;
+    // backface-visibility: hidden;
+    // transition: all .2s ease-in-out;
     .inputs {
+        position: relative;
         margin-top: 2rem;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        max-width: 30rem;
+        width: 32rem;
         gap: .5rem;
-        
+
         input {
             height: 5rem;
             border: none;
-            border-radius: .5rem;
-        
+            border-radius: .5rem;  
+        }
+        .facebook {
+            padding-left: 12.6rem;
+        }
+        .linkedin {
+            padding-left: 11.8rem;
+        }
+        .twitter {
+            padding-left: 10.2rem;
+        }
+        .youtube {
+            padding-left: 11.6rem;
+        }
+        span {
+            font-style: italic;
+            position: absolute;
+            transform: translate(5%, 60%);
         }
     }
 }
@@ -172,21 +194,22 @@
 
     }
 }
+
 .informacion_biografica {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     margin-top: 5rem;
-    height: 30rem;
-    margin-left: 2rem;
+    width: 100%;
+    
     label {
         font-size: 2rem;
         padding-bottom: 1rem;
     }
     textarea {
-        width: 30rem;
-        height: 30rem;
+        width: 80%;
+        height: 35rem;
         resize: none;
         border: none;
         border-radius: .5rem;
@@ -315,9 +338,12 @@ align-items: center;
     border-bottom: 1px solid $gris;
     padding-bottom: 2rem;
     img {
+        width: 20rem;
+        height: 20rem;
         margin-bottom: 2rem;
     }
     .curso {
+        font-size: 3rem;
         list-style: none;
         text-align: center;
     }
@@ -361,3 +387,4 @@ align-items: center;
     justify-content: center;
     text-decoration: underline;
 }
+
