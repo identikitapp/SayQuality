@@ -10,7 +10,6 @@ export const Aside = () => {
 	
 	const [user, setUser] = useState(null)
 	const navigate = useNavigate()
-	console.log()
 	
 	const logout = () => {
 		localStorage.removeItem('token')
