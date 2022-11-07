@@ -1,6 +1,6 @@
 const sql = require("../utils/sql.js");
 
-module.exports = function (req, res, next, name) {
+module.exports = function (req, res, next, stageID) {
     sql.GetStage(stageID)
         .then((stages) => {
             req.paramStage = stages[0];
