@@ -120,8 +120,8 @@ images.get("/:stageID/:file", (req, res) => {
                     });
             };
 
-            if (fs.existsSync(process.env.filesPath + "/" + req.paramStage.ID + "/" + req.file + ".pdf")) {
-                res.sendFile(process.env.filesPath + "/" + req.paramStage.ID + "/" + req.file + ".pdf");
+            if (fs.existsSync(process.env.filesPath + "/" + req.paramStage.ID + "/" + req.file)) {
+                res.sendFile(process.env.filesPath + "/" + req.paramStage.ID + "/" + req.file);
             } else {
                 return res
                     .status(404)

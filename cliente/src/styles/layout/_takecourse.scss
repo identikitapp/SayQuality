@@ -9,6 +9,7 @@
 
 	display: flex;
 	justify-content: center;
+	align-items: center;
 
 	h1 {
 		font-size: 4rem;
@@ -30,5 +31,22 @@
 
 	span {
 		font-size: 1.3rem;
+	}
+}
+
+@media (max-width: 768px) {
+	.takeCourseContainer {
+		text-align: center;
+	}
+
+	.materialContainer {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+
+		iframe {
+			width: 90%;
+		}
 	}
 }
