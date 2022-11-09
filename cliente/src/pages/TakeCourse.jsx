@@ -52,12 +52,15 @@ export function TakeCourse() {
 									{stage.chapters.map((chapter, index) => (
 										<div key={index} className='materialContainer'>
 											<h3>Capítulo {chapter.name}</h3>
-											{chapter.files !== null ? (
-												<iframe src={chapter.files} width='768px' height='500px'></iframe>
+											<span>No hay material disponible</span>
+											{/* {chapter.files !== null ? (
+												// <iframe src={chapter.files} width='768px' height='500px'></iframe>
+												// <object data={chapter.files} type='application/pdf'></object>
+												// <embed src={chapter.files} type='application/pdf' width='768px' height='500px' />
 											) : (
 												<span>No hay material disponible</span>
 												// <video src={chapter.files} controls></video>
-											)}
+											)} */}
 										</div>
 									))}
 								</div>
