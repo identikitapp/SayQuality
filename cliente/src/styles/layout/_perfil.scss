@@ -1,8 +1,6 @@
 .contenedor_perfil {
     margin-top: 6rem;
     min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr;
     background-color: $grisFondo;
     box-shadow: inset 0px 0px 5px 1px rgba(0,0,0,0.33);
   
@@ -108,7 +106,7 @@
     }
 }
 
-@include tablet {
+@media (min-width: 850px) {
     .contenedor_perfil {
         display: grid;
         grid-template-columns: 1fr 3fr;
@@ -232,7 +230,7 @@
    align-items: center;
     gap: 2rem;
     margin-top: 5rem;
-    font-size: 2rem;
+    font-size: 1.7rem;
 
     ::-webkit-file-upload-button {
         background-color: $naranja;
