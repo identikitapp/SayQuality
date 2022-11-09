@@ -16,7 +16,7 @@ export function CourseDetails() {
 	const navigate = useNavigate()
 	const { name } = useParams()
 
-	const mercadopago = useMercadopago.v2(import.meta.env.VITE_URL_TEST_PUBLIC_KEY_MP, {
+	const mercadopago = useMercadopago.v2(import.meta.env.VITE_URL_PUBLIC_KEY_MP, {
 		locale: 'es-AR',
 	})
 
@@ -49,8 +49,6 @@ export function CourseDetails() {
 
 	async function handleSubmit(e) {
 		e.preventDefault()
-
-		console.log(createPayBtn)
 
 		if (!createPayBtn) {
 			await fetch(import.meta.env.VITE_URL_COURSE + name + '/payment', {

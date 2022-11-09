@@ -71,8 +71,6 @@ export function Contacto() {
 	}
 
 	const enviarFormulario = async () => {
-		console.log(createData())
-
 		const url = import.meta.env.VITE_URL_CONTACT_FORM
 
 		await fetch(url, {
@@ -89,8 +87,6 @@ export function Contacto() {
 						confirmButtonColor: '#0083bb',
 					})
 				}
-
-				console.log(result)
 
 				borrarFormulario()
 
