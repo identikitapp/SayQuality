@@ -5,7 +5,6 @@ import Swal from 'sweetalert2'
 import logoColor from '../assets/logoColor.png'
 import createHeader from '../utils/createHeader'
 
-
 export function Acceder() {
 	const [correo, setCorreo] = useState('')
 	const [password, setPassword] = useState('')
@@ -14,7 +13,6 @@ export function Acceder() {
 	const navigate = useNavigate()
 
 	const enviarFormulario = async () => {
-		
 		const data = {
 			email: correo.trim(),
 			password: password.trim(),
@@ -32,12 +30,10 @@ export function Acceder() {
 				if (!result.data) {
 					return Swal.fire({
 						icon: 'error',
-						title: result.error.message,
+						title: 'Ha ocurrido un error al iniciar sesión',
 						confirmButtonColor: '#0083bb',
 					})
 				}
-
-				console.log(result)
 
 				const token = result.data.token
 
@@ -135,7 +131,6 @@ export function Acceder() {
 		}
 	}
 
-	
 	return (
 		<section className='acceder'>
 			<div className='logo-acceder'>
@@ -187,7 +182,6 @@ export function Acceder() {
 
 					<button>Iniciar Sesion</button>
 				</form>
-				
 
 				<div className='checkbox'>
 					<p>

@@ -47,8 +47,6 @@ export function PasswordVerify() {
 					})
 				}
 
-				console.log(result)
-
 				borrarFormulario()
 
 				Swal.fire({

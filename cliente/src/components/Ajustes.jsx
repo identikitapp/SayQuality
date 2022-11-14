@@ -33,7 +33,6 @@ export const Ajustes = () => {
 		})
 			.then(response => response.json())
 			.then(result => {
-				console.log(result)
 				if (!result.data) {
 					return Swal.fire({
 						icon: 'error',
@@ -42,17 +41,15 @@ export const Ajustes = () => {
 					})
 				}
 				let me = result.data.user
-				console.log(me)
-				
-				document.getElementById("nombre").value = me.username;
-				document.getElementById("email").value = me.email;
-				document.getElementById("facebook").value = me.facebook;
-				document.getElementById("linkedin").value = me.linkedin;
-				document.getElementById("youtube").value = me.youtube;
-				document.getElementById("twitter").value = me.twitter;
-				document.getElementById("github").value = me.github;
-				document.getElementById("biography").value = me.biography;
-				
+
+				document.getElementById('nombre').value = me.username
+				document.getElementById('email').value = me.email
+				document.getElementById('facebook').value = me.facebook
+				document.getElementById('linkedin').value = me.linkedin
+				document.getElementById('youtube').value = me.youtube
+				document.getElementById('twitter').value = me.twitter
+				document.getElementById('github').value = me.github
+				document.getElementById('biography').value = me.biography
 			})
 	})
 
@@ -82,7 +79,6 @@ export const Ajustes = () => {
 				.then(response => response.json())
 				.then(result => {
 					if (!result.data) {
-						console.log(result.error)
 						return Swal.fire({
 							icon: 'error',
 							title: 'error',
@@ -90,7 +86,6 @@ export const Ajustes = () => {
 						})
 					}
 					setAvatar(result.data.name)
-					console.log(result.data.name)
 				})
 		})
 	}
@@ -107,8 +102,7 @@ export const Ajustes = () => {
 			twitter: twitter.trim(),
 			github: github.trim(),
 			youtube: youtube.trim(),
-			avatar: avatar
-			
+			avatar: avatar,
 		}
 		const url = import.meta.env.VITE_URL_USER
 
@@ -120,7 +114,6 @@ export const Ajustes = () => {
 			.then(response => response.json())
 			.then(result => {
 				if (!result.data) {
-					console.log(result.error)
 					return Swal.fire({
 						icon: 'error',
 						title: result.error.message,
@@ -207,21 +200,20 @@ export const Ajustes = () => {
 		e.preventDefault()
 		enviarFormulario()
 	}
-	
+
 	return (
 		<>
-
 			<form onSubmit={e => handleSubmit(e)} autoComplete='off'>
 				<div className='formulario_ajustes'>
 					{/* Formulario Informacion Personal */}
-					
+
 					<div className='inputs'>
 						<label htmlFor='Nombre'>Nombre</label>
 						<input
 							id='nombre'
 							type='text'
 							placeholder='Nombre'
-							name='name'		
+							name='name'
 							onChange={handleChangeNombre}
 						/>
 						{error1 && <h2 className='error'>{error1}</h2>}
@@ -266,10 +258,9 @@ export const Ajustes = () => {
 						/>
 						<span>linkedin.com/</span>
 					</div>
-					
-					
+
 					<div className='inputs'>
-						<label htmlFor='twitter'>Twitter</label>		
+						<label htmlFor='twitter'>Twitter</label>
 						<input
 							className='twitter'
 							type='text'
@@ -278,7 +269,7 @@ export const Ajustes = () => {
 							id='twitter'
 							onChange={handleChangeTwitter}
 						/>
-						<span >twitter.com/</span>
+						<span>twitter.com/</span>
 					</div>
 
 					<div className='inputs'>

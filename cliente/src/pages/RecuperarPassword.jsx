@@ -42,8 +42,6 @@ export const RecuperarPassword = () => {
 					setValue('1')
 				}
 
-				console.log(result)
-
 				borrarFormulario()
 
 				Swal.fire({

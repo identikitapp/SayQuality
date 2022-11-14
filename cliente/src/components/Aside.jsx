@@ -7,10 +7,9 @@ import Swal from 'sweetalert2'
 import { useCallback } from 'react'
 
 export const Aside = () => {
-	
 	const [user, setUser] = useState(null)
 	const navigate = useNavigate()
-	
+
 	const logout = () => {
 		localStorage.removeItem('token')
 		navigate('/')
@@ -18,16 +17,15 @@ export const Aside = () => {
 		location.reload()
 	}
 
-	const peticion = useCallback (() => {
+	const peticion = useCallback(() => {
 		const url = import.meta.env.VITE_URL_USER
-		
+
 		fetch(url, {
 			method: 'GET',
 			headers: createHeader(),
 		})
 			.then(response => response.json())
 			.then(result => {
-				console.log(result)
 				if (!result.data) {
 					return Swal.fire({
 						icon: 'error',
@@ -38,15 +36,13 @@ export const Aside = () => {
 
 				return setUser(result.data.user)
 			})
-			
 	})
-		
+
 	useEffect(() => {
 		peticion()
 	}, [])
 
 	return (
-		
 		<aside>
 			{user === null ? (
 				navigate('/acceder')
@@ -54,7 +50,7 @@ export const Aside = () => {
 				<>
 					<div className='imagen_perfil'>
 						<p>{user.username}</p>
-						<img src={import.meta.env.VITE_URL_IMG + user.avatar}/>
+						<img src={import.meta.env.VITE_URL_IMG + user.avatar} />
 					</div>
 					<div className='secciones'>
 						<NavLink
@@ -64,7 +60,7 @@ export const Aside = () => {
 							<BsFillPlayFill className='icon' />
 							Cursos
 						</NavLink>
-						
+
 						<NavLink
 							to='/ajustes'
 							className={({ isActive }) => (isActive ? 'active' : '')}

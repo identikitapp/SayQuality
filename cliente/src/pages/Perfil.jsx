@@ -8,33 +8,28 @@ import createHeader from '../utils/createHeader'
 import { Loader } from '../components/Loader'
 
 export const Perfil = () => {
-
 	const navigate = useNavigate()
 	const [loading, setLoading] = useState(true)
 
-	
-	 useCallback( () => {
+	useCallback(() => {
 		const url = import.meta.env.VITE_URL_USER
 
 		fetch(url, {
 			method: 'GET',
 			headers: createHeader(),
-			})
+		})
 			.then(response => {
 				if (response.ok) {
-				
-				return	navigate("/perfil")
-				} 
-				console.log(error)
-				return navigate ("/acceder")
-			})	
+					return navigate('/perfil')
+				}
+				return navigate('/acceder')
+			})
 			.then(() => setLoading(false))
-	 }, [])
-
+	}, [])
 
 	return (
 		<div className='contenedor_perfil'>
-				<Aside />
+			<Aside />
 			<section className='panel_informacion'>
 				<Buttons />
 				<InformacionCursos />

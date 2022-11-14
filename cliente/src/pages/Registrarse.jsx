@@ -29,8 +29,6 @@ export const Registrarse = () => {
 			// password2: password2.trim(),
 		}
 
-		console.log(data)
-
 		const url = import.meta.env.VITE_URL_REGISTRARSE
 
 		await fetch(url, {
@@ -47,8 +45,6 @@ export const Registrarse = () => {
 						confirmButtonColor: '#0083bb',
 					})
 				}
-
-				console.log(result)
 
 				borrarFormulario()
 
