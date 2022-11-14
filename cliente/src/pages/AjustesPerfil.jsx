@@ -2,7 +2,6 @@ import React from 'react'
 import { Ajustes } from '../components/Ajustes'
 import { Aside } from '../components/Aside'
 import { useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
 import createHeader from '../utils/createHeader'
 import { useCallback } from 'react'
 

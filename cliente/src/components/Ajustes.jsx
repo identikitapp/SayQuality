@@ -155,7 +155,7 @@ export const Ajustes = () => {
 		setPassword(e.target.value)
 	}
 	const handleChangeNewPassword = e => {
-		setNewPassword(e.target.files[0])
+		setNewPassword(e.target.value)
 	}
 	const handleChangeBiography = e => {
 		setBiography(e.target.value)
@@ -304,7 +304,7 @@ export const Ajustes = () => {
 							id='youtube'
 							onChange={handleChangeYoutube}
 						/>
-						<span>youtube.com/</span>
+						<span>youtube.com/@</span>
 					</div>
 				</div>
 
