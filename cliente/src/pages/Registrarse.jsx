@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import logoColor from '../assets/logoColor.png'
 import { BsEye, BsEyeSlash } from 'react-icons/bs'
 import Swal from 'sweetalert2'
+import { Loader } from '../components/Loader'
 import createHeader from '../utils/createHeader'
 
 export const Registrarse = () => {
@@ -12,6 +14,23 @@ export const Registrarse = () => {
 	const [password2, setPassword2] = useState('')
 	const [passwordType, setPasswordType] = useState(true)
 	const [passwordType2, setPasswordType2] = useState(true)
+	const [loading, setLoading] = useState(true)
+
+	const navigate = useNavigate()
+
+	useEffect(() => {
+		const url = import.meta.env.VITE_URL_USER
+
+		fetch(url, {
+			method: 'GET',
+			headers: createHeader(),
+		}).then(response => {
+			if (!!response.ok) {
+				navigate('/')
+			}
+			setLoading(false)
+		})
+	}, [])
 
 	const borrarFormulario = () => {
 		setName('')
@@ -225,6 +244,10 @@ export const Registrarse = () => {
 			passwd2.type = 'password'
 			setPasswordType2(true)
 		}
+	}
+
+	if (loading) {
+		return <Loader />
 	}
 
 	return (

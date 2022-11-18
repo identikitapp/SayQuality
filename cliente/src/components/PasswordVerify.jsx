@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, useNavigate } from 'react-router-dom'
 import { BsEyeSlash, BsEye } from 'react-icons/bs'
 import Swal from 'sweetalert2'
 
@@ -10,6 +10,8 @@ export function PasswordVerify() {
 	const [password2, setPassword2] = useState('')
 	const [passwordType, setPasswordType] = useState(true)
 	const [passwordType2, setPasswordType2] = useState(true)
+
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		const code = searchParams.get('code')
@@ -54,6 +56,10 @@ export function PasswordVerify() {
 					title: result.data.message,
 					confirmButtonColor: '#0083bb',
 				})
+
+				setTimeout(() => {
+					navigate('/acceder')
+				}, 2000)
 			})
 	}
 

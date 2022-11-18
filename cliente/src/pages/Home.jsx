@@ -77,7 +77,7 @@ export function Home() {
 				<Link to='/registrarse'>Comenza a estudiar gratis</Link>
 			</article>
 
-			<a href='http://wa.me/5492634849515?text=Hola,%20¡necesito %20 ayuda!'>
+			<a href='http://wa.me/5492615020927?text=¡Hola!%20Say%20Quality%20me%20interesan%20sus%20cursos.'>
 				<SiWhatsapp className='whatsapp' size={45} />
 			</a>
 		</section>

@@ -1,5 +1,6 @@
 .takeCourseContainer {
 	margin-top: 60px;
+	padding-bottom: 60px;
 
 	min-height: 100vh;
 
@@ -31,6 +32,33 @@
 
 	span {
 		font-size: 1.3rem;
+	}
+
+	a {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		margin: 4rem 2rem;
+
+		width: 200px;
+		height: 50px;
+
+		font-size: 1.5rem;
+		color: $blanco;
+		background-color: $azul;
+
+		border: none;
+		border-radius: 5px;
+
+		cursor: pointer;
+	}
+
+	video {
+		width: 100%;
+		height: 600px;
+
+		margin: 3rem 0;
 	}
 }
 
