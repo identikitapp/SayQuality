@@ -31,6 +31,31 @@ export function TakeCourse() {
 			})
 	}, [])
 
+	async function getFile(stage, file) {
+		const url = import.meta.env.VITE_URL_DOWNLOAD + stage + '/' + file + '.pdf'
+
+		await fetch(url, {
+			method: 'GET',
+			headers: createHeader(),
+		})
+			.then(response => response.blob())
+			.then(response => {
+				const a = document.createElement('a')
+				const objectUrl = window.URL.createObjectURL(response)
+				a.href = objectUrl
+				a.download = file + '.pdf'
+
+				const container = document.querySelector('.materialContainer')
+
+				a.style.display = 'none'
+
+				container.appendChild(a)
+
+				a.click()
+				a.remove()
+			})
+	}
+
 	if (loading) {
 		return <Loader />
 	}
@@ -56,12 +81,12 @@ export function TakeCourse() {
 											{/* <span>No hay material disponible</span> */}
 
 											{chapter.files !== null && !chapter.files.includes('.pdf') ? (
-												<a
-													href={import.meta.env.VITE_URL_DOWNLOAD + chapter.files}
-													download={chapter.files}
+												<button
+													type='button'
+													onClick={() => getFile(stage.ID, chapter.files)}
 												>
-													Descargar material
-												</a>
+													Descargar pdf
+												</button>
 											) : (
 												<video src={chapter.files} controls></video>
 											)}
