@@ -252,7 +252,6 @@ module.exports.GetPayment = (userID, courseID) => {
     return new Promise((resolve, reject) => {
         connection.query("SELECT * FROM Payments WHERE userID = ? AND courseID = ?", [userID, courseID], (error, results, fields) => {
             if (error) {
-                console.log(error)
                 reject(new Error("Error al obtener el pago"))
             };
 
