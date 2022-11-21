@@ -844,7 +844,7 @@ users.patch("/:ID", rateLimit.updateUser, (req, res) => {
             });
     };
 
-    if (!!body.username) {
+    if (typeof body.username != "undefined") {
         if (typeof body.username != "string" || body.username.length > 15) {
             return res
                 .status(422)
@@ -858,7 +858,7 @@ users.patch("/:ID", rateLimit.updateUser, (req, res) => {
         updatedUser.username = body.username;
     };
 
-    if (!!body.email) {
+    if (typeof body.email != "undefined") {
         if (typeof body.email != "string") {
             return res
                 .status(422)
@@ -888,7 +888,7 @@ users.patch("/:ID", rateLimit.updateUser, (req, res) => {
     };
 
 
-    if (!!body.newPassword) {
+    if (typeof body.newPassword != "undefined") {
         if (typeof body.newPassword != "string") {
             return res
                 .status(422)
@@ -927,7 +927,7 @@ users.patch("/:ID", rateLimit.updateUser, (req, res) => {
     };
 
 
-    if (!!body.biography) {
+    if (typeof body.biography != "undefined") {
         if (typeof body.biography != "string" || body.biography.length > 2000) {
             return res
                 .status(422)
@@ -941,7 +941,7 @@ users.patch("/:ID", rateLimit.updateUser, (req, res) => {
         updatedUser.biography = body.biography;
     };
 
-    if (!!body.avatar) {
+    if (typeof body.avatar != "undefined") {
         if (typeof body.avatar != "string" || body.avatar.length != 64) {
             return res
                 .status(422)
@@ -967,7 +967,7 @@ users.patch("/:ID", rateLimit.updateUser, (req, res) => {
         updatedUser.avatar = body.avatar;
     };
 
-    if (!!body.linkedin) {
+    if (typeof body.linkedin != "undefined") {
         if (typeof body.linkedin != "string" || body.linkedin.length > 80) {
             return res
                 .status(422)
@@ -981,7 +981,7 @@ users.patch("/:ID", rateLimit.updateUser, (req, res) => {
         updatedUser.linkedin = body.linkedin;
     };
 
-    if (!!body.facebook) {
+    if (typeof body.facebook != "undefined") {
         if (typeof body.facebook != "string" || body.facebook.length > 50) {
             return res
                 .status(422)
@@ -995,7 +995,7 @@ users.patch("/:ID", rateLimit.updateUser, (req, res) => {
         updatedUser.facebook = body.facebook;
     };
 
-    if (!!body.twitter) {
+    if (typeof body.twitter != "undefined") {
         if (typeof body.twitter != "string" || body.twitter.length > 50) {
             return res
                 .status(422)
@@ -1009,7 +1009,7 @@ users.patch("/:ID", rateLimit.updateUser, (req, res) => {
         updatedUser.twitter = body.twitter;
     };
 
-    if (!!body.youtube) {
+    if (typeof body.youtube != "undefined") {
         if (typeof body.youtube != "string" || body.youtube.length > 256) {
             return res
                 .status(422)
@@ -1023,7 +1023,7 @@ users.patch("/:ID", rateLimit.updateUser, (req, res) => {
         updatedUser.youtube = body.youtube;
     };
 
-    if (!!body.github) {
+    if (typeof body.github != "undefined") {
         if (typeof body.github != "string" || body.github.length > 39) {
             return res
                 .status(422)
