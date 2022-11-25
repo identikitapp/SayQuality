@@ -90,25 +90,60 @@ export const Ajustes = () => {
 		})
 	}
 
-	const enviarFormulario = async () => {
-		const data = {
-			username: nombre.trim(),
+	function createData() {
+		let data = {
 			password: password.trim(), //LA CONTRASEÑA ACTUAL (OBLIGATORIA)
-			email: correo.trim(),
-			newPassword: newPassword.trim(),
-			biography: biography.trim(),
-			linkedin: linkedin.trim(),
-			facebook: facebook.trim(),
-			twitter: twitter.trim(),
-			github: github.trim(),
-			youtube: youtube.trim(),
-			avatar: avatar,
 		}
+
+		if (username !== '') {
+			data.username = nombre.trim()
+		}
+
+		if (email !== '') {
+			data.email = correo.trim()
+		}
+
+		if (newPassword !== '') {
+			data.newPassword = newPassword.trim()
+		}
+
+		if (biography !== '') {
+			data.biography = biography.trim()
+		}
+
+		if (linkedin !== '') {
+			data.linkedin = linkedin.trim()
+		}
+
+		if (facebook !== '') {
+			data.facebook = facebook.trim()
+		}
+
+		if (twitter !== '') {
+			data.twitter = twitter.trim()
+		}
+
+		if (github !== '') {
+			data.github = github.trim()
+		}
+
+		if (youtube !== '') {
+			data.youtube = youtube.trim()
+		}
+
+		if (avatar !== '') {
+			data.avatar = avatar
+		}
+
+		return data
+	}
+
+	const enviarFormulario = async () => {
 		const url = import.meta.env.VITE_URL_USER
 
 		await fetch(url, {
 			method: 'PATCH',
-			body: JSON.stringify(data),
+			body: JSON.stringify(createData()),
 			headers: createHeader(),
 		})
 			.then(response => response.json())
